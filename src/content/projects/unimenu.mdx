@@ -1,0 +1,314 @@
+---
+title: UniMenu
+description: Sistema completo de pedidos de comida para cantinas e restaurantes universitários, com arquitetura full-stack cross-platform.
+tags:
+  - NestJS
+  - React Native
+  - Expo
+  - React
+  - MySQL
+  - TypeScript
+  - Stripe
+  - JWT
+status: em desenvolvimento
+github: https://github.com/alanregis/unimenu
+highlight: Integração de pagamento Stripe com fluxo completo
+date: 2023-08-20
+---
+
+## O Problema
+
+As cantinas da UNIFOR enfrentavam um problema clássico: filas longas nos horários de pico, pedidos perdidos em papéis, e zero visibilidade do que estava disponível. Os alunos perdiam tempo, os atendentes cometiam erros, e os gestores não tinham dados.
+
+A solução típica seria "só fazer um app de pedidos". Mas eu queria construir algo que **funcionasse de verdade** em um ambiente universitário com suas particularidades.
+
+## Visão Geral
+
+UniMenu é um sistema completo de pedidos que inclui:
+
+- **App Mobile** (React Native/Expo) para alunos fazerem pedidos
+- **Painel Web** (React) para gestão de cardápio e pedidos
+- **API Backend** (NestJS) centralizando toda a lógica
+- **Integração Stripe** para pagamentos
+
+## Arquitetura
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                      CLIENTES                            │
+├─────────────────────┬────────────────────────────────────┤
+│   App Mobile        │        Painel Admin                │
+│   (React Native)    │        (React + Vite)              │
+│   ┌─────────────┐   │   ┌─────────────────────┐          │
+│   │ Expo        │   │   │ Dashboard           │          │
+│   │ Navigation  │   │   │ Gestão Cardápio    │          │
+│   │ Context     │   │   │ Fila de Pedidos    │          │
+│   └──────┬──────┘   │   └──────────┬──────────┘          │
+│          │          │              │                     │
+└──────────┼──────────┴──────────────┼─────────────────────┘
+           │                         │
+           ▼                         ▼
+┌──────────────────────────────────────────────────────────┐
+│                    API GATEWAY                           │
+│                  (NestJS Backend)                        │
+├──────────────────────────────────────────────────────────┤
+│  ┌────────────┐  ┌────────────┐  ┌────────────────────┐  │
+│  │ Auth       │  │ Orders     │  │ Payments           │  │
+│  │ Module     │  │ Module     │  │ Module (Stripe)    │  │
+│  └────────────┘  └────────────┘  └────────────────────┘  │
+│  ┌────────────┐  ┌────────────┐  ┌────────────────────┐  │
+│  │ Users      │  │ Products   │  │ Notifications      │  │
+│  │ Module     │  │ Module     │  │ Module             │  │
+│  └────────────┘  └────────────┘  └────────────────────┘  │
+└──────────────────────────┬───────────────────────────────┘
+                           │
+                           ▼
+┌──────────────────────────────────────────────────────────┐
+│                      DATABASE                            │
+│                      (MySQL)                             │
+└──────────────────────────────────────────────────────────┘
+```
+
+## Fluxo de Pedidos
+
+O coração do sistema é o fluxo de pedidos, que precisava ser:
+
+- **Rápido** — aluno faz pedido em menos de 1 minuto
+- **Confiável** — nenhum pedido pode ser perdido
+- **Rastreável** — status em tempo real
+
+```typescript
+// orders/order.entity.ts
+export enum OrderStatus {
+  PENDING = "pending", // Aguardando pagamento
+  CONFIRMED = "confirmed", // Pagamento confirmado
+  PREPARING = "preparing", // Em preparo
+  READY = "ready", // Pronto para retirada
+  COMPLETED = "completed", // Entregue
+  CANCELLED = "cancelled", // Cancelado
+}
+
+@Entity("orders")
+export class Order {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+
+  @Column()
+  orderNumber: string; // Ex: #0042
+
+  @ManyToOne(() => User)
+  customer: User;
+
+  @ManyToOne(() => Restaurant)
+  restaurant: Restaurant;
+
+  @OneToMany(() => OrderItem, (item) => item.order)
+  items: OrderItem[];
+
+  @Column({ type: "enum", enum: OrderStatus })
+  status: OrderStatus;
+
+  @Column({ type: "decimal", precision: 10, scale: 2 })
+  total: number;
+
+  @Column({ nullable: true })
+  stripePaymentIntentId: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+}
+```
+
+## Integração Stripe
+
+A integração de pagamento foi um dos maiores desafios. Implementei usando Payment Intents para máxima flexibilidade:
+
+```typescript
+// payments/stripe.service.ts
+@Injectable()
+export class StripeService {
+  private stripe: Stripe;
+
+  constructor(private configService: ConfigService) {
+    this.stripe = new Stripe(this.configService.get("STRIPE_SECRET_KEY"), {
+      apiVersion: "2023-10-16",
+    });
+  }
+
+  async createPaymentIntent(order: Order): Promise<PaymentIntent> {
+    return this.stripe.paymentIntents.create({
+      amount: Math.round(order.total * 100), // Centavos
+      currency: "brl",
+      metadata: {
+        orderId: order.id,
+        orderNumber: order.orderNumber,
+        customerId: order.customer.id,
+      },
+      automatic_payment_methods: {
+        enabled: true,
+      },
+    });
+  }
+
+  async handleWebhook(
+    payload: Buffer,
+    signature: string,
+  ): Promise<WebhookResult> {
+    const event = this.stripe.webhooks.constructEvent(
+      payload,
+      signature,
+      this.configService.get("STRIPE_WEBHOOK_SECRET"),
+    );
+
+    switch (event.type) {
+      case "payment_intent.succeeded":
+        return this.handlePaymentSuccess(event.data.object);
+      case "payment_intent.payment_failed":
+        return this.handlePaymentFailure(event.data.object);
+      default:
+        return { handled: false };
+    }
+  }
+}
+```
+
+### Webhook Handler
+
+Os webhooks do Stripe são essenciais para garantir que o status do pedido seja atualizado corretamente:
+
+```typescript
+// payments/stripe.controller.ts
+@Controller("webhooks/stripe")
+export class StripeWebhookController {
+  @Post()
+  @Public() // Webhooks não usam auth
+  async handleWebhook(
+    @Headers("stripe-signature") signature: string,
+    @Req() req: RawBodyRequest<Request>,
+  ) {
+    const result = await this.stripeService.handleWebhook(
+      req.rawBody,
+      signature,
+    );
+
+    if (result.orderId) {
+      await this.ordersService.updateStatus(result.orderId, result.newStatus);
+
+      // Notificar restaurante
+      await this.notificationService.notifyRestaurant(
+        result.orderId,
+        "Novo pedido confirmado!",
+      );
+    }
+
+    return { received: true };
+  }
+}
+```
+
+## App Mobile
+
+O app foi construído com Expo para facilitar o desenvolvimento cross-platform:
+
+```typescript
+// screens/OrderScreen.tsx
+export function OrderScreen() {
+  const { cart, total, clearCart } = useCart();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const { initPaymentSheet, presentPaymentSheet } = useStripe();
+
+  const handleCheckout = async () => {
+    setIsProcessing(true);
+
+    try {
+      // 1. Criar pedido no backend
+      const { order, clientSecret } = await api.createOrder({
+        items: cart.map(item => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+        })),
+      });
+
+      // 2. Inicializar payment sheet
+      await initPaymentSheet({
+        paymentIntentClientSecret: clientSecret,
+        merchantDisplayName: 'UniMenu',
+      });
+
+      // 3. Apresentar payment sheet
+      const { error } = await presentPaymentSheet();
+
+      if (!error) {
+        clearCart();
+        navigation.navigate('OrderConfirmation', {
+          orderId: order.id
+        });
+      }
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={cart}
+        renderItem={({ item }) => <CartItem item={item} />}
+      />
+
+      <View style={styles.footer}>
+        <Text style={styles.total}>Total: R$ {total.toFixed(2)}</Text>
+        <Button
+          title={isProcessing ? 'Processando...' : 'Finalizar Pedido'}
+          onPress={handleCheckout}
+          disabled={isProcessing || cart.length === 0}
+        />
+      </View>
+    </View>
+  );
+}
+```
+
+## Decisões Técnicas
+
+### Por que MySQL?
+
+- Familiaridade da equipe
+- Bom suporte em provedores managed
+- Relações bem definidas (usuários, restaurantes, pedidos, produtos)
+
+### Por que Expo?
+
+- Setup zero para iOS e Android
+- Over-the-air updates (crucial para bugs em produção)
+- Acesso a APIs nativas sem eject
+
+### Trade-offs
+
+| Decisão             | Vantagem            | Desvantagem                                    |
+| ------------------- | ------------------- | ---------------------------------------------- |
+| Expo managed        | Dev rápido          | Limitações em módulos nativos                  |
+| MySQL               | Familiar            | Menos flexível que PostgreSQL                  |
+| Stripe              | Confiável, completo | Taxas mais altas                               |
+| JWT em localStorage | Simples             | Vulnerável a XSS (mitigado com refresh tokens) |
+
+## Status Atual
+
+O projeto está em desenvolvimento ativo:
+
+- ✅ Backend completo com testes
+- ✅ Integração Stripe funcionando
+- ✅ App mobile com fluxo principal
+- 🔄 Painel admin em progresso
+- ⏳ Notificações push pendente
+- ⏳ Sistema de avaliações pendente
+
+## O que aprendi
+
+1. **Integrações de pagamento são complexas** — webhooks, idempotência, retry logic
+2. **Estado distribuído é difícil** — sincronizar app, web e backend em tempo real
+3. **UX > features** — um fluxo simples vale mais que 10 features mal feitas
+
+## Links
+
+- [Repositório GitHub](https://github.com/alanregis/unimenu)

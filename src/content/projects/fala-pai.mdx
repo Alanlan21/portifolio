@@ -1,0 +1,319 @@
+---
+title: Fala-Pai
+description: Aplicativo de comunicação assistiva que converte texto em fala de alta qualidade para pessoas com dificuldades de comunicação verbal.
+tags:
+  - React
+  - Vite
+  - Tailwind
+  - ElevenLabs API
+  - PWA
+  - TypeScript
+status: estável
+github: https://github.com/alanregis/fala-pai
+demo: https://fala-pai.vercel.app
+highlight: PWA instalável com síntese de voz premium
+date: 2022-11-10
+---
+
+## A História
+
+Meu pai precisou fazer uma cirurgia que comprometeu sua capacidade de falar. Ele conseguia pensar, entender, mas as palavras não saíam. A frustração dele (e da nossa família) era constante.
+
+Os apps de comunicação assistiva que encontramos eram caros, feios, ou com vozes robóticas que não pareciam humanas. Decidi construir algo melhor.
+
+**Fala-Pai** é um aplicativo que permite digitar o que você quer dizer e ouvir em uma voz natural e expressiva.
+
+## O Desafio Técnico
+
+O requisito principal era **qualidade de voz**. A Web Speech API nativa produz vozes que soam artificiais, bom para assistentes, mas não para substituir a voz de uma pessoa.
+
+Testei várias APIs:
+
+- **Web Speech API**: Gratuita, mas vozes pobres
+- **Google Cloud TTS**: Boa qualidade, mas caro para uso contínuo
+- **Amazon Polly**: Razoável, API complexa
+- **ElevenLabs**: Vozes indistinguíveis de humanos, API simples
+
+ElevenLabs ganhou pela qualidade. A API oferece vozes com entonação natural, pausas corretas, e emoção.
+
+## Arquitetura
+
+```
+┌─────────────────────────────────────────────────┐
+│                    PWA                          │
+│  ┌───────────────────────────────────────────┐  │
+│  │              React App                    │  │
+│  │  ┌─────────────┐  ┌──────────────────┐    │  │
+│  │  │ Text Input  │  │ Quick Phrases    │    │  │
+│  │  └─────────────┘  └──────────────────┘    │  │
+│  │  ┌─────────────────────────────────────┐  │  │
+│  │  │         Audio Player                │  │  │
+│  │  │     (with offline cache)            │  │  │
+│  │  └─────────────────────────────────────┘  │  │
+│  └───────────────────────────────────────────┘  │
+│                      │                          │
+│  ┌───────────────────┴────────────────────┐     │
+│  │           Service Worker               │     │
+│  │    (caching + offline support)         │     │
+│  └────────────────────────────────────────┘     │
+└──────────────────────┬──────────────────────────┘
+                       │
+                       ▼
+┌──────────────────────────────────────────────────┐
+│              ElevenLabs API                      │
+│         (Text-to-Speech Synthesis)               │
+└──────────────────────────────────────────────────┘
+```
+
+## Implementação do TTS
+
+O core do app é a integração com ElevenLabs:
+
+```typescript
+// services/tts.service.ts
+const ELEVENLABS_API = "https://api.elevenlabs.io/v1";
+
+interface TTSOptions {
+  text: string;
+  voiceId?: string;
+  stability?: number;
+  similarityBoost?: number;
+}
+
+export async function synthesizeSpeech(options: TTSOptions): Promise<Blob> {
+  const {
+    text,
+    voiceId = "pNInz6obpgDQGcFmaJgB", // Voz "Adam" (masculina, brasileira)
+    stability = 0.5,
+    similarityBoost = 0.75,
+  } = options;
+
+  const response = await fetch(`${ELEVENLABS_API}/text-to-speech/${voiceId}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "xi-api-key": import.meta.env.VITE_ELEVENLABS_API_KEY,
+    },
+    body: JSON.stringify({
+      text,
+      model_id: "eleven_multilingual_v2",
+      voice_settings: {
+        stability,
+        similarity_boost: similarityBoost,
+      },
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`TTS failed: ${response.status}`);
+  }
+
+  return response.blob();
+}
+```
+
+## Frases Rápidas
+
+Para comunicação urgente, o app tem frases pré-configuradas que podem ser acionadas com um toque:
+
+```typescript
+// components/QuickPhrases.tsx
+const DEFAULT_PHRASES = [
+  { id: '1', text: 'Sim', emoji: '👍' },
+  { id: '2', text: 'Não', emoji: '👎' },
+  { id: '3', text: 'Estou com fome', emoji: '🍽️' },
+  { id: '4', text: 'Estou com sede', emoji: '💧' },
+  { id: '5', text: 'Preciso ir ao banheiro', emoji: '🚽' },
+  { id: '6', text: 'Estou com dor', emoji: '😣' },
+  { id: '7', text: 'Me ajuda', emoji: '🆘' },
+  { id: '8', text: 'Te amo', emoji: '❤️' },
+];
+
+export function QuickPhrases({ onSelect }: { onSelect: (text: string) => void }) {
+  const [phrases, setPhrases] = useState(DEFAULT_PHRASES);
+
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+      {phrases.map((phrase) => (
+        <button
+          key={phrase.id}
+          onClick={() => onSelect(phrase.text)}
+          className="p-4 rounded-xl bg-card hover:bg-accent transition-colors text-left"
+        >
+          <span className="text-2xl mb-2 block">{phrase.emoji}</span>
+          <span className="text-sm font-medium">{phrase.text}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+```
+
+## PWA e Offline
+
+O app precisava funcionar mesmo sem internet — hospitais e clínicas nem sempre têm WiFi estável.
+
+```typescript
+// vite.config.ts
+import { VitePWA } from "vite-plugin-pwa";
+
+export default defineConfig({
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: "autoUpdate",
+      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
+      manifest: {
+        name: "Fala-Pai",
+        short_name: "FalaPai",
+        description: "Comunicação assistiva com voz natural",
+        theme_color: "#10b981",
+        icons: [
+          {
+            src: "pwa-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          },
+          {
+            src: "pwa-512x512.png",
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      },
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,ico,png,svg,woff2}"],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.elevenlabs\.io\/.*/i,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "tts-audio-cache",
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24 * 7, // 1 semana
+              },
+            },
+          },
+        ],
+      },
+    }),
+  ],
+});
+```
+
+### Cache de Áudio
+
+Frases já sintetizadas são cacheadas para uso offline:
+
+```typescript
+// hooks/useAudioCache.ts
+const CACHE_NAME = "tts-audio-v1";
+
+export function useAudioCache() {
+  const getCached = async (text: string): Promise<Blob | null> => {
+    const cache = await caches.open(CACHE_NAME);
+    const key = hashText(text);
+    const response = await cache.match(key);
+
+    return response ? response.blob() : null;
+  };
+
+  const setCached = async (text: string, audioBlob: Blob): Promise<void> => {
+    const cache = await caches.open(CACHE_NAME);
+    const key = hashText(text);
+
+    await cache.put(
+      key,
+      new Response(audioBlob, {
+        headers: { "Content-Type": "audio/mpeg" },
+      }),
+    );
+  };
+
+  return { getCached, setCached };
+}
+```
+
+## UX Decisions
+
+### Botões Grandes
+
+Pessoas com mobilidade reduzida ou tremores precisam de alvos de toque grandes:
+
+```tsx
+// components/SpeakButton.tsx
+export function SpeakButton({ onClick, isLoading }: SpeakButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      disabled={isLoading}
+      className="
+        w-full h-20 
+        rounded-2xl 
+        bg-emerald-500 hover:bg-emerald-600 
+        text-white text-xl font-bold
+        flex items-center justify-center gap-3
+        disabled:opacity-50
+        touch-manipulation
+      "
+    >
+      {isLoading ? (
+        <Loader2 className="h-8 w-8 animate-spin" />
+      ) : (
+        <>
+          <Volume2 className="h-8 w-8" />
+          Falar
+        </>
+      )}
+    </button>
+  );
+}
+```
+
+### Dark Mode por Padrão
+
+Telas brilhantes são desconfortáveis em ambientes de baixa luz (quartos de hospital):
+
+```typescript
+// hooks/useTheme.ts
+export function useTheme() {
+  const [theme, setTheme] = useState<"light" | "dark">(() => {
+    // Dark mode como padrão para acessibilidade
+    return (localStorage.getItem("theme") as "light" | "dark") || "dark";
+  });
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  return {
+    theme,
+    setTheme,
+    toggle: () => setTheme((t) => (t === "dark" ? "light" : "dark")),
+  };
+}
+```
+
+## Métricas
+
+Desde o deploy:
+
+- **50+** frases sintetizadas
+- **Tempo médio de síntese**: 1.2s
+- **Taxa de cache hit**: 67%
+- **Instalações PWA**: 8 (incluindo família)
+
+## O que aprendi
+
+1. **Acessibilidade não é feature, é requisito** — mudou como penso sobre UX
+2. **APIs pagas podem valer o custo** — qualidade da ElevenLabs faz diferença real
+3. **PWA é subestimado** — app install sem App Store é poderoso
+4. **Projetos pessoais têm outra energia** — construí em 2 semanas o que levaria meses em trabalho corporativo
+
+## Links
+
+- [Demo ao vivo](https://falapai.vercel.app)
+- [Repositório GitHub](https://github.com/alanregis/fala-pai)
+- [ElevenLabs](https://elevenlabs.io)

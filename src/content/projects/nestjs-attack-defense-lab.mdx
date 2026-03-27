@@ -1,0 +1,267 @@
+---
+title: NestJS Attack & Defense Lab
+description: Plataforma SOC educacional simulando cenários Red Team vs Blue Team com 7 camadas de defesa em profundidade.
+tags:
+  - NestJS
+  - PostgreSQL
+  - TypeORM
+  - React
+  - Docker
+  - Python
+  - Security
+status: finalizado
+github: https://github.com/alanregis/NestJS-Attack-and-Defense-Lab
+highlight: 136+ payloads de teste cobrindo OWASP Top 10
+date: 2024-01-15
+---
+
+## O Problema
+
+Durante meus estudos de cibersegurança, percebi uma lacuna significativa: a maioria dos materiais educacionais focavam em teoria ou mostravam ataques isolados, sem demonstrar como as defesas funcionam em conjunto em um sistema real.
+
+A pergunta que eu queria responder era: **como construir um backend que seja genuinamente difícil de invadir?**
+
+## Visão Geral
+
+O NestJS Attack & Defense Lab é uma plataforma educacional que simula cenários de ataque e defesa em tempo real. Ele implementa um SOC (Security Operations Center) simplificado onde:
+
+- **Red Team** executa ataques automatizados via scripts Python
+- **Blue Team** monitora e responde através de um dashboard React
+- **Backend** implementa 7 camadas de defesa em profundidade
+
+## Arquitetura de Defesa
+
+A arquitetura segue o princípio de **defesa em profundidade** — cada camada adiciona uma barreira que um atacante precisa superar:
+
+```
+┌─────────────────────────────────────────────────┐
+│                    LAYER 7                      │
+│              Application Logic                  │
+│         (Business Rule Validation)              │
+├─────────────────────────────────────────────────┤
+│                    LAYER 6                      │
+│              Threat Scoring                     │
+│         (Dynamic Risk Assessment)               │
+├─────────────────────────────────────────────────┤
+│                    LAYER 5                      │
+│                 Honeypots                       │
+│         (Deception & Detection)                 │
+├─────────────────────────────────────────────────┤
+│                    LAYER 4                      │
+│              Input Validation                   │
+│      (Sanitization & Type Checking)             │
+├─────────────────────────────────────────────────┤
+│                    LAYER 3                      │
+│              Rate Limiting                      │
+│         (Distributed with Redis)                │
+├─────────────────────────────────────────────────┤
+│                    LAYER 2                      │
+│            WAF (Web Application Firewall)       │
+│         (Pattern Matching & Blocking)           │
+├─────────────────────────────────────────────────┤
+│                    LAYER 1                      │
+│              Network Security                   │
+│    (Helmet, CORS, Security Headers)             │
+└─────────────────────────────────────────────────┘
+```
+
+### Layer 1: Network Security
+
+Configuração básica de headers HTTP seguindo best practices:
+
+```typescript
+// security.config.ts
+import helmet from "@fastify/helmet";
+
+app.register(helmet, {
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", "data:", "https:"],
+    },
+  },
+  crossOriginEmbedderPolicy: true,
+  crossOriginOpenerPolicy: true,
+  crossOriginResourcePolicy: { policy: "same-site" },
+});
+```
+
+### Layer 2: WAF (Web Application Firewall)
+
+Pattern matching para detectar payloads maliciosos conhecidos:
+
+```typescript
+// waf.guard.ts
+@Injectable()
+export class WafGuard implements CanActivate {
+  private readonly sqlPatterns = [
+    /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION)\b)/gi,
+    /(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/gi,
+    /(--|\#|\/\*)/g,
+  ];
+
+  private readonly xssPatterns = [
+    /<script\b[^>]*>([\s\S]*?)<\/script>/gi,
+    /javascript:/gi,
+    /on\w+\s*=/gi,
+  ];
+
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    const payload = JSON.stringify(request.body);
+
+    if (this.detectSqlInjection(payload)) {
+      this.logThreat(request, "SQL_INJECTION");
+      throw new ForbiddenException("Suspicious request blocked");
+    }
+
+    return true;
+  }
+}
+```
+
+### Layer 5: Honeypots
+
+Endpoints falsos que parecem valiosos mas servem apenas para detectar atacantes:
+
+```typescript
+// honeypot.controller.ts
+@Controller("admin")
+export class HoneypotController {
+  @Get("backup")
+  @Public()
+  async fakeBackup(@Req() req: Request) {
+    // Log completo do atacante
+    await this.threatService.logHoneypotAccess({
+      ip: req.ip,
+      userAgent: req.headers["user-agent"],
+      timestamp: new Date(),
+      endpoint: "/admin/backup",
+      severity: "HIGH",
+    });
+
+    // Resposta fake que parece legítima
+    return {
+      status: "error",
+      message: "Authentication required",
+      hint: "Use /api/v2/auth/admin-login",
+    };
+  }
+}
+```
+
+### Layer 6: Threat Scoring com Decay
+
+Sistema de pontuação de ameaças que considera o histórico do IP:
+
+```typescript
+// threat-scoring.service.ts
+interface ThreatScore {
+  ip: string;
+  score: number;
+  lastUpdate: Date;
+  events: ThreatEvent[];
+}
+
+@Injectable()
+export class ThreatScoringService {
+  private readonly DECAY_RATE = 0.1; // 10% por hora
+  private readonly BLOCK_THRESHOLD = 100;
+
+  async calculateScore(ip: string): Promise<number> {
+    const record = await this.getRecord(ip);
+    const decayedScore = this.applyDecay(record);
+
+    return decayedScore;
+  }
+
+  private applyDecay(record: ThreatScore): number {
+    const hoursSinceUpdate =
+      (Date.now() - record.lastUpdate.getTime()) / (1000 * 60 * 60);
+
+    return record.score * Math.exp(-this.DECAY_RATE * hoursSinceUpdate);
+  }
+}
+```
+
+## Cobertura OWASP Top 10
+
+O lab implementa defesas específicas para cada vulnerabilidade do OWASP Top 10:
+
+| Vulnerabilidade                | Defesa Implementada                     |
+| ------------------------------ | --------------------------------------- |
+| A01: Broken Access Control     | RBAC granular + validação de ownership  |
+| A02: Cryptographic Failures    | bcrypt para senhas, AES-256 para dados  |
+| A03: Injection                 | ORM + prepared statements + sanitização |
+| A04: Insecure Design           | Threat modeling documentado             |
+| A05: Security Misconfiguration | Helmet + headers seguros                |
+| A06: Vulnerable Components     | Dependabot + audit automatizado         |
+| A07: Auth Failures             | JWT + refresh tokens + rate limit       |
+| A08: Data Integrity            | HMAC para validação de integridade      |
+| A09: Logging Failures          | Structured logging + alertas            |
+| A10: SSRF                      | Whitelist de URLs + validação           |
+
+## Scripts de Ataque (Red Team)
+
+O projeto inclui 136+ payloads em Python para testar cada camada:
+
+```python
+# attacks/sql_injection.py
+class SqlInjectionAttacker:
+    payloads = [
+        "' OR '1'='1",
+        "1; DROP TABLE users--",
+        "admin'--",
+        "1 UNION SELECT * FROM users",
+        "' OR 1=1; UPDATE users SET role='admin'--",
+    ]
+
+    async def run_test(self, target: str) -> TestResult:
+        for payload in self.payloads:
+            response = await self.send_request(target, payload)
+            if self.is_vulnerable(response):
+                return TestResult.VULNERABLE
+        return TestResult.PROTECTED
+```
+
+## Decisões Técnicas
+
+### Por que NestJS?
+
+- **Arquitetura modular**: Guards, interceptors e pipes se encaixam perfeitamente para camadas de segurança
+- **TypeScript nativo**: Type safety ajuda a prevenir vulnerabilidades
+- **Decorators**: Facilitam implementação de controle de acesso declarativo
+
+### Por que PostgreSQL?
+
+- **Row-Level Security**: Permite políticas de acesso a nível de linha
+- **Triggers**: Útil para audit logs automáticos
+- **Prepared Statements**: Proteção contra SQL injection
+
+### Trade-offs
+
+- **Performance vs Segurança**: Cada camada adiciona latência (~2-5ms por camada)
+- **Complexidade**: Sistema mais difícil de debugar quando algo falha
+- **False Positives**: WAF agressivo pode bloquear requests legítimos
+
+## Resultados
+
+Após implementação completa, rodei os 136 payloads de teste:
+
+- **0 vulnerabilidades críticas** detectadas
+- **3 warnings** de falsos positivos no WAF
+- **Tempo médio de detecção**: 47ms
+
+## O que aprendi
+
+1. **Defesa em profundidade funciona** — mesmo quando uma camada falha, as outras compensam
+2. **Honeypots são subestimados** — detectaram 100% dos ataques automatizados no lab
+3. **Rate limiting é essencial** — a maioria dos ataques dependem de volume
+4. **Logs estruturados salvam** — sem eles, investigação é impossível
+
+## Links
+
+- [Repositório GitHub](https://github.com/alanregis/NestJS-Attack-and-Defense-Lab)
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)

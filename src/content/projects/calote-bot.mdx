@@ -1,0 +1,369 @@
+---
+title: Calote-bot
+description: Bot de automação de cobrança via WhatsApp com templates dinâmicos, agendamento inteligente e CLI interativo.
+tags:
+  - Node.js
+  - venom-bot
+  - dayjs
+  - inquirer
+  - node-schedule
+status: estável
+github: https://github.com/alanregis/calote-bot
+highlight: Templates com variáveis dinâmicas e scheduling cron-like
+date: 2022-05-15
+---
+
+## O Problema
+
+Um amigo que trabalha com vendas tinha um problema: clientes que não pagavam. Não por má-fé, mas por esquecerem. Ele passava horas por dia mandando mensagens de cobrança manualmente, uma por uma, copiando e colando.
+
+Eu disse: "cara, isso é trabalho de bot".
+
+## A Solução
+
+**Calote-bot** é um bot que automatiza cobranças via WhatsApp com:
+
+- Templates de mensagem personalizáveis
+- Variáveis dinâmicas (nome, valor, data)
+- Agendamento de envios
+- CLI interativo para gerenciamento
+
+O nome? Ironia. O bot é pra evitar calotes, não pra dar.
+
+## Arquitetura
+
+O bot é simples por design. Nada de cloud, database, ou microserviços — roda na máquina do usuário como um processo Node.js.
+
+```
+┌────────────────────────────────────────────────────────┐
+│                     CALOTE-BOT                         │
+├────────────────────────────────────────────────────────┤
+│  ┌─────────────┐  ┌─────────────┐  ┌───────────────┐   │
+│  │    CLI      │  │  Scheduler  │  │   Templates   │   │
+│  │  (inquirer) │  │ (node-sched)│  │   (JSON)      │   │
+│  └──────┬──────┘  └──────┬──────┘  └───────┬───────┘   │
+│         │                │                 │           │
+│         └────────────────┼─────────────────┘           │
+│                          │                             │
+│                          ▼                             │
+│  ┌─────────────────────────────────────────────────┐   │
+│  │              venom-bot                          │   │
+│  │      (WhatsApp Web Automation)                  │   │
+│  └─────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────┘
+                           │
+                           ▼
+┌────────────────────────────────────────────────────────┐
+│                    WhatsApp                            │
+└────────────────────────────────────────────────────────┘
+```
+
+## Templates Dinâmicos
+
+O sistema de templates permite criar mensagens com variáveis:
+
+```typescript
+// templates/template.types.ts
+interface Template {
+  id: string;
+  name: string;
+  message: string;
+  variables: string[];
+}
+
+interface Contact {
+  name: string;
+  phone: string;
+  debt: number;
+  dueDate: string;
+  [key: string]: string | number; // Variáveis customizadas
+}
+```
+
+Exemplo de template:
+
+```json
+{
+  "id": "cobranca-inicial",
+  "name": "Cobrança Inicial",
+  "message": "Olá {{name}}! 👋\n\nNotamos que o pagamento de R$ {{debt}} com vencimento em {{dueDate}} ainda não foi registrado.\n\nPrecisa de ajuda para regularizar? Estamos à disposição!\n\n📱 Responda esta mensagem ou ligue para nosso suporte.",
+  "variables": ["name", "debt", "dueDate"]
+}
+```
+
+### Engine de Templates
+
+A substituição de variáveis é feita com regex simples:
+
+```typescript
+// services/template.service.ts
+export function renderTemplate(template: Template, contact: Contact): string {
+  let message = template.message;
+
+  for (const variable of template.variables) {
+    const value = contact[variable];
+    const placeholder = new RegExp(`{{${variable}}}`, "g");
+
+    // Formatar valores especiais
+    let formattedValue: string;
+    if (variable === "debt" && typeof value === "number") {
+      formattedValue = value.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL",
+      });
+    } else if (variable === "dueDate") {
+      formattedValue = dayjs(value as string).format("DD/MM/YYYY");
+    } else {
+      formattedValue = String(value);
+    }
+
+    message = message.replace(placeholder, formattedValue);
+  }
+
+  return message;
+}
+```
+
+## CLI Interativo
+
+O bot é controlado via CLI usando inquirer:
+
+```typescript
+// cli/main.ts
+import inquirer from "inquirer";
+import chalk from "chalk";
+
+async function mainMenu(): Promise<void> {
+  console.clear();
+  console.log(chalk.green.bold("🤖 CALOTE-BOT"));
+  console.log(chalk.gray("Automação de cobranças via WhatsApp\n"));
+
+  const { action } = await inquirer.prompt([
+    {
+      type: "list",
+      name: "action",
+      message: "O que você quer fazer?",
+      choices: [
+        { name: "📨 Enviar cobranças agora", value: "send" },
+        { name: "⏰ Agendar envios", value: "schedule" },
+        { name: "📋 Gerenciar templates", value: "templates" },
+        { name: "👥 Gerenciar contatos", value: "contacts" },
+        { name: "📊 Ver relatório", value: "report" },
+        { name: "❌ Sair", value: "exit" },
+      ],
+    },
+  ]);
+
+  switch (action) {
+    case "send":
+      await sendFlow();
+      break;
+    case "schedule":
+      await scheduleFlow();
+      break;
+    // ...
+  }
+}
+```
+
+## Agendamento
+
+O bot usa node-schedule para agendar envios:
+
+```typescript
+// services/scheduler.service.ts
+import schedule from "node-schedule";
+import { sendMessage } from "./whatsapp.service";
+
+interface ScheduledJob {
+  id: string;
+  contact: Contact;
+  template: Template;
+  scheduledFor: Date;
+  job: schedule.Job;
+}
+
+const scheduledJobs: Map<string, ScheduledJob> = new Map();
+
+export function scheduleMessage(
+  contact: Contact,
+  template: Template,
+  dateTime: Date,
+): string {
+  const jobId = `${contact.phone}-${Date.now()}`;
+
+  const job = schedule.scheduleJob(dateTime, async () => {
+    try {
+      const message = renderTemplate(template, contact);
+      await sendMessage(contact.phone, message);
+
+      console.log(chalk.green(`✓ Mensagem enviada para ${contact.name}`));
+
+      // Remover job após execução
+      scheduledJobs.delete(jobId);
+    } catch (error) {
+      console.log(chalk.red(`✗ Falha ao enviar para ${contact.name}`));
+    }
+  });
+
+  scheduledJobs.set(jobId, {
+    id: jobId,
+    contact,
+    template,
+    scheduledFor: dateTime,
+    job,
+  });
+
+  return jobId;
+}
+
+// Agendar múltiplos contatos com intervalo
+export async function scheduleMultiple(
+  contacts: Contact[],
+  template: Template,
+  startTime: Date,
+  intervalMinutes: number,
+): Promise<void> {
+  let currentTime = dayjs(startTime);
+
+  for (const contact of contacts) {
+    scheduleMessage(contact, template, currentTime.toDate());
+    currentTime = currentTime.add(intervalMinutes, "minute");
+  }
+
+  console.log(chalk.green(`\n✓ ${contacts.length} mensagens agendadas`));
+  console.log(
+    chalk.gray(`  Início: ${dayjs(startTime).format("DD/MM HH:mm")}`),
+  );
+  console.log(chalk.gray(`  Fim: ${currentTime.format("DD/MM HH:mm")}`));
+}
+```
+
+## Integração WhatsApp
+
+O venom-bot faz a automação do WhatsApp Web:
+
+```typescript
+// services/whatsapp.service.ts
+import venom from "venom-bot";
+
+let client: venom.Whatsapp;
+
+export async function initWhatsApp(): Promise<void> {
+  client = await venom.create({
+    session: "calote-bot",
+    multidevice: true,
+    headless: true,
+    useChrome: true,
+    logQR: true, // Mostra QR no terminal
+  });
+
+  console.log(chalk.green("✓ WhatsApp conectado"));
+}
+
+export async function sendMessage(
+  phone: string,
+  message: string,
+): Promise<void> {
+  // Normalizar número brasileiro
+  const normalizedPhone = normalizePhone(phone);
+
+  // Verificar se número existe no WhatsApp
+  const isValid = await client.checkNumberStatus(normalizedPhone);
+
+  if (!isValid.numberExists) {
+    throw new Error(`Número não encontrado: ${phone}`);
+  }
+
+  await client.sendText(normalizedPhone, message);
+}
+
+function normalizePhone(phone: string): string {
+  // Remove tudo que não é número
+  const digits = phone.replace(/\D/g, "");
+
+  // Adiciona código do país se necessário
+  if (digits.length === 11) {
+    return `55${digits}@c.us`;
+  } else if (digits.length === 13 && digits.startsWith("55")) {
+    return `${digits}@c.us`;
+  }
+
+  throw new Error(`Formato de telefone inválido: ${phone}`);
+}
+```
+
+## Documentação com Personalidade
+
+A documentação do projeto tem um tom irônico que reflete o nome:
+
+```markdown
+# 🤖 Calote-bot
+
+> Porque cobrar na mão é coisa de quem não tem bot.
+
+## O que faz
+
+Manda mensagem de cobrança no WhatsApp. Isso mesmo, você cola na praia
+enquanto o bot faz o trabalho sujo.
+
+## Avisos importantes
+
+⚠️ **Não me responsabilizo por:**
+
+- Amizades perdidas
+- Clientes irritados
+- Uso excessivo (spam é crime, fera)
+
+## Setup
+
+1. Clone o repo
+2. `npm install`
+3. `npm start`
+4. Escaneie o QR code
+5. Seja feliz
+
+## Ética
+
+Use com moderação. Uma mensagem por dia no máximo.
+Lembre-se: o cliente esqueceu, não te deu calote (ainda).
+```
+
+## Decisões Técnicas
+
+### Por que venom-bot?
+
+- Não precisa de API oficial do WhatsApp (que é cara e burocrática)
+- Simula um navegador real
+- Mantido ativamente
+- Suporta multi-device
+
+### Por que não usar uma fila (Redis/RabbitMQ)?
+
+- Complexidade desnecessária para o caso de uso
+- Roda local, não precisa de infra
+- node-schedule resolve o agendamento
+
+### Por que JSON para dados?
+
+- Simplicidade
+- Usuário pode editar manualmente se quiser
+- Sem necessidade de migrations
+
+## Limitações Conhecidas
+
+1. **Rate limiting**: WhatsApp pode bloquear se enviar muitas mensagens rápido
+2. **Sessão expira**: Precisa escanear QR de novo periodicamente
+3. **Não oficial**: Pode quebrar se WhatsApp mudar a API
+
+## O que aprendi
+
+1. **Automação de WhatsApp é frágil** — APIs não oficiais dependem de engenharia reversa
+2. **CLI bem feito é UX** — inquirer transforma scripts em produtos
+3. **Documentação com personalidade engaja** — o README do Calote-bot é o mais compartilhado que eu já fiz
+4. **Resolver problemas pequenos vale a pena** — meu amigo economiza 2h por dia
+
+## Links
+
+- [Repositório GitHub](https://github.com/alanregis/calote-bot)
+- [venom-bot](https://github.com/orkestral/venom)
