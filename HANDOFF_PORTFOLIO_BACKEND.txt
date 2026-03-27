@@ -1,0 +1,97 @@
+CONTEXTO PARA RETOMAR EM OUTRO CHAT (PORTFOLIO BACKEND)
+
+Objetivo do projeto
+- Criar um portfolio de dev backend absolutamente impressionante, nada genérico.
+- Conceito central: "documentação navegável" com foco em projetos e decisões técnicas.
+- Direção visual: base de docs técnica elegante + elementos pontuais de CLI/terminal.
+- Stack escolhida: Next.js + React.
+- Deploy desejado: Vercel.
+
+Projetos que precisam entrar
+1) Unimenu
+2) NestJS-Attack-and-Defense-Lab
+3) Fala-Pai
+4) Calote-bot
+
+Resumo dos 4 projetos (já analisados)
+
+1) Unimenu
+- Tipo: sistema de pedidos de comida para cantinas/restaurantes da UNIFOR.
+- Stack: NestJS 10, React Native/Expo, React web, TypeScript, MySQL, JWT, Stripe.
+- Destaques: full-stack cross-platform, fluxo de pedido completo, integração de pagamento, separação por domínios (mobile/web/backend).
+- Status: em desenvolvimento.
+
+2) NestJS-Attack-and-Defense-Lab
+- Tipo: laboratório educacional de cibersegurança (Red Team vs Blue Team).
+- Stack: NestJS, PostgreSQL, TypeORM, React, Docker, Python para scripts de ataque.
+- Destaques: arquitetura de defesa em profundidade, WAF, honeypots, threat scoring com decay, cobertura de vetores OWASP.
+- Status: finalizado (trabalho acadêmico).
+
+3) Fala-Pai
+- Tipo: app de comunicação assistiva (texto para fala).
+- Stack: React 19, Vite, Tailwind, ElevenLabs API, PWA.
+- Destaques: propósito social real, síntese de voz de alta qualidade, PWA instalável, UX bem cuidada.
+- Status: finalizado/estável (deploy ativo).
+
+4) Calote-bot
+- Tipo: bot de automação de cobrança via WhatsApp.
+- Stack: Node.js, venom-bot, dayjs, inquirer, node-schedule.
+- Destaques: templates dinâmicos com variáveis, agendamento, CLI interativo, documentação com personalidade.
+- Status: finalizado/estável.
+
+Arquitetura proposta do portfolio
+- Landing de impacto com estética de terminal (sem clichê).
+- Área principal em formato docs:
+  - Sidebar de navegação
+  - Conteúdo principal (MDX)
+  - TOC na direita
+- Páginas:
+  - / (landing)
+  - /sobre
+  - /projetos
+  - /projetos/[slug]
+  - /contato
+- Conteúdo dos projetos em MDX para facilitar evolução.
+
+Stack técnica do portfolio
+- Next.js (App Router) + React + TypeScript
+- Tailwind CSS + shadcn/ui
+- MDX para conteúdo
+- Shiki para syntax highlight
+- Motion para animações pontuais
+- next-themes para dark/light
+- (Opcional depois) Pagefind para busca Cmd/Ctrl+K
+
+Estado real da implementação (já iniciado)
+- Projeto criado em: C:\Users\Alan\portfolio
+- Setup inicial já executado:
+  - create-next-app com TypeScript, Tailwind, App Router, src-dir
+  - shadcn/ui init concluído
+  - Componentes shadcn adicionados: card, badge, scroll-area, separator, tooltip, dialog
+  - Dependências instaladas: shiki, motion, gray-matter, reading-time, @next/mdx, @mdx-js/react, lucide-react, next-themes
+- A implementação de layout/componentes/conteúdo ainda não começou.
+
+Diretrizes de design (importante)
+- Evitar aparência genérica.
+- Forte identidade visual de documentação técnica premium.
+- Inserir elementos de CLI com moderação e propósito.
+- Foco principal em conteúdo técnico dos projetos (arquitetura, trade-offs, decisões).
+- Animações sutis e significativas, não decorativas.
+
+Próximos passos para o novo chat executar
+1) Criar providers globais (ThemeProvider + TooltipProvider).
+2) Ajustar layout raiz (fontes, metadata, base visual).
+3) Criar layout de docs com Sidebar + TOC responsivos.
+4) Criar componentes principais: Terminal, ProjectCard, TechStack, TOC.
+5) Implementar landing diferenciada.
+6) Criar conteúdo MDX dos 4 projetos com seções técnicas:
+   - problema
+   - arquitetura
+   - decisões técnicas
+   - highlights de código
+   - links de repo/demo
+7) Implementar /sobre, /projetos, /contato.
+8) Rodar build e ajustar polish final para deploy na Vercel.
+
+Prompt pronto para colar no novo chat
+"Continue a implementação do portfolio backend em C:\\Users\\Alan\\portfolio. Use Next.js App Router com layout de documentação navegável (sidebar + TOC), visual elegante com elementos de CLI. Priorize páginas: landing, /sobre, /projetos, /projetos/[slug], /contato. Use MDX para os 4 projetos (Unimenu, NestJS-Attack-and-Defense-Lab, Fala-Pai, Calote-bot), com foco em arquitetura e decisões técnicas. O setup já tem shadcn/ui, shiki, motion, next-themes e dependências de MDX instaladas. Pode começar pelos providers e layout base, depois criar os componentes e conteúdo."
