@@ -127,3 +127,155 @@
     @apply font-sans;
   }
 }
+
+/* Custom utilities for hero section */
+@layer utilities {
+  .bg-dot-pattern {
+    background-image: radial-gradient(
+      circle at center,
+      oklch(0.5 0 0 / 0.12) 1px,
+      transparent 1px
+    );
+    background-size: 32px 32px;
+  }
+
+  /* Noise texture for depth */
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    opacity: 0.03;
+  }
+
+  /* Gradient text for hero name */
+  .text-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      oklch(0.98 0 0) 0%,
+      oklch(0.75 0.15 160) 50%,
+      oklch(0.98 0 0) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-shift 8s ease-in-out infinite;
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+  }
+
+  /* Aurora ambient glow */
+  .aurora {
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, oklch(0.6 0.18 160 / 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 60% 40% at 80% 0%, oklch(0.55 0.15 200 / 0.1) 0%, transparent 40%),
+      radial-gradient(ellipse 50% 30% at 20% 10%, oklch(0.6 0.1 280 / 0.06) 0%, transparent 40%);
+    animation: aurora-pulse 12s ease-in-out infinite;
+  }
+
+  @keyframes aurora-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(1.05); }
+  }
+
+  /* Glow difuso - luz ambiente premium */
+  .glow-emerald {
+    box-shadow:
+      0 0 0 1px oklch(0.6 0.2 160 / 0.1),
+      0 4px 20px -4px oklch(0.6 0.2 160 / 0.15),
+      0 20px 60px -10px oklch(0.6 0.2 160 / 0.12),
+      0 40px 100px -20px oklch(0.1 0 0 / 0.5);
+  }
+
+  /* Terminal with subtle perspective - balanced for centered position */
+  .terminal-perspective {
+    transform: perspective(1200px) rotateY(-2deg) rotateX(0.5deg);
+    transform-origin: center center;
+  }
+
+  @media (min-width: 1280px) {
+    .terminal-perspective {
+      transform: perspective(1400px) rotateY(-2.5deg) rotateX(1deg);
+    }
+  }
+
+  /* Social links - compact but present */
+  .social-link {
+    @apply flex items-center justify-center w-8 h-8 rounded-md bg-zinc-800/50 text-zinc-400 transition-all duration-300;
+    border: 1px solid oklch(1 0 0 / 0.05);
+  }
+
+  .social-link:hover {
+    @apply text-emerald-400 bg-emerald-500/10;
+    border-color: oklch(0.6 0.2 160 / 0.3);
+    box-shadow: 0 0 16px -4px oklch(0.6 0.2 160 / 0.3);
+    transform: translateY(-1px);
+  }
+
+  /* Botão primário com glow + scale no hover */
+  .btn-glow {
+    @apply transition-all duration-300 relative overflow-hidden;
+  }
+
+  .btn-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, oklch(1 0 0 / 0.1) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-glow:hover {
+    transform: scale(1.03) translateY(-1px);
+    box-shadow:
+      0 4px 20px -2px oklch(0.6 0.2 160 / 0.5),
+      0 10px 30px -5px oklch(0.6 0.2 160 / 0.3),
+      inset 0 1px 0 oklch(1 0 0 / 0.1);
+  }
+
+  .btn-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Skill badge interativo */
+  .skill-badge {
+    @apply transition-all duration-200 cursor-default;
+  }
+
+  .skill-badge:hover {
+    @apply bg-emerald-500/15 text-emerald-400 border-emerald-500/30;
+    transform: translateY(-1px);
+  }
+
+  /* Gradient fade para transição suave */
+  .fade-bottom {
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      oklch(0.145 0 0) 100%
+    );
+  }
+
+  /* Terminal prompt destaque */
+  .terminal-prompt {
+    @apply text-emerald-400 font-bold;
+    text-shadow: 0 0 10px oklch(0.6 0.2 160 / 0.4);
+  }
+
+  /* Floating code decoration */
+  .code-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(-12deg); }
+    50% { transform: translateY(-10px) rotate(-12deg); }
+  }
+
+  /* Stats number glow */
+  .stat-number {
+    text-shadow: 0 0 30px oklch(0.6 0.2 160 / 0.2);
+  }
+}
