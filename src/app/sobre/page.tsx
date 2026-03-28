@@ -213,9 +213,11 @@ export default function SobrePage() {
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button variant="outline" className="gap-2">
-                  <Download className="h-4 w-4" />
-                  Download CV
+                <Button asChild variant="outline" className="gap-2">
+                  <a href="/cv-alan-regis.pdf" download>
+                    <Download className="h-4 w-4" />
+                    Download CV
+                  </a>
                 </Button>
               </div>
             </div>
@@ -225,3 +227,5 @@ export default function SobrePage() {
     </div>
   );
 }
+
+

@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Alan Regis | Backend Developer",
   description:
-    "Portfólio de desenvolvimento backend com foco em arquitetura, segurança e sistemas distribuídos. NestJS, TypeScript, Python, Docker.",
+    "Portfolio de desenvolvimento backend com foco em arquitetura, seguranca e sistemas distribuidos. NestJS, TypeScript, Python e Docker.",
   keywords: [
     "backend",
     "developer",
@@ -30,10 +30,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Alan Regis | Backend Developer",
     description:
-      "Portfólio de desenvolvimento backend com foco em arquitetura, segurança e sistemas distribuídos.",
+      "Portfolio de desenvolvimento backend com foco em arquitetura, seguranca e sistemas distribuidos.",
     type: "website",
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -52,3 +53,4 @@ export default function RootLayout({
     </html>
   );
 }
+
