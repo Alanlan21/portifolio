@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 
-interface TocItem {
+export interface TocItem {
   id: string;
   text: string;
   level: number;
@@ -15,23 +15,7 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ headings }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
-  const [tocItems, setTocItems] = useState<TocItem[]>(headings || []);
-
-  useEffect(() => {
-    // Se headings não foi passado, gerar automaticamente
-    if (!headings) {
-      const article = document.querySelector("article");
-      if (!article) return;
-
-      const elements = article.querySelectorAll("h2, h3");
-      const items: TocItem[] = Array.from(elements).map((el) => ({
-        id: el.id,
-        text: el.textContent || "",
-        level: parseInt(el.tagName[1]),
-      }));
-      setTocItems(items);
-    }
-  }, [headings]);
+  const tocItems = useMemo(() => headings ?? [], [headings]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(

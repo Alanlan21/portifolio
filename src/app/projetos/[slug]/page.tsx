@@ -5,16 +5,47 @@ import { ArrowLeft, ExternalLink, Github, Clock } from "lucide-react";
 import { compile, run } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import { getProjectBySlug, getProjectSlugs } from "@/lib/projects";
-import { useMDXComponents } from "../../../../mdx-components";
+import { useMDXComponents as getMDXComponents } from "../../../../mdx-components";
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
-import { TableOfContents } from "@/components/table-of-contents";
+import { TableOfContents, type TocItem } from "@/components/table-of-contents";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import readingTime from "reading-time";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
+
+function extractHeadings(content: string): TocItem[] {
+  const slugCounts = new Map<string, number>();
+
+  return content
+    .split("\n")
+    .flatMap((line) => {
+      const match = line.match(/^(##|###)\s+(.+?)\s*$/);
+      if (!match) return [];
+
+      const level = match[1].length;
+      const text = match[2].trim();
+      const baseSlug = slugifyHeading(text);
+      const count = slugCounts.get(baseSlug) ?? 0;
+      slugCounts.set(baseSlug, count + 1);
+      const id = count === 0 ? baseSlug : `${baseSlug}-${count}`;
+
+      return [{ id, text, level }];
+    })
+    .filter((item) => item.id.length > 0);
 }
 
 export async function generateStaticParams() {
@@ -52,6 +83,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
   const { frontmatter, content } = project;
   const stats = readingTime(content);
+  const headings = extractHeadings(content);
 
   // Compile and run MDX
   const code = await compile(content, {
@@ -64,7 +96,7 @@ export default async function ProjectPage({ params }: PageProps) {
     baseUrl: import.meta.url,
   });
 
-  const components = useMDXComponents({});
+  const components = getMDXComponents({});
 
   const statusColors = {
     "em desenvolvimento":
@@ -182,7 +214,7 @@ export default async function ProjectPage({ params }: PageProps) {
 
             {/* TOC */}
             <aside className="hidden xl:block">
-              <TableOfContents />
+              <TableOfContents headings={headings} />
             </aside>
           </div>
         </div>

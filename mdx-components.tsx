@@ -2,9 +2,45 @@ import type { MDXComponents } from "mdx/types";
 import { CodeBlock, InlineCode } from "@/components/code-block";
 import { Terminal } from "@/components/terminal";
 import { TechStack, TechBadge } from "@/components/tech-stack";
-import { cn } from "@/lib/utils";
+
+function extractText(node: React.ReactNode): string {
+  if (typeof node === "string" || typeof node === "number") {
+    return String(node);
+  }
+  if (Array.isArray(node)) {
+    return node.map((child) => extractText(child)).join("");
+  }
+  if (node && typeof node === "object" && "props" in node) {
+    const element = node as React.ReactElement<{ children?: React.ReactNode }>;
+    return extractText(element.props.children);
+  }
+  return "";
+}
+
+function slugifyHeading(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+}
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
+  const headingSlugCounts = new Map<string, number>();
+
+  const resolveHeadingId = (id: string | undefined, children: React.ReactNode) => {
+    if (id) return id;
+
+    const baseSlug = slugifyHeading(extractText(children));
+    if (!baseSlug) return undefined;
+
+    const count = headingSlugCounts.get(baseSlug) ?? 0;
+    headingSlugCounts.set(baseSlug, count + 1);
+    return count === 0 ? baseSlug : `${baseSlug}-${count}`;
+  };
+
   return {
     // Headings with anchor links
     h1: ({ children, ...props }) => (
@@ -15,24 +51,30 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </h1>
     ),
-    h2: ({ children, id, ...props }) => (
-      <h2
-        id={id}
-        className="scroll-m-20 text-2xl font-bold tracking-tight mt-12 mb-4 border-b border-border pb-2"
-        {...props}
-      >
-        {children}
-      </h2>
-    ),
-    h3: ({ children, id, ...props }) => (
-      <h3
-        id={id}
-        className="scroll-m-20 text-xl font-semibold tracking-tight mt-8 mb-3"
-        {...props}
-      >
-        {children}
-      </h3>
-    ),
+    h2: ({ children, id, ...props }) => {
+      const headingId = resolveHeadingId(id, children);
+      return (
+        <h2
+          id={headingId}
+          className="scroll-m-20 text-2xl font-bold tracking-tight mt-12 mb-4 border-b border-border pb-2"
+          {...props}
+        >
+          {children}
+        </h2>
+      );
+    },
+    h3: ({ children, id, ...props }) => {
+      const headingId = resolveHeadingId(id, children);
+      return (
+        <h3
+          id={headingId}
+          className="scroll-m-20 text-xl font-semibold tracking-tight mt-8 mb-3"
+          {...props}
+        >
+          {children}
+        </h3>
+      );
+    },
 
     // Paragraphs
     p: ({ children, ...props }) => (
