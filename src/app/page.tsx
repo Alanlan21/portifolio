@@ -42,12 +42,14 @@ export default function Home() {
         </div>
         
         {/* Top-right technical decoration - fills dead space */}
-        <div className="absolute top-24 right-[20%] hidden lg:block text-right">
-          <div className="text-[11px] font-mono text-zinc-700/60 leading-relaxed select-none">
-            <div>// backend • security • architecture</div>
-            <div className="text-zinc-800/50">// clean code • scalable systems</div>
+          <div className="absolute top-24 right-[20%] hidden lg:block text-right">
+            <div className="text-[11px] font-mono text-zinc-700/60 leading-relaxed select-none">
+            <div>{"// backend • security • architecture"}</div>
+            <div className="text-zinc-800/50">
+              {"// clean code • scalable systems"}
+            </div>
+            </div>
           </div>
-        </div>
         
         {/* Connecting glow - bridges left content to terminal */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] hidden lg:block pointer-events-none">
@@ -170,7 +172,7 @@ export default function Home() {
                 {/* Social links */}
                 <div className="flex gap-2">
                   <a
-                    href="https://github.com/alanregis"
+                    href="https://github.com/Alanlan21"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="social-link"
@@ -188,7 +190,7 @@ export default function Home() {
                     <Linkedin className="h-4 w-4" />
                   </a>
                   <a 
-                    href="mailto:alan@example.com" 
+                    href="mailto:alanregisps@gmail.com" 
                     className="social-link"
                     aria-label="Email"
                   >
@@ -338,11 +340,11 @@ export default function Home() {
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-emerald-500">$</span> alan.dev ©
-              2024
+              2026
             </p>
             <div className="flex gap-4">
               <a
-                href="https://github.com/alanregis"
+                href="https://github.com/Alanlan21"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -370,3 +372,6 @@ export default function Home() {
     </div>
   );
 }
+
+
+

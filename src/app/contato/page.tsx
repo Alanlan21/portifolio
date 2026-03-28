@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Link from "next/link";
 import { Github, Linkedin, Mail, MessageSquare, Send } from "lucide-react";
 import { Header } from "@/components/header";
 import { Sidebar } from "@/components/sidebar";
@@ -17,15 +16,15 @@ export const metadata: Metadata = {
 const contactMethods = [
   {
     name: "Email",
-    value: "alan@example.com",
-    href: "mailto:alan@example.com",
+    value: "alanregisps@gmail.com",
+    href: "mailto:alanregisps@gmail.com",
     icon: Mail,
     description: "Prefiro para discussões detalhadas sobre projetos",
   },
   {
     name: "GitHub",
-    value: "@alanregis",
-    href: "https://github.com/alanregis",
+    value: "@Alanlan21",
+    href: "https://github.com/Alanlan21",
     icon: Github,
     description: "Confira meus repositórios e contribuições",
   },
@@ -136,17 +135,17 @@ export default function ContatoPage() {
                   <div>
                     <span className="text-emerald-400">$</span>{" "}
                     <span className="text-zinc-100">
-                      curl -X POST alan.dev/api/contact \
+                      echo alanregisps@gmail.com
                     </span>
                   </div>
                   <div className="pl-4">
                     <span className="text-zinc-400">
-                      -d &apos;{`{"message": "Vamos conversar?"}`}&apos;
+                      Melhor canal para projetos e oportunidades
                     </span>
                   </div>
                   <div className="pt-2 text-zinc-500">
-                    <span className="text-emerald-400">→</span> 200 OK:
-                    &quot;Mensagem recebida! Respondo em breve.&quot;
+                    <span className="text-emerald-400">→</span> Resposta em até
+                    24h úteis
                   </div>
                 </div>
               </Terminal>
@@ -175,7 +174,7 @@ export default function ContatoPage() {
 
               {/* Direct CTA */}
               <Button asChild className="w-full gap-2" size="lg">
-                <a href="mailto:alan@example.com">
+                <a href="mailto:alanregisps@gmail.com">
                   <Send className="h-4 w-4" />
                   Enviar email agora
                 </a>

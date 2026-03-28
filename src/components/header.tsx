@@ -58,7 +58,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="icon" className="h-9 w-9" asChild>
             <a
-              href="https://github.com/alanregis"
+              href="https://github.com/Alanlan21"
               target="_blank"
               rel="noopener noreferrer"
             >

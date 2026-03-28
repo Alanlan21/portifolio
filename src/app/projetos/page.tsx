@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 export const metadata: Metadata = {
   title: "Projetos | Alan Regis",
   description:
-    "Projetos de desenvolvimento backend: sistemas de segurança, APIs, automação e mais.",
+    "Projetos de desenvolvimento backend: sistemas de seguranca, APIs, automacao e mais.",
 };
 
 const projects: ProjectCardProps[] = [
@@ -27,7 +27,7 @@ const projects: ProjectCardProps[] = [
     ],
     status: "finalizado",
     highlight: "136+ payloads de teste cobrindo OWASP Top 10",
-    github: "https://github.com/alanregis/NestJS-Attack-and-Defense-Lab",
+    github: "https://github.com/Alanlan21/NestJS-Attack-and-Defense-Lab",
   },
   {
     title: "UniMenu",
@@ -46,7 +46,7 @@ const projects: ProjectCardProps[] = [
     ],
     status: "em desenvolvimento",
     highlight: "Integração de pagamento Stripe com fluxo completo",
-    github: "https://github.com/alanregis/unimenu",
+    github: "https://github.com/Alanlan21/unimenu",
   },
   {
     title: "Fala-Pai",
@@ -56,8 +56,8 @@ const projects: ProjectCardProps[] = [
     tags: ["React", "Vite", "Tailwind", "ElevenLabs API", "PWA", "TypeScript"],
     status: "estável",
     highlight: "PWA instalável com síntese de voz premium",
-    github: "https://github.com/alanregis/fala-pai",
-    demo: "https://fala-pai.vercel.app",
+    github: "https://github.com/Alanlan21/fala-pai",
+    demo: "https://falapai.vercel.app",
   },
   {
     title: "Calote-bot",
@@ -67,7 +67,7 @@ const projects: ProjectCardProps[] = [
     tags: ["Node.js", "venom-bot", "dayjs", "inquirer", "node-schedule"],
     status: "estável",
     highlight: "Templates com variáveis dinâmicas e scheduling cron-like",
-    github: "https://github.com/alanregis/calote-bot",
+    github: "https://github.com/Alanlan21/calote-bot",
   },
 ];
 
@@ -131,3 +131,5 @@ export default function ProjetosPage() {
     </div>
   );
 }
+
+
