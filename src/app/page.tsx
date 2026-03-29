@@ -4,15 +4,10 @@ import { Terminal, TerminalLine } from "@/components/terminal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
-const skills = [
-  "NestJS",
-  "TypeScript",
-  "Python",
-  "Docker",
-  "PostgreSQL",
-  "Redis",
-  "AWS",
-];
+const skills = {
+  backend: ["NestJS", "TypeScript", "Python", "Docker", "PostgreSQL", "Redis"],
+  frontend: ["React", "Next.js", "Tailwind CSS"],
+};
 
 const projects = [
   {
@@ -34,39 +29,40 @@ export default function Home() {
         <div className="absolute inset-0 aurora" />
         <div className="absolute inset-0 bg-dot-pattern opacity-40" />
         <div className="absolute inset-0 bg-noise pointer-events-none" />
-        
+
         {/* Edge decorations - left */}
         <div className="absolute left-0 top-1/3 w-px h-32 bg-gradient-to-b from-transparent via-emerald-500/20 to-transparent hidden lg:block" />
         <div className="absolute left-8 top-[20%] text-[10px] font-mono text-zinc-700 -rotate-90 origin-left hidden xl:block tracking-widest">
-          BACKEND.DEV
+          SOFTWARE.DEV
         </div>
-        
+
         {/* Top-right technical decoration - fills dead space */}
-          <div className="absolute top-24 right-[20%] hidden lg:block text-right">
-            <div className="text-[11px] font-mono text-zinc-700/60 leading-relaxed select-none">
-            <div>{"// backend • security • architecture"}</div>
+        <div className="absolute top-24 right-[20%] hidden lg:block text-right">
+          <div className="text-[11px] font-mono text-zinc-700/60 leading-relaxed select-none">
+            <div>{"// fullstack • security • architecture"}</div>
             <div className="text-zinc-800/50">
-              {"// clean code • scalable systems"}
-            </div>
+              {"// backend + frontend • scalable systems"}
             </div>
           </div>
-        
+        </div>
+
         {/* Connecting glow - bridges left content to terminal */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] hidden lg:block pointer-events-none">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.6_0.15_160_/_0.06)_0%,transparent_60%)]" />
         </div>
-        
+
         {/* Floating code decoration - positioned higher */}
         <div className="absolute top-20 right-[12%] 2xl:right-[15%] hidden xl:block code-float opacity-20">
           <pre className="text-xs font-mono text-emerald-500/60 select-none">
-{`const security = {
-  layers: 7,
-  owasp: true,
-  honeypots: 'active'
-};`}
+            {`const App = () => (
+  <Layout>
+    <Hero />
+    <Projects />
+  </Layout>
+);`}
           </pre>
         </div>
-        
+
         {/* Decorative line - right edge */}
         <div className="absolute right-0 bottom-1/4 w-px h-48 bg-gradient-to-b from-transparent via-zinc-700/50 to-transparent hidden lg:block" />
 
@@ -88,39 +84,43 @@ export default function Home() {
                   <span className="text-gradient-hero">Alan Regis</span>
                   <br />
                   <span className="text-zinc-500 font-medium">
-                    Backend Developer
+                    Software Developer
                   </span>
                 </h1>
 
                 <p className="max-w-xl text-lg lg:text-xl text-zinc-300 leading-relaxed">
-                  Construo sistemas robustos com foco em{" "}
-                  <span className="text-white font-medium">
-                    arquitetura
-                  </span>
-                  ,{" "}
-                  <span className="text-white font-medium">segurança</span>{" "}
-                  e{" "}
-                  <span className="text-white font-medium">
-                    escalabilidade
-                  </span>
-                  . Transformo requisitos complexos em código limpo e
-                  documentado.
+                  Construo sistemas robustos do{" "}
+                  <span className="text-white font-medium">backend ao frontend</span>,{" "}
+                  com foco em <span className="text-white font-medium">arquitetura</span>,{" "}
+                  <span className="text-white font-medium">segurança</span> e{" "}
+                  <span className="text-white font-medium">experiência do usuário</span>.
                 </p>
-                
+
                 {/* Quick value proposition */}
                 <div className="flex items-center gap-3 text-sm text-zinc-500 pt-1">
                   <span className="w-8 h-px bg-zinc-700" />
-                  <span>Foco em autenticação, APIs REST e arquitetura modular</span>
+                  <span>
+                    APIs seguras + interfaces modernas em um único desenvolvedor
+                  </span>
                 </div>
               </div>
 
               {/* Skills */}
               <div className="flex flex-wrap gap-2">
-                {skills.map((skill) => (
-                  <Badge 
-                    key={skill} 
-                    variant="outline" 
-                    className="font-mono text-zinc-400 border-zinc-700/50 bg-zinc-800/30 skill-badge"
+                {skills.backend.map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="font-mono text-emerald-400 border-emerald-500/30 bg-emerald-500/10 skill-badge"
+                  >
+                    {skill}
+                  </Badge>
+                ))}
+                {skills.frontend.map((skill) => (
+                  <Badge
+                    key={skill}
+                    variant="outline"
+                    className="font-mono text-violet-400 border-violet-500/30 bg-violet-500/10 skill-badge"
                   >
                     {skill}
                   </Badge>
@@ -139,10 +139,10 @@ export default function Home() {
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </Link>
                 </Button>
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
+                <Button
+                  asChild
+                  variant="outline"
+                  size="lg"
                   className="gap-2 px-6 border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/50"
                 >
                   <a href="/cv-alan-regis.pdf" download>
@@ -156,19 +156,31 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-between gap-6 pt-4">
                 <div className="flex flex-wrap gap-6">
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black text-white tabular-nums stat-number">4+</span>
-                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">anos</span>
+                    <span className="text-2xl font-black text-white tabular-nums stat-number">
+                      4+
+                    </span>
+                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">
+                      anos
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black text-white tabular-nums stat-number">15+</span>
-                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">projetos</span>
+                    <span className="text-2xl font-black text-white tabular-nums stat-number">
+                      15+
+                    </span>
+                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">
+                      projetos
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-1.5">
-                    <span className="text-2xl font-black text-white tabular-nums stat-number">7</span>
-                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">camadas</span>
+                    <span className="text-2xl font-black text-white tabular-nums stat-number">
+                      7
+                    </span>
+                    <span className="text-[10px] text-zinc-600 uppercase tracking-widest">
+                      camadas
+                    </span>
                   </div>
                 </div>
-                
+
                 {/* Social links */}
                 <div className="flex gap-2">
                   <a
@@ -189,8 +201,8 @@ export default function Home() {
                   >
                     <Linkedin className="h-4 w-4" />
                   </a>
-                  <a 
-                    href="mailto:alanregisps@gmail.com" 
+                  <a
+                    href="mailto:alanregisps@gmail.com"
                     className="social-link"
                     aria-label="Email"
                   >
@@ -207,58 +219,58 @@ export default function Home() {
                   title="~/alan.dev"
                   className="w-full max-w-xl lg:max-w-lg xl:max-w-xl mx-auto lg:ml-auto glow-emerald"
                 >
-                <div className="space-y-4">
-                  <TerminalLine
-                    command="whoami"
-                    output={
-                      <span className="text-emerald-300 font-medium">
-                        Alan Regis — Backend Developer
-                      </span>
-                    }
-                    animate={true}
-                    delay={500}
-                  />
-                  <TerminalLine
-                    command="cat skills.txt"
-                    output={
-                      <div className="space-y-0.5 text-zinc-400">
-                        <div>
-                          <span className="text-amber-400">frameworks:</span>{" "}
-                          NestJS, TypeScript, Python
-                        </div>
-                        <div>
-                          <span className="text-amber-400">infra:</span> Docker,
-                          PostgreSQL, Redis
-                        </div>
-                        <div>
-                          <span className="text-amber-400">cloud:</span> AWS,
-                          CI/CD, Security
-                        </div>
-                      </div>
-                    }
-                    animate={true}
-                    delay={2000}
-                  />
-                  <TerminalLine
-                    command="ls projects/"
-                    output={
-                      <div className="space-y-0.5">
-                        {projects.map((project) => (
-                          <div key={project.name} className="flex gap-3">
-                            <span className="text-cyan-400">
-                              {project.name}/
-                            </span>
-                            <span className="text-zinc-600 text-xs">
-                              # {project.desc}
-                            </span>
+                  <div className="space-y-4">
+                    <TerminalLine
+                      command="whoami"
+                      output={
+                        <span className="text-emerald-300 font-medium">
+                          Alan Regis — Software Developer
+                        </span>
+                      }
+                      animate={true}
+                      delay={500}
+                    />
+                    <TerminalLine
+                      command="cat skills.txt"
+                      output={
+                        <div className="space-y-0.5 text-zinc-400">
+                          <div>
+                            <span className="text-emerald-400">backend:</span>{" "}
+                            NestJS, TypeScript, Python
                           </div>
-                        ))}
-                      </div>
-                    }
-                    animate={true}
-                    delay={4000}
-                  />
-                </div>
+                          <div>
+                            <span className="text-violet-400">frontend:</span>{" "}
+                            React, Next.js, Tailwind
+                          </div>
+                          <div>
+                            <span className="text-amber-400">infra:</span>{" "}
+                            Docker, PostgreSQL, Redis
+                          </div>
+                        </div>
+                      }
+                      animate={true}
+                      delay={2000}
+                    />
+                    <TerminalLine
+                      command="ls projects/"
+                      output={
+                        <div className="space-y-0.5">
+                          {projects.map((project) => (
+                            <div key={project.name} className="flex gap-3">
+                              <span className="text-cyan-400">
+                                {project.name}/
+                              </span>
+                              <span className="text-zinc-600 text-xs">
+                                # {project.desc}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                      }
+                      animate={true}
+                      delay={4000}
+                    />
+                  </div>
                 </Terminal>
               </div>
             </div>
@@ -372,6 +384,3 @@ export default function Home() {
     </div>
   );
 }
-
-
-
