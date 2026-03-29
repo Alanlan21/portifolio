@@ -90,10 +90,16 @@ export default function Home() {
 
                 <p className="max-w-xl text-lg lg:text-xl text-zinc-300 leading-relaxed">
                   Construo sistemas robustos do{" "}
-                  <span className="text-white font-medium">backend ao frontend</span>,{" "}
-                  com foco em <span className="text-white font-medium">arquitetura</span>,{" "}
+                  <span className="text-white font-medium">
+                    backend ao frontend
+                  </span>
+                  , com foco em{" "}
+                  <span className="text-white font-medium">arquitetura</span>,{" "}
                   <span className="text-white font-medium">segurança</span> e{" "}
-                  <span className="text-white font-medium">experiência do usuário</span>.
+                  <span className="text-white font-medium">
+                    experiência do usuário
+                  </span>
+                  .
                 </p>
 
                 {/* Quick value proposition */}
