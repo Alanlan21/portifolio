@@ -307,4 +307,38 @@
   .stat-number {
     text-shadow: 0 0 30px oklch(0.6 0.2 160 / 0.2);
   }
+
+  /* Grid lines background - blueprint style */
+  .bg-grid-lines {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* Bento card style */
+  .bento-card {
+    @apply relative rounded-xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-sm;
+    @apply transition-all duration-300;
+  }
+
+  .bento-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, oklch(1 0 0 / 0.02) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  .bento-card:hover {
+    border-color: oklch(0.6 0.15 160 / 0.3);
+    box-shadow: 0 0 30px -10px oklch(0.6 0.15 160 / 0.15);
+  }
+
+  /* Bento highlight variant */
+  .bento-highlight {
+    border-color: oklch(0.6 0.15 160 / 0.2);
+    background: linear-gradient(135deg, oklch(0.15 0.02 160 / 0.4) 0%, oklch(0.12 0 0 / 0.5) 100%);
+  }
 }
