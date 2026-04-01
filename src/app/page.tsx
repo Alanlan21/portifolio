@@ -5,18 +5,71 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 
 const skills = {
-  backend: ["NestJS", "TypeScript", "Python", "Docker", "PostgreSQL", "Redis"],
-  frontend: ["React", "Next.js", "Tailwind CSS"],
+  backend: [
+    "Node.js",
+    "NestJS",
+    "TypeScript",
+    "Java",
+    "Spring",
+    "MySQL",
+    "PostgreSQL",
+  ],
+  frontend: ["React", "Next.js", "React Native", "Tailwind CSS"],
+  devops: ["Docker", "Git", "GitHub Actions", "AWS"],
 };
 
 const projects = [
   {
-    name: "nestjs-attack-defense-lab",
-    desc: "Security lab • 7 defense layers",
+    slug: "soc-dashboard",
+    name: "SOC Dashboard",
+    tagline: "Red Team vs Blue Team — segurança em tempo real",
+    category: "security",
+    categoryColor: "emerald",
+    status: "finalizado",
+    tech: ["NestJS", "PostgreSQL", "React", "Python"],
+    highlights: [
+      "7 camadas de defesa em profundidade",
+      "WAF com 18 padrões regex custom",
+      "136 payloads automatizados de teste",
+    ],
+    decision: "Arquitetura de honeypots para detecção activa de intrusos",
   },
-  { name: "unimenu", desc: "Food ordering • Full-stack cross-platform" },
-  { name: "fala-pai", desc: "Assistive communication • PWA" },
-  { name: "calote-bot", desc: "WhatsApp automation • Node.js" },
+  {
+    slug: "unimenu",
+    name: "UniMenu",
+    tagline: "Full-stack + Mobile — sistema completo de pedidos",
+    category: "fullstack",
+    categoryColor: "violet",
+    status: "em desenvolvimento",
+    tech: ["NestJS", "React", "React Native", "MySQL", "Stripe"],
+    highlights: [
+      "App mobile + painel web + API unificada",
+      "Integração Stripe para pagamentos",
+      "Autenticação JWT multi-tenant",
+    ],
+    decision: "Módulos NestJS desacoplados para escalabilidade horizontal",
+  },
+  {
+    slug: "fala-pai",
+    name: "FalaPai",
+    tagline: "PWA de comunicação assistiva com voz natural",
+    category: "frontend",
+    categoryColor: "cyan",
+    status: "em produção",
+    tech: ["React 19", "Vite", "ElevenLabs API", "PWA"],
+    highlights: [
+      "Síntese de voz indistinguível de humana",
+      "PWA instalável com cache offline",
+      "Frases rápidas com persistência local",
+    ],
+    decision: "ElevenLabs escolhida após benchmark de 4 APIs de TTS",
+  },
+];
+
+const terminalProjects = [
+  { name: "soc-dashboard", desc: "SOC Cybersec • Red Team vs Blue Team" },
+  { name: "unimenu", desc: "Full-stack + Mobile • NestJS + React Native" },
+  { name: "fala-pai", desc: "PWA em produção • ElevenLabs API" },
 ];
 
 export default function Home() {
@@ -94,17 +147,14 @@ export default function Home() {
                   </h1>
 
                   <p className="max-w-lg text-base lg:text-lg text-zinc-300 leading-relaxed">
-                    Construo sistemas robustos do{" "}
+                    <span className="text-white font-medium">2+ anos</span> em
+                    sistemas de produção críticos. Foco em{" "}
+                    <span className="text-white font-medium">APIs REST</span> e{" "}
                     <span className="text-white font-medium">
-                      backend ao frontend
-                    </span>
-                    , com foco em{" "}
-                    <span className="text-white font-medium">arquitetura</span>,{" "}
-                    <span className="text-white font-medium">segurança</span> e{" "}
-                    <span className="text-white font-medium">
-                      experiência do usuário
-                    </span>
-                    .
+                      arquitetura backend
+                    </span>{" "}
+                    com Node.js/NestJS. Experiência complementar em{" "}
+                    <span className="text-white font-medium">React</span>.
                   </p>
 
                   <div className="flex flex-wrap items-center gap-3 pt-2">
@@ -134,33 +184,58 @@ export default function Home() {
               </div>
 
               {/* Skills row */}
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bento-card p-4">
-                  <div className="text-[10px] font-mono text-emerald-500/70 uppercase tracking-widest mb-2">
-                    Backend
+              <div className="grid grid-cols-3 gap-3">
+                <div className="bento-card bento-backend p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
+                    <div className="text-[10px] font-mono text-emerald-400/80 uppercase tracking-widest">
+                      Backend
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1">
                     {skills.backend.map((skill) => (
                       <Badge
                         key={skill}
                         variant="outline"
-                        className="font-mono text-xs text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                        className="font-mono text-[10px] text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
                       >
                         {skill}
                       </Badge>
                     ))}
                   </div>
                 </div>
-                <div className="bento-card p-4">
-                  <div className="text-[10px] font-mono text-violet-500/70 uppercase tracking-widest mb-2">
-                    Frontend
+                <div className="bento-card bento-frontend p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500/60"></div>
+                    <div className="text-[10px] font-mono text-violet-400/80 uppercase tracking-widest">
+                      Frontend
+                    </div>
                   </div>
-                  <div className="flex flex-wrap gap-1.5">
+                  <div className="flex flex-wrap gap-1">
                     {skills.frontend.map((skill) => (
                       <Badge
                         key={skill}
                         variant="outline"
-                        className="font-mono text-xs text-violet-400 border-violet-500/30 bg-violet-500/10"
+                        className="font-mono text-[10px] text-violet-400 border-violet-500/30 bg-violet-500/10"
+                      >
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                <div className="bento-card bento-devops p-3">
+                  <div className="flex items-center gap-2 mb-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60"></div>
+                    <div className="text-[10px] font-mono text-amber-400/80 uppercase tracking-widest">
+                      DevOps
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {skills.devops.map((skill) => (
+                      <Badge
+                        key={skill}
+                        variant="outline"
+                        className="font-mono text-[10px] text-amber-400 border-amber-500/30 bg-amber-500/10"
                       >
                         {skill}
                       </Badge>
@@ -177,7 +252,7 @@ export default function Home() {
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <div className="text-2xl lg:text-3xl font-black text-white stat-number">
-                      4+
+                      2+
                     </div>
                     <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
                       anos
@@ -185,7 +260,7 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-2xl lg:text-3xl font-black text-white stat-number">
-                      15+
+                      3+
                     </div>
                     <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
                       projetos
@@ -193,17 +268,17 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-2xl lg:text-3xl font-black text-emerald-400 stat-number">
-                      7
+                      2
                     </div>
                     <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
-                      camadas
+                      empresas
                     </div>
                   </div>
                 </div>
               </div>
 
               {/* Terminal card */}
-              <div className="bento-card p-0 overflow-hidden flex-1">
+              <div className="bento-card bento-terminal p-0 overflow-hidden flex-1">
                 <Terminal
                   title="~/alan.dev"
                   className="w-full h-full border-0 bg-transparent rounded-none"
@@ -225,15 +300,15 @@ export default function Home() {
                         <div className="space-y-0.5 text-zinc-400 text-sm">
                           <div>
                             <span className="text-emerald-400">backend:</span>{" "}
-                            NestJS, TypeScript, Python
+                            Node.js, NestJS, TypeScript, Java
                           </div>
                           <div>
                             <span className="text-violet-400">frontend:</span>{" "}
-                            React, Next.js, Tailwind
+                            React, Next.js, React Native
                           </div>
                           <div>
-                            <span className="text-amber-400">infra:</span>{" "}
-                            Docker, PostgreSQL, Redis
+                            <span className="text-amber-400">devops:</span>{" "}
+                            Docker, AWS, GitHub Actions
                           </div>
                         </div>
                       }
@@ -244,7 +319,7 @@ export default function Home() {
                       command="ls projects/"
                       output={
                         <div className="space-y-0.5 text-sm">
-                          {projects.map((project) => (
+                          {terminalProjects.map((project) => (
                             <div key={project.name} className="flex gap-2">
                               <span className="text-cyan-400">
                                 {project.name}/
@@ -270,53 +345,112 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 h-16 fade-bottom pointer-events-none" />
       </section>
 
-      {/* Featured Project - compact */}
-      <section className="border-t border-border/50">
-        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-10">
-          <Link
-            href="/projetos/nestjs-attack-defense-lab"
-            className="group block rounded-xl border border-border bg-card/50 backdrop-blur-sm p-6 lg:p-8 transition-all hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/5"
-          >
-            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-              <div className="space-y-3 lg:max-w-2xl">
-                <div className="flex flex-wrap items-center gap-3">
-                  <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
-                    Destaque
-                  </span>
-                  <Badge
-                    variant="outline"
-                    className="text-emerald-500 border-emerald-500/30"
-                  >
-                    Security
-                  </Badge>
-                </div>
-                <h3 className="text-xl lg:text-2xl font-bold group-hover:text-emerald-500 transition-colors">
-                  NestJS Attack & Defense Lab
-                </h3>
-                <p className="text-muted-foreground text-sm lg:text-base leading-relaxed">
-                  Plataforma SOC educacional: Red Team vs Blue Team, 7 camadas
-                  de defesa, honeypots e OWASP Top 10.
-                </p>
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  <Badge variant="secondary" className="font-mono text-xs">
-                    NestJS
-                  </Badge>
-                  <Badge variant="secondary" className="font-mono text-xs">
-                    PostgreSQL
-                  </Badge>
-                  <Badge variant="secondary" className="font-mono text-xs">
-                    React
-                  </Badge>
-                  <Badge variant="secondary" className="font-mono text-xs">
-                    Docker
-                  </Badge>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-emerald-500 transition-colors">
-                <span>Ver projeto</span>
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-              </div>
+      {/* Projects Section */}
+      <section className="relative border-t border-border/30">
+        {/* Subtle background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/50 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-grid-lines opacity-50" />
+
+        <div className="relative max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+          {/* Section header */}
+          <div className="flex items-end justify-between mb-10 lg:mb-14">
+            <div className="space-y-2">
+              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">
+                Projetos
+              </h2>
+              <p className="text-zinc-500 text-sm lg:text-base max-w-md">
+                Sistemas reais com decisões técnicas intencionais
+              </p>
             </div>
+            <Link
+              href="/projetos"
+              className="hidden sm:flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 transition-colors group"
+            >
+              <span>Ver todos</span>
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          {/* Projects list */}
+          <div className="space-y-3">
+            {projects.map((project) => (
+              <Link
+                key={project.slug}
+                href={`/projetos/${project.slug}`}
+                className="group project-item block"
+              >
+                <div className="project-item-inner">
+                  {/* Main row - always visible */}
+                  <div className="project-main">
+                    <div className="flex items-center gap-4 flex-1 min-w-0">
+                      {/* Project info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-1">
+                          <h3 className="font-semibold text-lg group-hover:text-emerald-400 transition-colors">
+                            {project.name}
+                          </h3>
+                          <Badge
+                            variant="outline"
+                            className={`text-[10px] uppercase tracking-wider ${
+                              project.categoryColor === "emerald"
+                                ? "text-emerald-400/80 border-emerald-500/30"
+                                : project.categoryColor === "violet"
+                                  ? "text-violet-400/80 border-violet-500/30"
+                                  : "text-cyan-400/80 border-cyan-500/30"
+                            }`}
+                          >
+                            {project.category}
+                          </Badge>
+                        </div>
+                        <p className="text-zinc-400 text-sm truncate">
+                          {project.tagline}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Tech stack - visible on lg */}
+                    <div className="hidden lg:flex items-center gap-2 shrink-0">
+                      {project.tech.slice(0, 3).map((tech) => (
+                        <span
+                          key={tech}
+                          className="text-[11px] font-mono text-zinc-500 bg-zinc-800/50 px-2 py-0.5 rounded"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className="text-[11px] font-mono text-zinc-600">
+                          +{project.tech.length - 3}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Arrow */}
+                    <ArrowRight className="h-5 w-5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all shrink-0 ml-4" />
+                  </div>
+
+                  {/* Expanded content - visible on hover */}
+                  <div className="project-detail">
+                    <div className="pt-3 pb-1">
+                      <p className="text-sm text-zinc-400 leading-relaxed">
+                        {project.highlights[0]}
+                        <span className="text-zinc-600 mx-2">·</span>
+                        {project.decision}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+
+          {/* Mobile: Ver todos link */}
+          <Link
+            href="/projetos"
+            className="sm:hidden flex items-center justify-center gap-2 mt-8 text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+          >
+            <span>Ver todos os projetos</span>
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       </section>
