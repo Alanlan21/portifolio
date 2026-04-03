@@ -292,28 +292,48 @@ export default function Home() {
                         </span>
                       }
                       animate={true}
-                      delay={500}
+                      delay={300}
                     />
                     <TerminalLine
-                      command="cat skills.txt"
+                      command="echo $STATUS"
                       output={
-                        <div className="space-y-0.5 text-zinc-400 text-sm">
-                          <div>
-                            <span className="text-emerald-400">backend:</span>{" "}
-                            Node.js, NestJS, TypeScript, Java
-                          </div>
-                          <div>
-                            <span className="text-violet-400">frontend:</span>{" "}
-                            React, Next.js, React Native
-                          </div>
-                          <div>
-                            <span className="text-amber-400">devops:</span>{" "}
-                            Docker, AWS, GitHub Actions
-                          </div>
+                        <span className="text-emerald-400">
+                          available for projects
+                        </span>
+                      }
+                      animate={true}
+                      delay={900}
+                    />
+                    <TerminalLine
+                      command="cat skills.json | jq .main"
+                      output={
+                        <span className="text-zinc-400 text-sm">
+                          <span className="text-emerald-400">node</span>
+                          <span className="text-zinc-600"> · </span>
+                          <span className="text-emerald-400">nestjs</span>
+                          <span className="text-zinc-600"> · </span>
+                          <span className="text-emerald-400">typescript</span>
+                          <span className="text-zinc-600"> · </span>
+                          <span className="text-violet-400">react</span>
+                          <span className="text-zinc-600"> · </span>
+                          <span className="text-amber-400">docker</span>
+                          <span className="text-zinc-600"> · </span>
+                          <span className="text-amber-400">aws</span>
+                        </span>
+                      }
+                      animate={true}
+                      delay={1500}
+                    />
+                    <TerminalLine
+                      command="cat ./now"
+                      output={
+                        <div className="text-zinc-400 text-sm">
+                          <span className="text-zinc-500">focus:</span> backend
+                          architecture, cybersecurity, devops
                         </div>
                       }
                       animate={true}
-                      delay={2000}
+                      delay={2100}
                     />
                     <TerminalLine
                       command="ls projects/"
@@ -332,7 +352,7 @@ export default function Home() {
                         </div>
                       }
                       animate={true}
-                      delay={3500}
+                      delay={2700}
                     />
                   </div>
                 </Terminal>
