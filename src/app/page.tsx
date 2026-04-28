@@ -298,7 +298,7 @@ export default function Home() {
                       command="echo $STATUS"
                       output={
                         <span className="text-emerald-400">
-                          available for projects
+                          Disponível para trabalho
                         </span>
                       }
                       animate={true}
@@ -328,8 +328,7 @@ export default function Home() {
                       command="cat ./now"
                       output={
                         <div className="text-zinc-400 text-sm">
-                          <span className="text-zinc-500">focus:</span> backend
-                          architecture, cybersecurity, devops
+                        Pós-graduando em Engenharia de Software com Foco em Devops
                         </div>
                       }
                       animate={true}

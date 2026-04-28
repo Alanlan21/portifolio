@@ -1,0 +1,179 @@
+{
+  "dados_pessoais": {
+    "nome": "Alan Regis",
+    "email": "alanregisps@gmail.com",
+    "telefone": "+55 85 98211-9104",
+    "linkedin": "linkedin.com/in/alanregis",
+    "github": "github.com/Alanlan21",
+    "local": "Fortaleza, CE"
+  },
+
+  "resumo_base": {
+    "versao_geral": "Desenvolvedor com mais de 2 anos de experiência em sistemas de produção, focando em rastreabilidade, segurança e automação. Experiência com arquitetura backend, APIs REST e práticas modernas de desenvolvimento, incluindo uso de ferramentas de IA (GitHub Copilot, Cursor, Claude) no fluxo diário de trabalho.",
+    "versao_backend": "Desenvolvedor Backend com mais de 2 anos de experiência em sistemas de produção, focando em rastreabilidade, segurança e automação utilizando NestJS, TypeScript e MySQL. Inglês em nível intermediário (B2). Experiência com Docker e práticas de CI/CD, além de projetos pessoais hospedados na nuvem. Com foco em arquitetura backend, AWS e cibersegurança.",
+    "versao_fullstack": "Desenvolvedor Full Stack com 2+ anos de experiência em sistemas de produção, com foco em backend (NestJS, TypeScript, MySQL) e atuação prática em frontend com React. Inglês upper intermediate (B2). Experiência em projetos escaláveis, integrações de APIs REST, bancos relacionais (MySQL/PostgreSQL) e práticas modernas como Docker, Git/flow, CI/CD e princípios SOLID. Uso consistente de ferramentas de IA (GitHub Copilot, Cursor, Claude) para acelerar desenvolvimento mantendo qualidade e aderência arquitetural.",
+    "versao_cybersecurity": "Desenvolvedor com 2+ anos de experiência em sistemas críticos e interesse genuíno em migrar para Cibersegurança. Experiência prática com auditoria de sistemas, monitoramento (Grafana), autenticação/autorização (JWT) e compliance (LGPD/ISO). Certificação IBM Cybersecurity Fundamentals e formação acadêmica em ADS. Perfil analítico e investigativo, com disposição para aprendizado contínuo em offensive security."
+  },
+  "experiencias": [
+    {
+      "empresa": "Energia Pecém",
+      "cargo": "Desenvolvedor Web",
+      "periodo": "08/2024 - 01/2026",
+      "local": "Fortaleza, CE",
+      "contexto": "Usina termelétrica, ~50% da geração elétrica do CE. Equipe de 6 devs, metodologia ágil (ClickUp).",
+      "atividades": [
+        "APIs REST críticas para 100% dos fluxos de manutenção/segurança da usina",
+        "Modelagem MySQL/TypeORM com compliance ISO e LGPD",
+        "Sistema de auditoria integrado ao Protheus + monitoramento Grafana",
+        "Autenticação JWT para controle de acesso a sistemas críticos",
+        "Automação de relatórios PDF (Puppeteer) - redução de 60% no tempo",
+        "Alertas em tempo real para incidentes",
+        "Colaboração em arquitetura backend e integração AWS"
+      ],
+      "stack": [
+        "NestJS",
+        "TypeScript",
+        "MySQL",
+        "TypeORM",
+        "Docker",
+        "JWT",
+        "Puppeteer",
+        "AWS",
+        "Grafana"
+      ]
+    },
+    {
+      "empresa": "Dataged",
+      "cargo": "Desenvolvedor Java",
+      "periodo": "05/2023 - 06/2024",
+      "local": "Fortaleza, CE",
+      "contexto": "Empresa 15+ anos em ECM/GED para instituições públicas. Times pequenos (3-4 pessoas), sprints quinzenais.",
+      "atividades": [
+        "Manutenção de sistema interno Java/Spring para operação crítica",
+        "Desenvolvimento de soluções para clientes do zero até entrega",
+        "Resolução de bugs em sistemas legados",
+        "Suporte direto a usuários via sistema de chamados",
+        "Redução de ~15% nos chamados através de melhorias proativas"
+      ],
+      "stack": [
+        "Java",
+        "Spring",
+        "Hibernate",
+        "SQL",
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ]
+    }
+  ],
+
+  "projetos": [
+    {
+      "nome": "FalaPai",
+      "tipo": "PWA em produção",
+      "url": "https://falapai.vercel.app",
+      "github": "https://github.com/Alanlan21/FalaPai",
+      "descricao": "App de comunicação assistiva com síntese de voz (ElevenLabs). PWA instalável, drag & drop, persistência local.",
+      "stack": ["React 19", "Vite", "Tailwind", "ElevenLabs API", "PWA"]
+    },
+    {
+      "nome": "UniMenu",
+      "tipo": "Full-Stack + Mobile",
+      "github": "https://github.com/Alanlan21/Unimenu",
+      "descricao": "Sistema de pedidos para restaurantes. Autenticação JWT, integração Stripe, arquitetura modular.",
+      "stack": ["NestJS", "React", "React Native", "MySQL", "JWT", "Stripe"]
+    },
+    {
+      "nome": "SOC Dashboard",
+      "tipo": "Cybersec Lab",
+      "github": "https://github.com/Alanlan21/NestJS-Attack-and-Defense-Lab",
+      "descricao": "Plataforma Red Team vs Blue Team. WAF com 18 padrões, IDS/IPS, 136 payloads de ataque, dashboard SOC.",
+      "stack": ["NestJS", "PostgreSQL", "React", "TailwindCSS", "Python"]
+    },
+    {
+      "nome": "Love Timeline",
+      "tipo": "Full-Stack",
+      "github": "privado",
+      "descricao": "Timeline interativa de memórias. Upload de imagens, autenticação, animações Framer Motion.",
+      "stack": [
+        "Next.js",
+        "Supabase",
+        "PostgreSQL",
+        "Framer Motion",
+        "Tailwind"
+      ]
+    },
+    {
+      "nome": "CaloteBot",
+      "tipo": "Automação",
+      "github": "https://github.com/Alanlan21/CaloteBot",
+      "descricao": "Bot de cobrança via WhatsApp. Agendamento, templates dinâmicos, CLI interativo.",
+      "stack": ["Node.js", "venom-bot", "node-schedule"]
+    },
+    {
+      "nome": "Sistema Avine",
+      "tipo": "Desafio técnico .NET",
+      "github": "https://github.com/Alanlan21/desafio-avine",
+      "youtube": "https://youtu.be/IUrwFSHEzDA",
+      "descricao": "CRUD completo com Docker Compose. API documentada com Swagger.",
+      "stack": [
+        "C#",
+        ".NET 8",
+        "Entity Framework",
+        "Next.js",
+        "Docker",
+        "MySQL"
+      ]
+    },
+    {
+      "nome": "Sistema Lynx",
+      "tipo": "Desafio técnico .NET",
+      "github": "https://github.com/Alanlan21/desafio-lynx",
+      "descricao": "Gestão de pedidos com snapshot pricing. Pagamentos parciais/totais com atualização automática de status.",
+      "stack": [
+        "C#",
+        ".NET 10",
+        "Dapper",
+        "SQLite",
+        "React",
+        "TypeScript",
+        "Tailwind"
+      ]
+    }
+  ],
+
+  "skills": {
+    "backend": ["Node.js", "NestJS", "Java", "Spring", "C#/.NET (básico)"],
+    "frontend": ["React", "Next.js", "React Native", "HTML", "CSS", "Tailwind"],
+    "databases": ["MySQL", "PostgreSQL", "TypeORM"],
+    "devops": ["Docker", "Git", "GitHub", "GitHub Actions", "CI/CD", "AWS"],
+    "outros": ["REST APIs", "JWT", "Puppeteer", "Grafana", "Swagger"],
+    "ia_dev_tools": {
+      "card_titulo": "IA & Developer Tools",
+      "principais": [
+        "GitHub Copilot",
+        "Cursor",
+        "Claude",
+        "AI-Assisted Development",
+        "Prompt Engineering"
+      ],
+      "secundarias": ["MCP servers", "RAG (experimental)", "OpenAI API"]
+    }
+  },
+
+  "formacao": {
+    "curso": "Análise e Desenvolvimento de Sistemas",
+    "instituicao": "Unifor",
+    "periodo": "2023 - 2025",
+    "status": "Concluído"
+  },
+
+  "certificacoes": [
+    { "nome": "IBM Cybersecurity Fundamentals", "ano": "2024" }
+  ],
+
+  "idiomas": {
+    "portugues": "Nativo",
+    "ingles": "B2 (Intermediário-Avançado)"
+  }
+}
