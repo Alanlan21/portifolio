@@ -125,6 +125,8 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 3.5rem;
   }
 }
 
@@ -522,5 +524,117 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* ─── Scroll reveal ─────────────────────────────────────────── */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(48px) scale(0.97);
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-hidden {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* ─── Section dividers ──────────────────────────────────────── */
+  .section-divider {
+    position: relative;
+    height: 2px;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .section-divider::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      oklch(1 0 0 / 0.08) 15%,
+      oklch(1 0 0 / 0.18) 50%,
+      oklch(1 0 0 / 0.08) 85%,
+      transparent 100%
+    );
+  }
+
+  .section-divider::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 3px;
+    background: radial-gradient(
+      ellipse at center,
+      oklch(0.65 0.2 160 / 0.9) 0%,
+      oklch(0.65 0.2 160 / 0.35) 40%,
+      transparent 100%
+    );
+    filter: blur(3px);
+  }
+
+  /* ─── Section ambient glow ──────────────────────────────────── */
+  .section-glow-emerald::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 500px;
+    background: radial-gradient(
+      ellipse at top center,
+      oklch(0.6 0.18 160 / 0.12) 0%,
+      oklch(0.6 0.18 160 / 0.04) 50%,
+      transparent 75%
+    );
+    pointer-events: none;
+  }
+
+  .section-glow-violet::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    height: 500px;
+    background: radial-gradient(
+      ellipse at top center,
+      oklch(0.6 0.18 280 / 0.12) 0%,
+      oklch(0.6 0.18 280 / 0.04) 50%,
+      transparent 75%
+    );
+    pointer-events: none;
+  }
+
+  .section-glow-neutral::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at top center,
+      oklch(0.5 0 0 / 0.1) 0%,
+      transparent 70%
+    );
+    pointer-events: none;
   }
 }

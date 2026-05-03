@@ -1,0 +1,75 @@
+---
+title: Desenvolvedor Web
+organization: Energia Pecém
+period: "2024 - 2026"
+logo: /assets/logos/logo-energia-pecem.jpg
+type: work
+tags:
+  [
+    Node.js,
+    NestJS,
+    TypeScript,
+    MySQL,
+    Grafana,
+    Docker,
+    LGPD,
+    TypeORM,
+    JWT,
+    Swagger,
+    AWS,
+  ]
+description: Backend de sistemas internos críticos para digitalização de processos operacionais em usina termelétrica responsável por ~50% da geração elétrica do Ceará.
+location: Fortaleza, CE
+---
+
+## Contexto
+
+A Usina Termelétrica Pecém é uma das maiores fontes de energia do Nordeste, responsável por aproximadamente 50% da geração elétrica do Ceará. Entrei para um projeto temporário com escopo bem definido: digitalizar um processo que antes era feito inteiramente no papel.
+
+O projeto envolvia segurança de funcionários em campo. Qualquer falha no sistema poderia gerar riscos reais. Isso moldou como eu abordei cada decisão técnica ao longo do desenvolvimento.
+
+## Minha atuação
+
+Fui alocado no backend e fiquei responsável por grande parte da estrutura desde a arquitetura inicial até o fechamento da minha parte. Trabalhei numa equipe enxuta com revisões de código por pessoas mais experientes.
+
+### Backend e APIs
+
+Desenvolvimento completo do backend com NestJS e TypeScript:
+
+- Arquitetura inicial dos módulos da aplicação, organização de rotas e nomenclaturas
+- Implementação de autenticação com **JWT** e controle de acesso baseado em roles (RBAC)
+- Validações, logging de eventos críticos e documentação via **Swagger**
+- Modelagem de entidades e integração com **TypeORM** + MySQL
+- Versionamento e backward compatibility para sistemas legados
+
+### Compliance e Segurança
+
+O contexto crítico exigiu cuidado redobrado com rastreabilidade e segurança:
+
+- Adequação à **LGPD**: mapeamento de dados pessoais, políticas de retenção, logs de acesso
+- Compliance com padrões **ISO** aplicáveis ao setor de energia
+- Revisão de código com foco em segurança: validação de inputs, prevenção de injeções, autenticação e autorização
+
+### Observabilidade
+
+- Dashboards no **Grafana** para monitoramento de saúde das APIs
+- Alertas automáticos para anomalias de performance e disponibilidade
+- Análise de logs para identificação proativa de gargalos
+
+### AWS
+
+Ajustes pontuais na infraestrutura AWS conforme necessidades do projeto.
+
+## Stack utilizada
+
+| Camada          | Tecnologia      |
+| --------------- | --------------- |
+| Runtime         | Node.js         |
+| Framework       | NestJS          |
+| Linguagem       | TypeScript      |
+| Banco de dados  | MySQL + TypeORM |
+| Auth            | JWT             |
+| Containers      | Docker          |
+| Observabilidade | Grafana         |
+| Cloud           | AWS             |
+| CI/CD           | GitHub Actions  |

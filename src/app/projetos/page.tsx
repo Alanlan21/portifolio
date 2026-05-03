@@ -1,6 +1,4 @@
 import { Metadata } from "next";
-import { Header } from "@/components/header";
-import { Sidebar } from "@/components/sidebar";
 import { ProjectCard, ProjectCardProps } from "@/components/project-card";
 import { Badge } from "@/components/ui/badge";
 
@@ -28,6 +26,25 @@ const projects: ProjectCardProps[] = [
     status: "finalizado",
     highlight: "136+ payloads de teste cobrindo OWASP Top 10",
     github: "https://github.com/Alanlan21/NestJS-Attack-and-Defense-Lab",
+  },
+  {
+    title: "Valvecraft",
+    slug: "valvecraft",
+    description:
+      "Jogo educativo para trompetistas. Treine dedilhado, leitura de partitura e senso de ritmo direto no navegador, com amostras de áudio reais e feedback visual em tempo real.",
+    tags: [
+      "React 19",
+      "TypeScript",
+      "Vite",
+      "Tailwind CSS",
+      "VexFlow",
+      "Tone.js",
+    ],
+    status: "finalizado",
+    highlight:
+      "Áudio real de trompete • Dois modos de jogo • Partituras com VexFlow",
+    github: "https://github.com/Alanlan21/valvecraft",
+    demo: "https://valvecraft.vercel.app",
   },
   {
     title: "UniMenu",
@@ -74,62 +91,55 @@ const projects: ProjectCardProps[] = [
 export default function ProjetosPage() {
   return (
     <div className="min-h-screen bg-background">
-      <Sidebar />
-      <div className="lg:pl-64">
-        <Header />
+      <main className="mx-auto max-w-4xl px-6 py-12">
+        {/* Header */}
+        <div className="mb-12">
+          <Badge variant="outline" className="mb-4 font-mono">
+            /projetos
+          </Badge>
+          <h1 className="text-4xl font-bold mb-4">Projetos</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl">
+            Uma seleção de projetos que demonstram minha abordagem em{" "}
+            <span className="text-foreground">arquitetura</span>,{" "}
+            <span className="text-foreground">segurança</span> e{" "}
+            <span className="text-foreground">desenvolvimento backend</span>.
+          </p>
+        </div>
 
-        <main className="mx-auto max-w-4xl px-6 py-12">
-          {/* Header */}
-          <div className="mb-12">
-            <Badge variant="outline" className="mb-4 font-mono">
-              /projetos
-            </Badge>
-            <h1 className="text-4xl font-bold mb-4">Projetos</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Uma seleção de projetos que demonstram minha abordagem em{" "}
-              <span className="text-foreground">arquitetura</span>,{" "}
-              <span className="text-foreground">segurança</span> e{" "}
-              <span className="text-foreground">desenvolvimento backend</span>.
-            </p>
-          </div>
+        {/* Filters (opcional para o futuro) */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          <Badge
+            variant="secondary"
+            className="cursor-pointer hover:bg-emerald-500/20"
+          >
+            Todos
+          </Badge>
+          <Badge variant="outline" className="cursor-pointer hover:bg-accent">
+            Security
+          </Badge>
+          <Badge variant="outline" className="cursor-pointer hover:bg-accent">
+            Full-Stack
+          </Badge>
+          <Badge variant="outline" className="cursor-pointer hover:bg-accent">
+            Automação
+          </Badge>
+        </div>
 
-          {/* Filters (opcional para o futuro) */}
-          <div className="flex flex-wrap gap-2 mb-8">
-            <Badge
-              variant="secondary"
-              className="cursor-pointer hover:bg-emerald-500/20"
-            >
-              Todos
-            </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-accent">
-              Security
-            </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-accent">
-              Full-Stack
-            </Badge>
-            <Badge variant="outline" className="cursor-pointer hover:bg-accent">
-              Automação
-            </Badge>
-          </div>
+        {/* Projects Grid */}
+        <div className="grid gap-6 md:grid-cols-2">
+          {projects.map((project) => (
+            <ProjectCard key={project.slug} {...project} />
+          ))}
+        </div>
 
-          {/* Projects Grid */}
-          <div className="grid gap-6 md:grid-cols-2">
-            {projects.map((project) => (
-              <ProjectCard key={project.slug} {...project} />
-            ))}
-          </div>
-
-          {/* More coming */}
-          <div className="mt-12 p-6 rounded-lg border border-dashed border-border text-center">
-            <p className="text-muted-foreground">
-              <span className="text-emerald-500 font-mono">+</span> Mais
-              projetos em breve
-            </p>
-          </div>
-        </main>
-      </div>
+        {/* More coming */}
+        <div className="mt-12 p-6 rounded-lg border border-dashed border-border text-center">
+          <p className="text-muted-foreground">
+            <span className="text-emerald-500 font-mono">+</span> Mais projetos
+            em breve
+          </p>
+        </div>
+      </main>
     </div>
   );
 }
-
-

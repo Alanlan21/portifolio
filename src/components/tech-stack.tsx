@@ -54,7 +54,7 @@ const techIcons: Record<string, { icon: string; invert?: boolean }> = {
   kubernetes: { icon: `${DEVICON_BASE}/kubernetes/kubernetes-original.svg` },
 
   // ORMs & Others
-  typeorm: { icon: `${DEVICON_BASE}/typeorm/typeorm-original.svg` },
+  typeorm: { icon: "https://cdn.simpleicons.org/typeorm/ffffff" },
   prisma: { icon: `${DEVICON_BASE}/prisma/prisma-original.svg`, invert: true },
   grafana: { icon: `${DEVICON_BASE}/grafana/grafana-original.svg` },
 };

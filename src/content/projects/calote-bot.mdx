@@ -1,0 +1,121 @@
+---
+title: CaloteBot
+description: Bot de cobrança via WhatsApp com agendamento de mensagens, templates dinâmicos e suporte a anexos. Começou como script pessoal e virou uma operação modular.
+tags:
+  - Node.js
+  - venom-bot
+  - dayjs
+  - inquirer
+  - node-schedule
+status: finalizado
+github: https://github.com/Alanlan21/calote-bot
+highlight: Agendamento por contato • Templates com variáveis dinâmicas
+date: 2024-06-01
+---
+
+## O Problema
+
+Começou simples: um amigo me devia e eu precisava cobrar. Criei um script em Python + Selenium para enviar a mensagem automaticamente.
+
+Até mais uma pessoa começar a dever. Aí virou outra coisa.
+
+A pergunta passou a ser: **como transformar uma cobrança pontual em um sistema modular e reutilizável?**
+
+## Visão Geral
+
+O CaloteBot é um bot de cobrança via WhatsApp que funciona via terminal. Ele:
+
+- Envia mensagens personalizadas com variáveis dinâmicas
+- Agenda o envio por horários definidos por contato
+- Suporta anexos de imagem (prints, comprovantes, memes)
+- Roda com menu interativo no terminal
+
+## Por Que Migrei para Node.js
+
+O script original em Python com Selenium era frágil: dependia do estado do browser, quebrava com updates do WhatsApp Web e não tinha como agendar de forma confiável.
+
+A migração para Node.js + `venom-bot` resolveu:
+
+```
+Python + Selenium         →   Node.js + venom-bot
+Controle de browser       →   WebSocket nativo
+Frágil a updates de UI    →   Integração de protocolo
+Sem agendamento real      →   node-schedule (estilo cron)
+Script monolítico         →   Módulos separados por responsabilidade
+```
+
+## Arquitetura
+
+```
+calote-bot/
+├── calote.js              # Ponto de entrada (CLI com inquirer)
+├── data/
+│   ├── contacts.json      # Contatos com templates e horários
+│   └── contacts-example.json
+├── messages/
+│   └── generateMessage.js # Interpolação de variáveis no template
+├── scheduler/
+│   └── schedule.js        # Agendamento com node-schedule
+├── sender/
+│   └── sendMessage.js     # Envio via venom-bot
+└── images/                # Anexos opcionais
+```
+
+## Templates com Variáveis Dinâmicas
+
+Cada contato define seu próprio template com variáveis interpoladas em runtime:
+
+```json
+{
+  "name": "Fulano",
+  "number": "559999999999",
+  "amount": 170.0,
+  "dueDate": "2025-04-25",
+  "schedules": ["08:00", "11:00"],
+  "template": "Oi {{name}}, já se passaram {{days}} dias. Valor: R${{amount}}."
+}
+```
+
+O módulo `generateMessage.js` resolve as variáveis calculando `daysLate` a partir de `dueDate` via `dayjs`.
+
+## Agendamento
+
+O `node-schedule` agenda o envio nos horários definidos por contato:
+
+```js
+// schedule.js
+const schedule = require("node-schedule");
+const dayjs = require("dayjs");
+
+function scheduleMessages(contacts, sendFn) {
+  contacts.forEach((contact) => {
+    contact.schedules.forEach((time) => {
+      const [hour, minute] = time.split(":").map(Number);
+      schedule.scheduleJob({ hour, minute }, () => sendFn(contact));
+    });
+  });
+}
+```
+
+## Decisão Técnica
+
+A escolha do `venom-bot` foi feita após comparar três opções:
+
+| Biblioteca      | Maturidade | Confiabilidade | Manutenção |
+| --------------- | ---------- | -------------- | ---------- |
+| whatsapp-web.js | Alta       | Alta           | Ativa      |
+| venom-bot       | Média-Alta | Alta           | Ativa      |
+| baileys         | Alta       | Média          | Ativa      |
+
+O `venom-bot` venceu pela simplicidade da API para o caso de uso (envio + anexos) sem precisar de configurações avançadas de multi-device.
+
+## Uso
+
+```bash
+npm install
+cp data/contacts-example.json data/contacts.json
+# editar contacts.json com seus dados
+npm start
+# escanear QR Code no terminal com WhatsApp > Dispositivos Conectados
+# escolher: enviar agora ou agendar
+```

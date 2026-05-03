@@ -7,17 +7,26 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
+import { useActiveSection } from "@/hooks/use-active-section";
 
 const navigation = [
-  { name: "Início", href: "/" },
-  { name: "Sobre", href: "/sobre" },
-  { name: "Projetos", href: "/projetos" },
-  { name: "Contato", href: "/contato" },
+  { name: "Início", href: "/#inicio" },
+  { name: "Sobre", href: "/#sobre" },
+  { name: "Projetos", href: "/#projetos" },
+  { name: "Contato", href: "/#contato" },
 ];
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const activeSection = useActiveSection();
+
+  function isActive(href: string): boolean {
+    if (pathname === "/" && href.startsWith("/#")) {
+      return activeSection === href.slice(2);
+    }
+    return pathname === href;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -43,7 +52,7 @@ export function Header() {
                 href={item.href}
                 className={cn(
                   "transition-colors hover:text-foreground",
-                  pathname === item.href
+                  isActive(item.href)
                     ? "text-foreground font-medium"
                     : "text-muted-foreground",
                 )}
@@ -105,7 +114,7 @@ export function Header() {
                 href={item.href}
                 className={cn(
                   "px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                  pathname === item.href
+                  isActive(item.href)
                     ? "bg-accent text-accent-foreground"
                     : "text-muted-foreground hover:bg-accent/50 hover:text-foreground",
                 )}

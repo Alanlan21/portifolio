@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
+import { Sidebar } from "@/components/sidebar";
 import "./globals.css";
 
 const inter = Inter({
@@ -35,7 +36,6 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -48,9 +48,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">
-        <Providers>{children}</Providers>
+        <Providers>
+          <Sidebar />
+          <div className="lg:pl-64">{children}</div>
+        </Providers>
       </body>
     </html>
   );
 }
-

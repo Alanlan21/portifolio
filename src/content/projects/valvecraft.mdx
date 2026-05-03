@@ -1,0 +1,152 @@
+---
+title: Valvecraft
+description: Jogo educativo para trompetistas. Treine dedilhado, leitura de partitura e senso de ritmo direto no navegador com áudio real de trompete.
+tags:
+  - React 19
+  - TypeScript
+  - Vite
+  - Tailwind CSS
+  - VexFlow
+  - Tone.js
+status: finalizado
+github: https://github.com/Alanlan21/valvecraft
+demo: https://valvecraft.vercel.app
+highlight: Áudio real de trompete • Dois modos de jogo • VexFlow para partituras
+date: 2025-03-15
+---
+
+## O Projeto
+
+Valvecraft é um jogo para trompetistas que querem melhorar dedilhado, leitura de partitura e senso de ritmo de forma interativa. Com amostras de áudio reais e feedback visual em tempo real, o estudo técnico vira uma experiência dinâmica.
+
+Suporta Trompete em Si♭ (padrão) e Trompete em Dó.
+
+## Modos de Jogo
+
+### Modo Quiz
+
+Você vê uma nota na pauta e precisa identificar e tocar o dedilhado correto nas válvulas.
+
+| Variante | Descrição                                                                                             |
+| -------- | ----------------------------------------------------------------------------------------------------- |
+| Desafio  | Cronômetro de 60s. Acertos estendem o tempo, erros penalizam. Sistema de streaks com multiplicadores. |
+| Treino   | Sem tempo, com dicas visuais de dedilhado. Ideal para iniciantes.                                     |
+
+O sistema de streaks premia acertos consecutivos com multiplicadores de pontuação:
+
+| Nível | Acertos | Multiplicador |
+| ----- | ------- | ------------- |
+| Ritmo | 0+      | 1.0x          |
+| Combo | 5+      | 1.15x         |
+| Foco  | 10+     | 1.3x          |
+| Blitz | 15+     | 1.5x          |
+
+### Modo Ritmo
+
+Toque músicas reais em partitura. Um playhead percorre as notas no tempo certo, você precisa pressionar as válvulas corretas no momento exato.
+
+Feedback por nota:
+
+- **Perfeito** — dedilhado correto no tempo certo
+- **Dedilhado errado** — tempo certo, nota errada
+- **Miss** — janela de tempo perdida
+
+Repertório disponível: escalas maiores, exercícios técnicos e melodias como Ode à Alegria, Amazing Grace, When the Saints, entre outras.
+
+## Desafios Técnicos
+
+### Renderização de Partituras com VexFlow
+
+O maior desafio foi integrar o VexFlow para renderizar partituras musicais corretamente no React. VexFlow manipula o DOM diretamente via canvas ou SVG, o que conflita com o modelo de reconciliação do React.
+
+```typescript
+// hooks/useSheetMusic.ts
+export function useSheetMusic(containerRef: RefObject<HTMLDivElement>) {
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    // VexFlow requer limpeza manual antes de re-renderizar
+    containerRef.current.innerHTML = "";
+
+    const renderer = new Renderer(containerRef.current, Renderer.Backends.SVG);
+    renderer.resize(600, 150);
+
+    const context = renderer.getContext();
+    const stave = new Stave(10, 10, 580);
+    stave.addClef("treble").addTimeSignature("4/4");
+    stave.setContext(context).draw();
+
+    return () => {
+      if (containerRef.current) {
+        containerRef.current.innerHTML = "";
+      }
+    };
+  }, [note]);
+}
+```
+
+### Engine de Áudio com Tone.js
+
+Para o áudio, usei Tone.js com `ToneAudioBuffer` carregando amostras reais de trompete por nota. A detecção de timing no Modo Ritmo usa `Tone.Transport` para sincronizar o playhead com a janela de acerto de cada nota.
+
+```typescript
+// hooks/useTrumpetAudio.ts
+const SAMPLE_MAP: Record<string, string> = {
+  C4: "/audio/trumpet/C4.mp3",
+  D4: "/audio/trumpet/D4.mp3",
+  // ...
+};
+
+export function useTrumpetAudio() {
+  const samplerRef = useRef<Tone.Sampler | null>(null);
+
+  useEffect(() => {
+    samplerRef.current = new Tone.Sampler(SAMPLE_MAP).toDestination();
+    return () => samplerRef.current?.dispose();
+  }, []);
+
+  const playNote = useCallback((note: string) => {
+    samplerRef.current?.triggerAttackRelease(note, "8n");
+  }, []);
+
+  return { playNote };
+}
+```
+
+### Mapeamento de Dedilhado
+
+Cada nota do trompete tem um dedilhado específico (combinação de válvulas 1, 2 e 3). O `fingeringMap` mapeia nota para válvulas e também inclui dedilhados alternativos para notas com múltiplas opções.
+
+```typescript
+// data/fingeringMap.ts
+export const fingeringMap: Record<string, number[][]> = {
+  C4: [[0, 0, 0]], // Nota aberta
+  D4: [[1, 3, 0]], // Válvulas 1 e 3
+  E4: [[1, 2, 0]], // Válvulas 1 e 2
+  F4: [[1, 0, 0]], // Válvula 1
+  "F#4": [
+    [2, 3, 0],
+    [1, 2, 3],
+  ], // Alternativo: todas as válvulas
+  G4: [[0, 0, 0]], // Nota aberta (parcial diferente)
+  // ...
+};
+```
+
+## Controles
+
+| Ação                    | Tecla  |
+| ----------------------- | ------ |
+| Válvula 1               | Q      |
+| Válvula 2               | W      |
+| Válvula 3               | E      |
+| 3º slide (afinação)     | Shift  |
+| Confirmar / Nota aberta | Espaço |
+
+Os controles podem ser alterados no menu principal.
+
+## O que aprendi
+
+- VexFlow tem uma API imperativa que requer atenção ao ciclo de vida do React: precisei gerenciar limpeza do DOM manualmente nos `useEffect`
+- Tone.js e timing preciso: a janela de detecção de acerto no Modo Ritmo foi a parte mais difícil, sincronizar áudio com animação visual tem latências diferentes
+- Sistema de gamificação simples mas eficaz: o multiplier de streaks foi o que mais engajou nos testes, pequenos feedbacks visuais fazem diferença
