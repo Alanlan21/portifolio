@@ -1,7 +1,34 @@
 import type { MDXComponents } from "mdx/types";
+import { Download } from "lucide-react";
 import { CodeBlock, InlineCode } from "@/components/code-block";
 import { Terminal } from "@/components/terminal";
 import { TechStack, TechBadge } from "@/components/tech-stack";
+
+function DownloadButton({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      download
+      className="group inline-flex items-center gap-3 rounded-xl border border-zinc-700 bg-zinc-900 px-5 py-3 text-sm font-medium text-zinc-200 no-underline transition-all hover:border-emerald-500/50 hover:bg-zinc-800 hover:text-white my-4"
+    >
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 transition-colors group-hover:bg-emerald-500/20">
+        <Download className="h-4 w-4" />
+      </span>
+      <span className="flex flex-col leading-tight">
+        <span>{children}</span>
+        <span className="text-xs text-zinc-500 font-normal">
+          PDF · Unifor · 2025
+        </span>
+      </span>
+    </a>
+  );
+}
 
 function extractText(node: React.ReactNode): string {
   if (typeof node === "string" || typeof node === "number") {
@@ -30,7 +57,10 @@ function slugifyHeading(text: string): string {
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   const headingSlugCounts = new Map<string, number>();
 
-  const resolveHeadingId = (id: string | undefined, children: React.ReactNode) => {
+  const resolveHeadingId = (
+    id: string | undefined,
+    children: React.ReactNode,
+  ) => {
     if (id) return id;
 
     const baseSlug = slugifyHeading(extractText(children));
@@ -194,6 +224,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     TechStack,
     TechBadge,
     CodeBlock,
+    DownloadButton,
 
     ...components,
   };

@@ -483,7 +483,7 @@ export default function Home() {
                       logo: "/assets/logos/logo-unifor.jpg",
                       desc: "Pós-graduação com ênfase em práticas DevOps, CI/CD, observabilidade e arquitetura de sistemas distribuídos.",
                       type: "education",
-                      slug: "unifor",
+                      slug: "pos-devops",
                       current: true,
                     },
                     {

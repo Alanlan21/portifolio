@@ -39,8 +39,13 @@ const navigation = [
         icon: Database,
       },
       {
-        name: "Unifor",
-        href: "/sobre/unifor",
+        name: "Pós DevOps | Unifor",
+        href: "/sobre/pos-devops",
+        icon: GraduationCap,
+      },
+      {
+        name: "ADS | Unifor",
+        href: "/sobre/ADS",
         icon: GraduationCap,
       },
     ],
