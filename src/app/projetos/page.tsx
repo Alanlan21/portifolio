@@ -40,7 +40,7 @@ const projects: ProjectCardProps[] = [
       "VexFlow",
       "Tone.js",
     ],
-    status: "finalizado",
+    status: "beta",
     highlight:
       "Áudio real de trompete • Dois modos de jogo • Partituras com VexFlow",
     github: "https://github.com/Alanlan21/valvecraft",
@@ -61,7 +61,7 @@ const projects: ProjectCardProps[] = [
       "Stripe",
       "JWT",
     ],
-    status: "em desenvolvimento",
+    status: "estável",
     highlight: "Integração de pagamento Stripe com fluxo completo",
     github: "https://github.com/Alanlan21/unimenu",
   },
@@ -71,7 +71,7 @@ const projects: ProjectCardProps[] = [
     description:
       "Aplicativo de comunicação assistiva que converte texto em fala de alta qualidade. Desenvolvido para pessoas com dificuldades de comunicação verbal, utilizando síntese de voz avançada da ElevenLabs.",
     tags: ["React", "Vite", "Tailwind", "ElevenLabs API", "PWA", "TypeScript"],
-    status: "estável",
+    status: "finalizado",
     highlight: "PWA instalável com síntese de voz premium",
     github: "https://github.com/Alanlan21/fala-pai",
     demo: "https://falapai.vercel.app",

@@ -9,7 +9,7 @@ export interface ProjectCardProps {
   description: string;
   slug: string;
   tags: string[];
-  status?: "em desenvolvimento" | "finalizado" | "estável";
+  status?: "em desenvolvimento" | "finalizado" | "estável" | "beta";
   highlight?: string;
   github?: string;
   demo?: string;
@@ -32,6 +32,7 @@ export function ProjectCard({
       "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
     finalizado: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
     estável: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    beta: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   };
 
   return (
