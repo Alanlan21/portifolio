@@ -1,0 +1,53 @@
+---
+title: FalaPai
+description: Assistive communication app with natural voice synthesis via ElevenLabs API. Installable PWA with local persistence.
+tags:
+  - React 19
+  - Vite
+  - Tailwind CSS
+  - ElevenLabs API
+  - PWA
+  - TypeScript
+status: em produção
+github: https://github.com/Alanlan21/fala-pai
+demo: https://falapai.vercel.app
+highlight: Installable PWA • Natural voice synthesis
+date: 2024-11-10
+---
+
+## The Story
+
+My father needed surgery that compromised his vocal cords and his ability to speak. He could think and understand everything, but speaking was extremely painful and hoarse.
+
+Communication became exhausting — for him and for everyone around him. I built FalaPai in a weekend so he'd have a way to express himself with his own voice again.
+
+## How It Works
+
+The app converts typed text into speech using ElevenLabs, which generates audio indistinguishable from a real human voice. My father's voice was cloned beforehand so the output sounds like him.
+
+Key features:
+
+- **Quick phrases**: pre-saved buttons for the most common things ("Yes", "No", "Water", "Come here")
+- **Free text**: type anything and it speaks it out loud
+- **Offline**: cached as a PWA, works without internet for saved phrases
+- **Installable**: added to the home screen, looks and feels like a native app
+
+## Technical Decisions
+
+### Why ElevenLabs?
+
+I benchmarked 4 TTS APIs. ElevenLabs was the only one that sounded human enough that my father's friends didn't notice it was synthetic. The latency (~800ms) was acceptable for the use case.
+
+### Why PWA and not a native app?
+
+Speed of deployment. A PWA lets me ship in a weekend and update without going through app stores. For a personal tool used by one person, that's the right tradeoff.
+
+### Offline-first
+
+The quick phrases are stored in localStorage and the PWA manifest caches the app shell. The ElevenLabs calls need internet, but the most-used phrases can be pre-synthesized and cached locally.
+
+## Impact
+
+My father used the app every day for over three months during recovery. It was the most directly useful thing I've ever built.
+
+It's currently in production and still being maintained.

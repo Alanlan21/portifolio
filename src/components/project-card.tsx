@@ -1,15 +1,18 @@
+"use client";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
+import { useLanguage } from "@/lib/i18n";
 
 export interface ProjectCardProps {
   title: string;
   description: string;
   slug: string;
   tags: string[];
-  status?: "em desenvolvimento" | "finalizado" | "estável" | "beta";
+  status?: "finalizado" | "em_desenvolvimento" | "estavel" | "em_producao" | "beta";
   highlight?: string;
   github?: string;
   demo?: string;
@@ -27,11 +30,12 @@ export function ProjectCard({
   demo,
   className,
 }: ProjectCardProps) {
+  const { t } = useLanguage();
   const statusColors = {
-    "em desenvolvimento":
-      "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
+    em_desenvolvimento: "bg-yellow-500/10 text-yellow-500 border-yellow-500/20",
     finalizado: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-    estável: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    estavel: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    em_producao: "bg-green-500/10 text-green-500 border-green-500/20",
     beta: "bg-orange-500/10 text-orange-400 border-orange-500/20",
   };
 
@@ -51,7 +55,7 @@ export function ProjectCard({
             variant="outline"
             className={cn("text-xs", statusColors[status])}
           >
-            {status}
+            {t.status[status]}
           </Badge>
         </div>
       </CardHeader>
@@ -112,7 +116,7 @@ export function ProjectCard({
             href={`/projetos/${slug}`}
             className="inline-flex items-center gap-1 text-sm font-medium text-muted-foreground hover:text-emerald-500 transition-colors"
           >
-            Ver detalhes
+            {t.projectDetail.viewDetails}
             <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>

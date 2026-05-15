@@ -1,0 +1,64 @@
+---
+title: UniMenu Full-Stack + Mobile
+description: Complete food ordering system for restaurants. JWT authentication, Stripe payment integration, NestJS backend + React frontend + React Native app.
+tags:
+  - NestJS
+  - React
+  - React Native
+  - MySQL
+  - TypeScript
+  - Stripe
+  - JWT
+status: em desenvolvimento
+github: https://github.com/Alanlan21/unimenu
+highlight: Stripe integration • JWT Auth • Cross-platform
+date: 2023-08-20
+---
+
+## The Problem
+
+UNIFOR's cafeterias faced a classic problem: long queues during peak hours, orders lost on paper, and zero visibility into what was available. Students wasted time, staff made mistakes, and managers had no data.
+
+The solution needed to be cross-platform — students use both Android and iOS — and it needed to handle real money, which meant taking payment integration seriously.
+
+## Architecture
+
+The system has three parts:
+
+**Backend (NestJS):** REST API with modular architecture. Each domain (auth, orders, menu, payments) is a separate NestJS module with its own repository. This makes it easy to scale individual parts without touching the rest.
+
+**Web Panel (React):** Admin dashboard for cafeteria managers. Real-time order view, menu management, sales reports.
+
+**Mobile App (React Native + Expo):** Student-facing app. Browse menu, place orders, pay with Stripe, track order status.
+
+## Payment Flow
+
+```
+Student places order → Stripe creates PaymentIntent
+→ App confirms payment → Backend verifies webhook
+→ Order status updated → Kitchen receives notification
+```
+
+Stripe webhooks handle the critical part: the backend never trusts the client to confirm payment. It only marks an order as paid after receiving the `payment_intent.succeeded` webhook directly from Stripe.
+
+## Auth Strategy
+
+Multi-tenant JWT: students, staff, and admins have different roles with different permissions. The token payload includes the role, and a custom NestJS guard checks it on every protected route.
+
+```typescript
+@Injectable()
+export class RolesGuard implements CanActivate {
+  canActivate(context: ExecutionContext): boolean {
+    const requiredRoles = this.reflector.get<Role[]>(
+      "roles",
+      context.getHandler(),
+    );
+    const { user } = context.switchToHttp().getRequest();
+    return requiredRoles.some((role) => user.roles.includes(role));
+  }
+}
+```
+
+## Status
+
+In active development. The core order flow is working; payment integration is being tested. Mobile app has a working prototype.

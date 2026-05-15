@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
+import { useLanguage } from "@/lib/i18n";
 
 interface Contribution {
   date: string;
@@ -30,11 +31,11 @@ const COLORS_LIGHT = {
   4: "#216e39",
 } as const;
 
-const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
-const DAYS = ["", "Seg", "", "Qua", "", "Sex", ""];
-
 export function ContributionGraph({ username }: { username: string }) {
   const { resolvedTheme } = useTheme();
+  const { t } = useLanguage();
+  const MONTHS = t.months;
+  const DAYS = t.days;
   const COLORS = resolvedTheme === "dark" ? COLORS_DARK : COLORS_LIGHT;
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [total, setTotal] = useState<number>(0);
@@ -99,7 +100,7 @@ export function ContributionGraph({ username }: { username: string }) {
   });
 
   const CELL = 10; // px per cell
-  const GAP = 2;  // px gap
+  const GAP = 2; // px gap
   const step = CELL + GAP;
 
   const svgWidth = weeks.length * step - GAP;
@@ -109,7 +110,7 @@ export function ContributionGraph({ username }: { username: string }) {
     <div className="w-full overflow-x-auto">
       {/* month labels */}
       <div
-        className="relative mb-1 ml-[22px]"
+        className="relative mb-1 ml-5.5"
         style={{ height: 14, minWidth: svgWidth }}
       >
         {monthLabels.map(({ label, col }) => (
@@ -142,7 +143,7 @@ export function ContributionGraph({ username }: { username: string }) {
           width={svgWidth}
           height={svgHeight}
           style={{ minWidth: svgWidth }}
-          aria-label={`${total} contribuições no último ano`}
+          aria-label={`${total} ${t.contributionGraph.totalLabel}`}
         >
           {weeks.map((week, col) =>
             week.map((day, row) => (
@@ -155,28 +156,39 @@ export function ContributionGraph({ username }: { username: string }) {
                 rx={2}
                 ry={2}
                 fill={day ? COLORS[day.level] : COLORS[0]}
-                aria-label={day ? `${day.count} contribuições em ${day.date}` : undefined}
+                aria-label={
+                  day
+                    ? `${day.count} ${t.contributionGraph.contributions} ${t.contributionGraph.on} ${day.date}`
+                    : undefined
+                }
               >
-                {day && <title>{`${day.count} contribuições em ${day.date}`}</title>}
+                {day && (
+                  <title>{`${day.count} ${t.contributionGraph.contributions} ${t.contributionGraph.on} ${day.date}`}</title>
+                )}
               </rect>
-            ))
+            )),
           )}
         </svg>
       </div>
 
       {/* footer */}
-      <div className="flex items-center justify-between mt-2 ml-[22px]">
+      <div className="flex items-center justify-between mt-2 ml-5.5">
         <span className="text-[11px] text-zinc-500">
-          {total.toLocaleString("pt-BR")} contribuições no último ano
+          {total.toLocaleString(t.contributionGraph.locale)}{" "}
+          {t.contributionGraph.totalLabel}
         </span>
         <div className="flex items-center gap-1">
-          <span className="text-[10px] text-zinc-600">Menos</span>
+          <span className="text-[10px] text-zinc-600">
+            {t.contributionGraph.less}
+          </span>
           {([0, 1, 2, 3, 4] as const).map((l) => (
             <svg key={l} width={CELL} height={CELL}>
               <rect width={CELL} height={CELL} rx={2} ry={2} fill={COLORS[l]} />
             </svg>
           ))}
-          <span className="text-[10px] text-zinc-600">Mais</span>
+          <span className="text-[10px] text-zinc-600">
+            {t.contributionGraph.more}
+          </span>
         </div>
       </div>
     </div>

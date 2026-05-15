@@ -6,20 +6,23 @@ import { Menu, X, Github, Linkedin } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
 import { Button } from "@/components/ui/button";
 import { useActiveSection } from "@/hooks/use-active-section";
-
-const navigation = [
-  { name: "Início", href: "/#inicio" },
-  { name: "Sobre", href: "/#sobre" },
-  { name: "Projetos", href: "/#projetos" },
-  { name: "Contato", href: "/#contato" },
-];
+import { useLanguage } from "@/lib/i18n";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const activeSection = useActiveSection();
+  const { t } = useLanguage();
+
+  const navigation = [
+    { name: t.nav.home, href: "/#inicio" },
+    { name: t.nav.about, href: "/#sobre" },
+    { name: t.nav.projects, href: "/#trabalho" },
+    { name: t.nav.contact, href: "/#contato" },
+  ];
 
   function isActive(href: string): boolean {
     if (pathname === "/" && href.startsWith("/#")) {
@@ -29,7 +32,7 @@ export function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="flex h-14 items-center justify-between px-4 lg:px-6">
         {/* Logo (mobile) */}
         <Link href="/" className="flex items-center gap-2 lg:hidden">
@@ -86,6 +89,7 @@ export function Header() {
             </a>
           </Button>
           <ThemeToggle />
+          <LanguageToggle />
 
           {/* Mobile menu button */}
           <Button

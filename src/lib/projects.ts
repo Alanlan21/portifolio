@@ -27,7 +27,7 @@ export function getProjectSlugs(): string[] {
   }
   return fs
     .readdirSync(projectsDirectory)
-    .filter((file) => file.endsWith(".mdx"))
+    .filter((file) => file.endsWith(".mdx") && !file.endsWith(".en.mdx"))
     .map((file) => file.replace(/\.mdx$/, ""));
 }
 
@@ -53,4 +53,19 @@ export function getAllProjects(): Project[] {
   return slugs
     .map((slug) => getProjectBySlug(slug))
     .filter((project): project is Project => project !== null);
+}
+
+export function getProjectBySlugLocale(
+  slug: string,
+  locale: string,
+): Project | null {
+  if (locale === "en") {
+    const enPath = path.join(projectsDirectory, `${slug}.en.mdx`);
+    if (fs.existsSync(enPath)) {
+      const fileContents = fs.readFileSync(enPath, "utf8");
+      const { data, content } = matter(fileContents);
+      return { slug, frontmatter: data as ProjectFrontmatter, content };
+    }
+  }
+  return getProjectBySlug(slug);
 }

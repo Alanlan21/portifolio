@@ -2,16 +2,19 @@
 
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { LanguageProvider } from "@/lib/i18n";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <NextThemesProvider
-      attribute="class"
-      defaultTheme="dark"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <TooltipProvider delay={0}>{children}</TooltipProvider>
-    </NextThemesProvider>
+    <LanguageProvider>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="dark"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <TooltipProvider delay={0}>{children}</TooltipProvider>
+      </NextThemesProvider>
+    </LanguageProvider>
   );
 }

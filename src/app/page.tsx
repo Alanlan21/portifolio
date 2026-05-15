@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
@@ -7,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ContributionGraph } from "@/components/contribution-graph";
+import { useLanguage } from "@/lib/i18n";
 
 const skills = {
   backend: [
@@ -22,94 +25,11 @@ const skills = {
   devops: ["Docker", "Git", "GitHub Actions", "AWS"],
 };
 
-const projects = [
-  {
-    slug: "attack-defense-lab",
-    name: "Attack & Defense Lab",
-    tagline: "Simulação de segurança: Red Team vs Blue Team",
-    category: "security",
-    categoryColor: "emerald",
-    status: "finalizado",
-    tech: ["NestJS", "PostgreSQL", "React", "Python"],
-    highlights: [
-      "Camadas de defesa em profundidade (WAF, rate limiting, honeypot)",
-      "Suite de payloads para testar as próprias defesas",
-      "Aprendi bastante sobre segurança ofensiva e defensiva",
-    ],
-    decision: "Projeto de estudo focado em entender segurança na prática",
-  },
-  {
-    slug: "valvecraft",
-    name: "Valvecraft",
-    tagline: "Jogo educativo para trompetistas no navegador",
-    category: "frontend",
-    categoryColor: "orange",
-    status: "finalizado",
-    tech: ["React 19", "TypeScript", "Vite", "VexFlow", "Tone.js"],
-    highlights: [
-      "Amostras de áudio reais de trompete por nota",
-      "Modo Quiz com streaks e multiplicadores de pontuação",
-      "Modo Ritmo com playhead sincronizado via Tone.Transport",
-    ],
-    decision:
-      "VexFlow para renderização de partituras, Tone.js para timing preciso de áudio",
-  },
-  {
-    slug: "unimenu",
-    name: "UniMenu",
-    tagline: "Full-stack + Mobile, sistema completo de pedidos",
-    category: "fullstack",
-    categoryColor: "violet",
-    status: "em desenvolvimento",
-    tech: ["NestJS", "React", "React Native", "MySQL", "Stripe"],
-    highlights: [
-      "App mobile + painel web + API unificada",
-      "Integração Stripe para pagamentos",
-      "Autenticação JWT multi-tenant",
-    ],
-    decision: "Módulos NestJS desacoplados para escalabilidade horizontal",
-  },
-  {
-    slug: "fala-pai",
-    name: "FalaPai",
-    tagline: "PWA de comunicação assistiva com voz natural",
-    category: "frontend",
-    categoryColor: "cyan",
-    status: "em produção",
-    tech: ["React 19", "Vite", "ElevenLabs API", "PWA"],
-    highlights: [
-      "Síntese de voz indistinguível de humana",
-      "PWA instalável com cache offline",
-      "Frases rápidas com persistência local",
-    ],
-    decision: "ElevenLabs escolhida após benchmark de 4 APIs de TTS",
-  },
-  {
-    slug: "calote-bot",
-    name: "CaloteBot",
-    tagline: "Bot de cobrança via WhatsApp com agendamento",
-    category: "automação",
-    categoryColor: "amber",
-    status: "finalizado",
-    tech: ["Node.js", "venom-bot", "dayjs", "inquirer"],
-    highlights: [
-      "Templates dinâmicos com variáveis (nome, valor, dias de atraso)",
-      "Agendamento de mensagens por contato",
-      "Suporte a anexos de imagem e comprovantes",
-    ],
-    decision:
-      "Migrado de Python/Selenium para Node.js + venom-bot para maior estabilidade",
-  },
-];
-
-const terminalProjects = [
-  { name: "attack-defense-lab", desc: "SOC Cybersec • Red Team vs Blue Team" },
-  { name: "valvecraft", desc: "Jogo educativo • Trompete no navegador" },
-  { name: "unimenu", desc: "Full-stack + Mobile • NestJS + React Native" },
-  { name: "fala-pai", desc: "PWA em produção • ElevenLabs API" },
-];
-
 export default function Home() {
+  const { lang, t } = useLanguage();
+  const projects = t.projectsData;
+  const terminalProjects = t.terminalProjects;
+
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
@@ -175,8 +95,7 @@ export default function Home() {
                     variant="outline"
                     className="border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
                   >
-                    <span className="mr-1.5 animate-pulse">●</span> Disponível
-                    para trabalho
+                    <span className="mr-1.5 animate-pulse">●</span> {t.status.available}
                   </Badge>
 
                   <div>
@@ -196,7 +115,7 @@ export default function Home() {
                       className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
                     >
                       <Link href="/#trabalho">
-                        Explorar projetos
+                        {t.home.exploreCta}
                         <ArrowRight className="h-4 w-4" />
                       </Link>
                     </Button>
@@ -208,7 +127,7 @@ export default function Home() {
                     >
                       <a href="/cv-alan-regis.pdf" download>
                         <Download className="h-4 w-4" />
-                        CV
+                        {t.home.cv}
                       </a>
                     </Button>
                   </div>
@@ -310,7 +229,7 @@ export default function Home() {
                       command="echo $STATUS"
                       output={
                         <span className="text-emerald-400">
-                          Disponível para trabalho
+                          {t.home.terminalStatus}
                         </span>
                       }
                       animate={true}
@@ -340,8 +259,7 @@ export default function Home() {
                       command="cat ./now"
                       output={
                         <div className="text-zinc-400 text-sm">
-                          Pós-graduando em Engenharia de Software com Foco em
-                          Devops
+                          {t.home.terminalNow}
                         </div>
                       }
                       animate={true}
@@ -387,10 +305,10 @@ export default function Home() {
           <ScrollReveal className="mb-10 lg:mb-14">
             <div className="w-8 h-0.5 bg-emerald-500/70 mb-3 rounded-full" />
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
-              Sobre
+              {t.home.aboutTitle}
             </h2>
             <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-              NestJS · TypeScript · React — 2 anos em produção
+              {t.home.aboutSubtitle}
             </p>
           </ScrollReveal>
 
@@ -402,17 +320,17 @@ export default function Home() {
             <div className="space-y-6">
               <div>
                 <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl mb-6">
-                  Foco em{" "}
-                  <span className="text-zinc-900 dark:text-white font-medium">APIs REST</span> com
-                  Node.js e NestJS. Dois anos desenvolvendo sistemas em
-                  produção, de usinas termelétricas a instituições públicas.
-                  Com atuação prática em frontend com React.
+                  {lang === "en" ? (
+                    <>Focused on{" "}<span className="text-zinc-900 dark:text-white font-medium">REST APIs</span>{" "}with Node.js and NestJS. Two years building production systems, from power plants to public institutions. With hands-on frontend experience using React.</>
+                  ) : (
+                    <>Foco em{" "}<span className="text-zinc-900 dark:text-white font-medium">APIs REST</span>{" "}com Node.js e NestJS. Dois anos desenvolvendo sistemas em produção, de usinas termelétricas a instituições públicas. Com atuação prática em frontend com React.</>
+                  )}
                 </p>
               </div>
 
               <div>
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
-                  Stack principal
+                  {t.home.stackMain}
                 </p>
                 <TechStack
                   technologies={[
@@ -429,7 +347,7 @@ export default function Home() {
 
               <div>
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
-                  Também trabalho com
+                  {t.home.stackAlso}
                 </p>
                 <TechStack
                   technologies={[
@@ -450,55 +368,14 @@ export default function Home() {
             {/* Timeline */}
             <div>
               <p className="text-xs font-medium text-zinc-500 uppercase tracking-widest mb-5">
-                Trajetória
+                {t.home.careerTitle}
               </p>
               <div className="relative">
                 {/* linha vertical */}
                 <div className="absolute left-4.75 top-2 bottom-2 w-px bg-zinc-200 dark:bg-zinc-800" />
 
                 <div className="space-y-0">
-                  {[
-                    {
-                      period: "2026 – atual",
-                      title: "Pós em Eng. Software foco em DevOps",
-                      org: "Unifor",
-                      logo: "/assets/logos/logo-unifor.jpg",
-                      desc: "Pós-graduação com ênfase em práticas DevOps, CI/CD, observabilidade e arquitetura de sistemas distribuídos.",
-                      type: "education",
-                      slug: "pos-devops",
-                      current: true,
-                    },
-                    {
-                      period: "2024 – 2026",
-                      title: "Desenvolvedor Web",
-                      org: "Energia Pecém",
-                      logo: "/assets/logos/logo-energia-pecem.jpg",
-                      desc: "APIs REST críticas para manutenção e segurança de usina termelétrica (~50% da geração elétrica do CE). Auditoria, compliance ISO/LGPD, monitoramento Grafana.",
-                      type: "work",
-                      slug: "energia-pecem",
-                      current: false,
-                    },
-                    {
-                      period: "2023 – 2025",
-                      title: "Análise e Desenvolvimento de Sistemas",
-                      org: "Unifor",
-                      logo: "/assets/logos/logo-unifor.jpg",
-                      desc: "Formação em ADS com foco em engenharia de software e arquitetura de sistemas.",
-                      type: "education",
-                      slug: "unifor",
-                      current: false,
-                    },
-                    {
-                      period: "2023 – 2024",
-                      title: "Estagiário de Desenvolvimento",
-                      org: "Dataged",
-                      logo: "/assets/logos/logo-dataged.jpg",
-                      desc: "Desenvolvimento e manutenção de aplicações Java/Spring para ECM/GED em instituições públicas. Do levantamento de requisitos até a entrega.",
-                      type: "estagio",
-                      slug: "dataged",
-                      current: false,
-                    },
-                  ].map((item, i) => (
+                  {t.timeline.map((item, i) => (
                     <div
                       key={i}
                       className="relative flex gap-4 pl-10 pb-6 last:pb-0"
@@ -544,10 +421,10 @@ export default function Home() {
                               className={`text-[10px] font-mono ${item.current ? "border-emerald-500/30 text-emerald-400" : ""}`}
                             >
                               {item.type === "work"
-                                ? "trabalho"
+                                ? t.experienceType.work
                                 : item.type === "estagio"
-                                  ? "estágio"
-                                  : "formação"}
+                                  ? t.experienceType.estagio
+                                  : t.experienceType.education}
                             </Badge>
                           </div>
                           <p className="text-xs text-zinc-500">
@@ -608,17 +485,17 @@ export default function Home() {
             <div className="space-y-2">
               <div className="w-8 h-0.5 bg-violet-500/70 mb-3 rounded-full" />
               <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">
-                Projetos
+                {t.home.projectsTitle}
               </h2>
               <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-                Trabalhos selecionados
+                {t.home.projectsSubtitle}
               </p>
             </div>
             <Link
               href="/projetos"
               className="hidden sm:flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 transition-colors group"
             >
-              <span>Ver todos</span>
+              <span>{t.home.viewAll}</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </ScrollReveal>
@@ -700,12 +577,12 @@ export default function Home() {
 
           {/* CTA contato */}
           <div className="mt-10 flex items-center gap-2 text-sm text-zinc-500">
-            <span>Tem um projeto em mente?</span>
+            <span>{t.home.ctaProjectQ}</span>
             <Link
               href="/#contato"
               className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 group"
             >
-              Fala comigo
+              {t.home.ctaProjectLink}
               <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
@@ -715,7 +592,7 @@ export default function Home() {
             href="/projetos"
             className="sm:hidden flex items-center justify-center gap-2 mt-6 text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
           >
-            <span>Ver todos os projetos</span>
+            <span>{t.home.viewAllProjects}</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -731,10 +608,10 @@ export default function Home() {
           <ScrollReveal className="mb-10">
             <div className="w-8 h-0.5 bg-zinc-500/70 mb-3 rounded-full" />
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
-              Contato
+              {t.home.contactTitle}
             </h2>
             <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-              Tem um projeto ou oportunidade? Vamos conversar.
+              {t.home.contactSubtitle}
             </p>
           </ScrollReveal>
 
@@ -787,26 +664,25 @@ export default function Home() {
             <div className="space-y-4">
               <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/30 p-5">
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
-                  Disponibilidade
+                  {t.home.availabilityTitle}
                 </p>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   <span className="text-sm text-zinc-900 dark:text-white font-medium">
-                    Disponível para trabalho
+                    {t.status.available}
                   </span>
                 </div>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  Fico feliz em ouvir sobre projetos, oportunidades ou só bater
-                  um papo sobre tech. Respondo rápido.
+                  {t.home.availabilityMsg}
                 </p>
               </div>
 
               <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/30 p-5">
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
-                  Localização
+                  {t.home.locationTitle}
                 </p>
                 <p className="text-sm text-zinc-500 dark:text-zinc-400">
-                  Fortaleza, CE. Aberto a remoto ou híbrido.
+                  {t.home.locationMsg}
                 </p>
               </div>
             </div>
@@ -843,7 +719,7 @@ export default function Home() {
                 href="/#contato"
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
-                Contato
+                {t.home.footerContact}
               </Link>
             </div>
           </div>

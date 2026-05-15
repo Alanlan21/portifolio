@@ -1,0 +1,111 @@
+---
+title: Attack & Defense Lab
+description: Red Team vs Blue Team platform with WAF, IDS/IPS, threat intelligence and real-time SOC dashboard.
+tags:
+  - NestJS
+  - PostgreSQL
+  - React
+  - Python
+  - Security
+status: finalizado
+github: https://github.com/Alanlan21/NestJS-Attack-and-Defense-Lab
+highlight: WAF with 18 regex patterns • 136 automated payloads
+date: 2024-01-15
+---
+
+## The Problem
+
+During my cybersecurity studies, I noticed a significant gap: most educational materials focused on theory or showed isolated attacks, without demonstrating how defenses work together in a real system.
+
+The question I wanted to answer was: **how do you build a backend that's genuinely hard to break into?**
+
+## Overview
+
+The NestJS Attack & Defense Lab is an educational platform that simulates attack and defense scenarios in real time. It implements a simplified SOC (Security Operations Center) where:
+
+- **Red Team** runs automated attacks via Python scripts
+- **Blue Team** monitors and responds through a React dashboard
+- **Backend** implements 7 layers of defense in depth
+
+## Defense Architecture
+
+The architecture follows the **defense in depth** principle: each layer adds a barrier an attacker needs to overcome:
+
+```
+┌─────────────────────────────────────────────────┐
+│                    LAYER 7                      │
+│              Application Logic                  │
+│         (Business Rule Validation)              │
+├─────────────────────────────────────────────────┤
+│                    LAYER 6                      │
+│              Threat Scoring                     │
+│         (Dynamic Risk Assessment)               │
+├─────────────────────────────────────────────────┤
+│                    LAYER 5                      │
+│                 Honeypots                       │
+│         (Deception & Detection)                 │
+├─────────────────────────────────────────────────┤
+│                    LAYER 4                      │
+│              Input Validation                   │
+│      (Sanitization & Type Checking)             │
+├─────────────────────────────────────────────────┤
+│                    LAYER 3                      │
+│              Rate Limiting                      │
+│         (Distributed with Redis)                │
+├─────────────────────────────────────────────────┤
+│                    LAYER 2                      │
+│            WAF (Web Application Firewall)       │
+│         (Pattern Matching & Blocking)           │
+├─────────────────────────────────────────────────┤
+│                    LAYER 1                      │
+│              Network Security                   │
+│    (Helmet, CORS, Security Headers)             │
+└─────────────────────────────────────────────────┘
+```
+
+### Layer 2: WAF (Web Application Firewall)
+
+Pattern matching to detect known malicious payloads:
+
+```typescript
+@Injectable()
+export class WafGuard implements CanActivate {
+  private readonly sqlPatterns = [
+    /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|UNION)\b)/gi,
+    /(\b(OR|AND)\b\s+\d+\s*=\s*\d+)/gi,
+    /(--|\#|\/\*)/g,
+  ];
+
+  canActivate(context: ExecutionContext): boolean {
+    const request = context.switchToHttp().getRequest();
+    const payload = JSON.stringify(request.body);
+    if (this.detectSqlInjection(payload)) {
+      this.logThreat(request, "SQL_INJECTION");
+      throw new ForbiddenException("Suspicious request blocked");
+    }
+    return true;
+  }
+}
+```
+
+### Layer 5: Honeypots
+
+Fake endpoints that look valuable but only serve to detect attackers.
+
+### Layer 6: Threat Scoring with Decay
+
+A threat scoring system that considers IP history with time-based decay.
+
+## OWASP Top 10 Coverage
+
+| Vulnerability              | Implemented Defense                  |
+| -------------------------- | ------------------------------------ |
+| A01: Broken Access Control | Granular RBAC + ownership validation |
+| A03: Injection             | WAF + parameterized queries          |
+| A07: Auth Failures         | JWT + refresh rotation + brute force |
+
+## What I Learned
+
+Building a system to attack yourself is a completely different way of thinking about security. You stop thinking "what could go wrong" and start thinking "how would I exploit this".
+
+The most valuable insight: **most vulnerabilities come from trusting user input too much**. The WAF and input validation alone blocked ~70% of the test payloads.

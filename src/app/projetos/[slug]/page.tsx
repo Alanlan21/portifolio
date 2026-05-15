@@ -5,11 +5,16 @@ import { ArrowLeft, ExternalLink, Github, Clock } from "lucide-react";
 import { compile, run } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import remarkGfm from "remark-gfm";
-import { getProjectBySlug, getProjectSlugs } from "@/lib/projects";
+import {
+  getProjectBySlug,
+  getProjectBySlugLocale,
+  getProjectSlugs,
+} from "@/lib/projects";
 import { useMDXComponents as getMDXComponents } from "../../../../mdx-components";
 import { TableOfContents, type TocItem } from "@/components/table-of-contents";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { LocaleContent } from "@/components/locale-content";
 import readingTime from "reading-time";
 
 interface PageProps {
@@ -80,18 +85,30 @@ export default async function ProjectPage({ params }: PageProps) {
     notFound();
   }
 
+  const projectEn = getProjectBySlugLocale(slug, "en") ?? project;
+
   const { frontmatter, content } = project;
   const stats = readingTime(content);
   const headings = extractHeadings(content);
 
-  // Compile and run MDX
-  const code = await compile(content, {
+  // Compile PT MDX
+  const codePt = await compile(content, {
     outputFormat: "function-body",
     development: false,
     remarkPlugins: [remarkGfm],
   });
+  const { default: MDXContentPt } = await run(String(codePt), {
+    ...runtime,
+    baseUrl: import.meta.url,
+  });
 
-  const { default: MDXContent } = await run(String(code), {
+  // Compile EN MDX
+  const codeEn = await compile(projectEn.content, {
+    outputFormat: "function-body",
+    development: false,
+    remarkPlugins: [remarkGfm],
+  });
+  const { default: MDXContentEn } = await run(String(codeEn), {
     ...runtime,
     baseUrl: import.meta.url,
   });
@@ -113,13 +130,26 @@ export default async function ProjectPage({ params }: PageProps) {
           <main className="max-w-3xl">
             {/* Breadcrumb */}
             <div className="mb-8">
-              <Link
-                href="/projetos"
-                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Voltar para projetos
-              </Link>
+              <LocaleContent
+                pt={
+                  <Link
+                    href="/projetos"
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Voltar para projetos
+                  </Link>
+                }
+                en={
+                  <Link
+                    href="/projetos"
+                    className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Back to projects
+                  </Link>
+                }
+              />
             </div>
 
             {/* Header */}
@@ -141,9 +171,18 @@ export default async function ProjectPage({ params }: PageProps) {
                 {frontmatter.title}
               </h1>
 
-              <p className="text-xl text-muted-foreground mb-6">
-                {frontmatter.description}
-              </p>
+              <LocaleContent
+                pt={
+                  <p className="text-xl text-muted-foreground mb-6">
+                    {frontmatter.description}
+                  </p>
+                }
+                en={
+                  <p className="text-xl text-muted-foreground mb-6">
+                    {projectEn.frontmatter.description}
+                  </p>
+                }
+              />
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-6">
@@ -164,7 +203,7 @@ export default async function ProjectPage({ params }: PageProps) {
                       rel="noopener noreferrer"
                     >
                       <Github className="h-4 w-4" />
-                      Ver código
+                      <LocaleContent pt="Ver código" en="View code" />
                     </a>
                   </Button>
                 )}
@@ -176,7 +215,7 @@ export default async function ProjectPage({ params }: PageProps) {
                       rel="noopener noreferrer"
                     >
                       <ExternalLink className="h-4 w-4" />
-                      Ver demo
+                      <LocaleContent pt="Ver demo" en="View demo" />
                     </a>
                   </Button>
                 )}
@@ -185,25 +224,53 @@ export default async function ProjectPage({ params }: PageProps) {
 
             {/* Content */}
             <article className="prose prose-zinc dark:prose-invert max-w-none">
-              <MDXContent components={components} />
+              <LocaleContent
+                pt={<MDXContentPt components={components} />}
+                en={<MDXContentEn components={components} />}
+              />
             </article>
 
             {/* Footer navigation */}
             <footer className="mt-16 pt-8 border-t border-border">
               <div className="flex justify-between items-center">
-                <Link
-                  href="/projetos"
-                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  Todos os projetos
-                </Link>
-                <Link
-                  href="/contato"
-                  className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
-                >
-                  Gostou? Vamos conversar
-                </Link>
+                <LocaleContent
+                  pt={
+                    <Link
+                      href="/projetos"
+                      className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      Todos os projetos
+                    </Link>
+                  }
+                  en={
+                    <Link
+                      href="/projetos"
+                      className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                      All projects
+                    </Link>
+                  }
+                />
+                <LocaleContent
+                  pt={
+                    <Link
+                      href="/contato"
+                      className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
+                    >
+                      Gostou? Vamos conversar
+                    </Link>
+                  }
+                  en={
+                    <Link
+                      href="/contato"
+                      className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
+                    >
+                      Like it? Let&apos;s talk
+                    </Link>
+                  }
+                />
               </div>
             </footer>
           </main>

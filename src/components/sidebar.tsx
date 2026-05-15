@@ -21,80 +21,91 @@ import {
 } from "lucide-react";
 import { useActiveSection } from "@/hooks/use-active-section";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageToggle } from "@/components/language-toggle";
+import { useLanguage } from "@/lib/i18n";
 
-const navigation = [
-  { name: "Início", href: "/#inicio", icon: Home },
-  {
-    name: "Sobre",
-    href: "/#sobre",
-    icon: User,
-    children: [
-      {
-        name: "Energia Pecém",
-        href: "/sobre/energia-pecem",
-        icon: Zap,
-      },
-      {
-        name: "Dataged",
-        href: "/sobre/dataged",
-        icon: Database,
-      },
-      {
-        name: "Pós DevOps | Unifor",
-        href: "/sobre/pos-devops",
-        icon: GraduationCap,
-      },
-      {
-        name: "ADS | Unifor",
-        href: "/sobre/ADS",
-        icon: GraduationCap,
-      },
-    ],
-  },
-  {
-    name: "Projetos",
-    href: "/#trabalho",
-    icon: FolderGit2,
-    children: [
-      {
-        name: "Attack & Defense Lab",
-        href: "/projetos/attack-defense-lab",
-        icon: Shield,
-      },
-      {
-        name: "Valvecraft",
-        href: "/projetos/valvecraft",
-        icon: Music,
-      },
-      {
-        name: "UniMenu",
-        href: "/projetos/unimenu",
-        icon: FileCode,
-      },
-      {
-        name: "Fala-Pai",
-        href: "/projetos/fala-pai",
-        icon: Smartphone,
-      },
-      {
-        name: "CaloteBot",
-        href: "/projetos/calote-bot",
-        icon: Bot,
-      },
-    ],
-  },
-  { name: "Contato", href: "/#contato", icon: Mail },
-];
+function useNavigation() {
+  const { t } = useLanguage();
+  return [
+    { name: t.nav.home, href: "/#inicio", icon: Home },
+    {
+      name: t.nav.about,
+      href: "/#sobre",
+      icon: User,
+      children: [
+        {
+          name: "Energia Pecém",
+          href: "/sobre/energia-pecem",
+          icon: Zap,
+        },
+        {
+          name: "Dataged",
+          href: "/sobre/dataged",
+          icon: Database,
+        },
+        {
+          name: "Pós DevOps | Unifor",
+          href: "/sobre/pos-devops",
+          icon: GraduationCap,
+        },
+        {
+          name: "ADS | Unifor",
+          href: "/sobre/ADS",
+          icon: GraduationCap,
+        },
+      ],
+    },
+    {
+      name: t.nav.projects,
+      href: "/#trabalho",
+      icon: FolderGit2,
+      children: [
+        {
+          name: "Attack & Defense Lab",
+          href: "/projetos/attack-defense-lab",
+          icon: Shield,
+        },
+        {
+          name: "Valvecraft",
+          href: "/projetos/valvecraft",
+          icon: Music,
+        },
+        {
+          name: "UniMenu",
+          href: "/projetos/unimenu",
+          icon: FileCode,
+        },
+        {
+          name: "Fala-Pai",
+          href: "/projetos/fala-pai",
+          icon: Smartphone,
+        },
+        {
+          name: "CaloteBot",
+          href: "/projetos/calote-bot",
+          icon: Bot,
+        },
+      ],
+    },
+    { name: t.nav.contact, href: "/#contato", icon: Mail },
+  ];
+}
 
 export function Sidebar() {
   const pathname = usePathname();
   const activeSection = useActiveSection();
+  const { t } = useLanguage();
+  const navigation = useNavigation();
 
   // Auto-expand sections that have an active child on first load
   const [openSections, setOpenSections] = useState<Set<string>>(() => {
     const set = new Set<string>();
     for (const item of navigation) {
-      if (item.children?.some((c) => pathname.startsWith(c.href))) {
+      if (
+        item.children?.some((c: { href: string }) =>
+          pathname.startsWith(c.href),
+        )
+      ) {
         set.add(item.name);
       }
     }
@@ -165,7 +176,7 @@ export function Sidebar() {
                         <button
                           onClick={() => toggleSection(item.name)}
                           className="px-2 py-2 rounded-r-md hover:text-foreground transition-colors"
-                          aria-label={isOpen ? "Recolher" : "Expandir"}
+                          aria-label={isOpen ? t.nav.collapse : t.nav.expand}
                         >
                           <ChevronRight
                             className={cn(
@@ -227,7 +238,10 @@ export function Sidebar() {
             <p className="text-xs text-muted-foreground font-mono">
               <span className="text-emerald-500">v</span>1.0.0
             </p>
-            <ThemeToggle />
+            <div className="flex items-center gap-1">
+              <LanguageToggle />
+              <ThemeToggle />
+            </div>
           </div>
         </nav>
       </div>

@@ -12,9 +12,14 @@ import {
 import { compile, run } from "@mdx-js/mdx";
 import * as runtime from "react/jsx-runtime";
 import remarkGfm from "remark-gfm";
-import { getExperienceBySlug, getExperienceSlugs } from "@/lib/experiences";
+import {
+  getExperienceBySlug,
+  getExperienceBySlugLocale,
+  getExperienceSlugs,
+} from "@/lib/experiences";
 import { useMDXComponents as getMDXComponents } from "../../../../mdx-components";
 import { Badge } from "@/components/ui/badge";
+import { LocaleContent } from "@/components/locale-content";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -48,15 +53,26 @@ export default async function ExperiencePage({ params }: PageProps) {
     notFound();
   }
 
+  const experienceEn = getExperienceBySlugLocale(slug, "en") ?? experience;
+
   const { frontmatter, content } = experience;
 
-  const code = await compile(content, {
+  const codePt = await compile(content, {
     outputFormat: "function-body",
     development: false,
     remarkPlugins: [remarkGfm],
   });
+  const { default: MDXContentPt } = await run(String(codePt), {
+    ...runtime,
+    baseUrl: import.meta.url,
+  });
 
-  const { default: MDXContent } = await run(String(code), {
+  const codeEn = await compile(experienceEn.content, {
+    outputFormat: "function-body",
+    development: false,
+    remarkPlugins: [remarkGfm],
+  });
+  const { default: MDXContentEn } = await run(String(codeEn), {
     ...runtime,
     baseUrl: import.meta.url,
   });
@@ -68,13 +84,26 @@ export default async function ExperiencePage({ params }: PageProps) {
       <main className="mx-auto max-w-3xl px-6 py-12">
         {/* Breadcrumb */}
         <div className="mb-8">
-          <Link
-            href="/sobre"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            Voltar para sobre
-          </Link>
+          <LocaleContent
+            pt={
+              <Link
+                href="/#sobre"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Voltar para sobre
+              </Link>
+            }
+            en={
+              <Link
+                href="/#sobre"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Back to career
+              </Link>
+            }
+          />
         </div>
 
         {/* Header */}
@@ -101,16 +130,28 @@ export default async function ExperiencePage({ params }: PageProps) {
                         : "border-blue-500/30 text-blue-400"
                   }
                 >
-                  {frontmatter.type === "work" ? (
+                  {frontmatter.type === "work" ||
+                  frontmatter.type === "estagio" ? (
                     <Briefcase className="h-3 w-3 mr-1" />
                   ) : (
                     <GraduationCap className="h-3 w-3 mr-1" />
                   )}
-                  {frontmatter.type === "work"
-                    ? "Experiência"
-                    : frontmatter.type === "estagio"
-                      ? "Estágio"
-                      : "Formação"}
+                  <LocaleContent
+                    pt={
+                      frontmatter.type === "work"
+                        ? "Experiência"
+                        : frontmatter.type === "estagio"
+                          ? "Estágio"
+                          : "Formação"
+                    }
+                    en={
+                      frontmatter.type === "work"
+                        ? "Work Experience"
+                        : frontmatter.type === "estagio"
+                          ? "Internship"
+                          : "Education"
+                    }
+                  />
                 </Badge>
               </div>
               <h1 className="text-3xl font-bold tracking-tight mb-1">
@@ -135,9 +176,18 @@ export default async function ExperiencePage({ params }: PageProps) {
             )}
           </div>
 
-          <p className="text-zinc-400 leading-relaxed mb-6">
-            {frontmatter.description}
-          </p>
+          <LocaleContent
+            pt={
+              <p className="text-zinc-400 leading-relaxed mb-6">
+                {frontmatter.description}
+              </p>
+            }
+            en={
+              <p className="text-zinc-400 leading-relaxed mb-6">
+                {experienceEn.frontmatter.description}
+              </p>
+            }
+          />
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
@@ -151,25 +201,53 @@ export default async function ExperiencePage({ params }: PageProps) {
 
         {/* MDX Content */}
         <article className="prose prose-zinc dark:prose-invert max-w-none">
-          <MDXContent components={components} />
+          <LocaleContent
+            pt={<MDXContentPt components={components} />}
+            en={<MDXContentEn components={components} />}
+          />
         </article>
 
         {/* Footer */}
         <footer className="mt-16 pt-8 border-t border-border">
           <div className="flex justify-between items-center">
-            <Link
-              href="/sobre"
-              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" />
-              Trajetória completa
-            </Link>
-            <Link
-              href="/contato"
-              className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
-            >
-              Vamos conversar →
-            </Link>
+            <LocaleContent
+              pt={
+                <Link
+                  href="/#sobre"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Trajetória completa
+                </Link>
+              }
+              en={
+                <Link
+                  href="/#sobre"
+                  className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  Full career
+                </Link>
+              }
+            />
+            <LocaleContent
+              pt={
+                <Link
+                  href="/contato"
+                  className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
+                >
+                  Vamos conversar →
+                </Link>
+              }
+              en={
+                <Link
+                  href="/contato"
+                  className="inline-flex items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors"
+                >
+                  Let&apos;s talk →
+                </Link>
+              }
+            />
           </div>
         </footer>
       </main>

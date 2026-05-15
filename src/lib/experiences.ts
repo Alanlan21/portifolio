@@ -30,7 +30,7 @@ export function getExperienceSlugs(): string[] {
   }
   return fs
     .readdirSync(experiencesDirectory)
-    .filter((file) => file.endsWith(".mdx"))
+    .filter((file) => file.endsWith(".mdx") && !file.endsWith(".en.mdx"))
     .map((file) => file.replace(/\.mdx$/, ""));
 }
 
@@ -47,4 +47,19 @@ export function getAllExperiences(): Experience[] {
   return slugs
     .map((slug) => getExperienceBySlug(slug))
     .filter((exp): exp is Experience => exp !== null);
+}
+
+export function getExperienceBySlugLocale(
+  slug: string,
+  locale: string,
+): Experience | null {
+  if (locale === "en") {
+    const enPath = path.join(experiencesDirectory, `${slug}.en.mdx`);
+    if (fs.existsSync(enPath)) {
+      const fileContents = fs.readFileSync(enPath, "utf8");
+      const { data, content } = matter(fileContents);
+      return { slug, frontmatter: data as ExperienceFrontmatter, content };
+    }
+  }
+  return getExperienceBySlug(slug);
 }

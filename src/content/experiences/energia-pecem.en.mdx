@@ -1,0 +1,75 @@
+---
+title: Web Developer
+organization: Energia Pecém
+period: "2024 - 2026"
+logo: /assets/logos/logo-energia-pecem.jpg
+type: work
+tags:
+  [
+    Node.js,
+    NestJS,
+    TypeScript,
+    MySQL,
+    Grafana,
+    Docker,
+    LGPD,
+    TypeORM,
+    JWT,
+    Swagger,
+    AWS,
+  ]
+description: Backend for critical internal systems to digitize operational processes at a thermoelectric power plant responsible for ~50% of Ceará's electricity generation.
+location: Fortaleza, CE
+---
+
+## Context
+
+The Pecém Thermoelectric Power Plant is one of the largest energy sources in Brazil's Northeast, responsible for approximately 50% of Ceará's electricity generation. I joined a scoped project with a clear goal: digitize a process that was previously done entirely on paper.
+
+The project involved field worker safety. Any system failure could create real risks. That shaped every technical decision I made throughout development.
+
+## My Role
+
+I was allocated to the backend and was responsible for a large part of the structure — from the initial architecture through the closure of my scope. I worked on a lean team with code reviews from more senior engineers.
+
+### Backend and APIs
+
+Full backend development with NestJS and TypeScript:
+
+- Initial module architecture, route organization and naming conventions
+- **JWT** authentication implementation and role-based access control (RBAC)
+- Validations, critical event logging, and documentation via **Swagger**
+- Entity modeling and integration with **TypeORM** + MySQL
+- Versioning and backward compatibility for legacy systems
+
+### Compliance and Security
+
+The critical context demanded extra care with traceability and security:
+
+- **LGPD** (Brazil's GDPR equivalent) compliance: personal data mapping, retention policies, access logs
+- Compliance with **ISO** standards applicable to the energy sector
+- Security-focused code review: input validation, injection prevention, authentication and authorization
+
+### Observability
+
+- **Grafana** dashboards for API health monitoring
+- Automatic alerts for performance and availability anomalies
+- Log analysis for proactive bottleneck identification
+
+### AWS
+
+Targeted infrastructure adjustments on AWS as project needs evolved.
+
+## Stack
+
+| Layer         | Technology      |
+| ------------- | --------------- |
+| Runtime       | Node.js         |
+| Framework     | NestJS          |
+| Language      | TypeScript      |
+| Database      | MySQL + TypeORM |
+| Auth          | JWT             |
+| Containers    | Docker          |
+| Observability | Grafana         |
+| Cloud         | AWS             |
+| CI/CD         | GitHub Actions  |

@@ -1,0 +1,65 @@
+---
+title: CaloteBot
+description: WhatsApp debt collection bot with message scheduling, dynamic templates, and attachment support. Started as a personal script and became a modular operation.
+tags:
+  - Node.js
+  - venom-bot
+  - dayjs
+  - inquirer
+  - node-schedule
+status: finalizado
+github: https://github.com/Alanlan21/calote-bot
+highlight: Per-contact scheduling • Dynamic variable templates
+date: 2024-06-01
+---
+
+## The Problem
+
+It started simple: a friend owed me money and I needed to collect. I built a Python + Selenium script to send the message automatically.
+
+Then more people started owing. And it became something else.
+
+## Evolution
+
+**v1 (Python + Selenium):** Worked, but crashed constantly. WhatsApp Web changed its structure frequently and the selectors broke all the time.
+
+**v2 (Node.js + venom-bot):** Much more stable. venom-bot wraps WhatsApp Web at a lower level and handles reconnections automatically.
+
+**v3 (current):** Full modularization. Interactive CLI with inquirer, per-contact scheduling, dynamic message templates with variables, and image/receipt attachment support.
+
+## Key Features
+
+### Dynamic Templates
+
+```javascript
+// templates.js
+const templates = {
+  reminder: (name, amount, days) =>
+    `Hey ${name}, just a reminder about the R$${amount} from ${days} days ago. 😊`,
+  final: (name, amount) =>
+    `${name}, last notice about the R$${amount}. Let me know if you need to set something up.`,
+};
+```
+
+### Per-Contact Scheduling
+
+Each contact has its own schedule. The bot sends messages at the configured times without manual intervention.
+
+### Interactive CLI
+
+```
+? Who do you want to add?
+  > Name: João
+  > Phone: 5511999999999
+  > Amount: 150
+  > Schedule: daily at 10am
+✓ João added. First message will be sent today at 10:00.
+```
+
+## Technical Decision
+
+The migration from Python/Selenium to Node.js + venom-bot was the best decision of the project. Stability went from ~60% uptime to ~99%.
+
+## What I Learned
+
+Sometimes the best architecture is the simplest one that works reliably. Overengineering a debt collection script would've been a waste of time — the goal was to send messages, not to build a distributed system.

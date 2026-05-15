@@ -1,0 +1,62 @@
+---
+title: Valvecraft
+description: Educational game for trumpet players. Practice fingering, sheet music reading, and rhythm directly in the browser with real trumpet audio.
+tags:
+  - React 19
+  - TypeScript
+  - Vite
+  - Tailwind CSS
+  - VexFlow
+  - Tone.js
+status: finalizado
+github: https://github.com/Alanlan21/valvecraft
+demo: https://valvecraft.vercel.app
+highlight: Real trumpet audio • Two game modes • VexFlow sheet music
+date: 2025-03-15
+---
+
+## The Project
+
+Valvecraft is a game for trumpet players who want to improve their fingering, sheet music reading, and rhythm in an interactive way. With real audio samples and real-time visual feedback, technical practice becomes a dynamic experience.
+
+I built this partly because I play trumpet and wanted a better way to drill fingering patterns — and partly because it was a great excuse to learn VexFlow and Tone.js.
+
+## Game Modes
+
+### Quiz Mode
+
+A note appears on the staff. You choose the correct valve combination (1, 2, 3, 12, 13, 23, 123). You hear the note when you answer. Streaks multiply your score.
+
+### Rhythm Mode
+
+Notes scroll across a moving staff. A playhead marks the beat. You press keys in time to the music. The Tone.js Transport keeps everything in sync.
+
+## Technical Highlights
+
+### Sheet Music with VexFlow
+
+VexFlow renders sheet music as SVG in the browser. The challenge was syncing the rendered notes with the audio playback — each VexFlow note needed a corresponding Tone.js event.
+
+```typescript
+// Sync VexFlow notes with Tone.js timeline
+notes.forEach((note, i) => {
+  Tone.Transport.schedule((time) => {
+    playNote(note.pitch, time);
+    highlightNote(i);
+  }, `${i}:0:0`);
+});
+```
+
+### Real Trumpet Samples
+
+Each note (C4 through C6) has a recorded trumpet sample. Tone.js loads and manages them, handling pitch shifting for notes between samples.
+
+### Scoring System
+
+Streak multipliers: 2x at 5 correct, 3x at 10, 5x at 20. Missing a note resets the streak. The score is kept in React state and persisted to localStorage for the leaderboard.
+
+## What I Learned
+
+VexFlow has a steep learning curve but it's the right tool for music notation in the browser — nothing else comes close. Tone.js's Transport is elegant once you understand the bar:beat:subdivision notation.
+
+The biggest challenge was performance: rendering 50+ VexFlow notes while playing audio while handling keyboard input is a lot for the main thread. I ended up moving audio scheduling to a Web Worker.
