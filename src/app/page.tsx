@@ -118,18 +118,18 @@ export default function Home() {
         className="relative overflow-hidden min-h-[85vh] flex items-center"
       >
         {/* Layered backgrounds */}
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-background to-background" />
+        <div className="absolute inset-0 hero-gradient-overlay bg-linear-to-b from-zinc-950 via-background to-background" />
         <div className="absolute inset-0 aurora" />
         <div className="absolute inset-0 bg-grid-lines" />
         <div className="absolute inset-0 bg-noise pointer-events-none" />
 
         {/* Connecting glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[600px] pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.6_0.15_160_/_0.08)_0%,transparent_50%)]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-250 h-150 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.6_0.15_160/0.08)_0%,transparent_50%)]" />
         </div>
 
         {/* Main content - Bento Grid */}
-        <div className="relative w-full max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20">
+        <div className="relative w-full max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
             {/* Left column: Social + Main intro */}
             <div className="lg:col-span-7 flex flex-col gap-4">
@@ -169,7 +169,8 @@ export default function Home() {
 
               {/* Main intro card */}
               <div className="bento-card bento-highlight p-6 lg:p-8 flex-1">
-                <div className="space-y-5">
+                <div className="flex items-start gap-4">
+                  <div className="space-y-5 flex-1 min-w-0">
                   <Badge
                     variant="outline"
                     className="border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
@@ -178,13 +179,15 @@ export default function Home() {
                     para trabalho
                   </Badge>
 
-                  <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
-                    <span className="text-gradient-hero">Alan Regis</span>
-                    <br />
-                    <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
-                      Software Developer
-                    </span>
-                  </h1>
+                  <div>
+                    <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
+                      <span className="text-gradient-hero">Alan Regis</span>
+                      <br />
+                      <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
+                        Software Developer
+                      </span>
+                    </h1>
+                  </div>
 
                   <div className="flex flex-wrap items-center gap-3 pt-2">
                     <Button
@@ -201,7 +204,7 @@ export default function Home() {
                       asChild
                       variant="outline"
                       size="lg"
-                      className="gap-2 px-5 border-zinc-700 hover:border-zinc-600 hover:bg-zinc-800/50"
+                      className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
                     >
                       <a href="/cv-alan-regis.pdf" download>
                         <Download className="h-4 w-4" />
@@ -209,11 +212,21 @@ export default function Home() {
                       </a>
                     </Button>
                   </div>
+                  </div>
+                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-emerald-500/70 ring-2 ring-emerald-500/20 shrink-0 hidden sm:block">
+                    <Image
+                      src="/assets/foto-perfil.jpg"
+                      alt="Alan Regis"
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Skills row */}
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="bento-card bento-backend p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
@@ -274,38 +287,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right column: Stats + Terminal */}
+            {/* Right column: Terminal */}
             <div className="lg:col-span-5 flex flex-col gap-4">
-              {/* Stats card */}
-              <div className="bento-card p-5">
-                <div className="grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl lg:text-3xl font-black text-white stat-number">
-                      2+
-                    </div>
-                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
-                      anos
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl lg:text-3xl font-black text-white stat-number">
-                      3+
-                    </div>
-                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
-                      trabalho
-                    </div>
-                  </div>
-                  <div>
-                    <div className="text-2xl lg:text-3xl font-black text-emerald-400 stat-number">
-                      2
-                    </div>
-                    <div className="text-[10px] text-zinc-500 uppercase tracking-wider mt-1">
-                      empresas
-                    </div>
-                  </div>
-                </div>
-              </div>
-
               {/* Terminal card */}
               <div className="bento-card bento-terminal p-0 overflow-hidden flex-1">
                 <Terminal
@@ -400,14 +383,14 @@ export default function Home() {
       {/* Sobre Section */}
       <section id="sobre" className="relative section-glow-emerald">
         <div className="absolute inset-0 bg-grid-lines opacity-50" />
-        <div className="relative max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           <ScrollReveal className="mb-10 lg:mb-14">
             <div className="w-8 h-0.5 bg-emerald-500/70 mb-3 rounded-full" />
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
               Sobre
             </h2>
             <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-              Backend como foco principal
+              NestJS · TypeScript · React — 2 anos em produção
             </p>
           </ScrollReveal>
 
@@ -418,13 +401,12 @@ export default function Home() {
             {/* Stack */}
             <div className="space-y-6">
               <div>
-                <p className="text-zinc-300 leading-relaxed max-w-2xl mb-6">
+                <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl mb-6">
                   Foco em{" "}
-                  <span className="text-white font-medium">APIs REST</span> com
-                  Node.js e NestJS. Tenho 2 anos de experiência em projetos
-                  reais, atuando em sistemas para uma usina termelétrica e para
-                  instituições públicas. Tenho boa base em frontend com React e
-                  sigo sempre aprendendo.
+                  <span className="text-zinc-900 dark:text-white font-medium">APIs REST</span> com
+                  Node.js e NestJS. Dois anos desenvolvendo sistemas em
+                  produção, de usinas termelétricas a instituições públicas.
+                  Com atuação prática em frontend com React.
                 </p>
               </div>
 
@@ -472,12 +454,12 @@ export default function Home() {
               </p>
               <div className="relative">
                 {/* linha vertical */}
-                <div className="absolute left-[19px] top-2 bottom-2 w-px bg-zinc-800" />
+                <div className="absolute left-4.75 top-2 bottom-2 w-px bg-zinc-200 dark:bg-zinc-800" />
 
                 <div className="space-y-0">
                   {[
                     {
-                      period: "2025 – atual",
+                      period: "2026 – atual",
                       title: "Pós em Eng. Software foco em DevOps",
                       org: "Unifor",
                       logo: "/assets/logos/logo-unifor.jpg",
@@ -531,16 +513,16 @@ export default function Home() {
                             <span className="relative w-3 h-3 rounded-full bg-emerald-500" />
                           </>
                         ) : (
-                          <span className="w-2.5 h-2.5 rounded-full border-2 border-zinc-600 bg-zinc-950" />
+                          <span className="w-2.5 h-2.5 rounded-full border-2 border-zinc-400 dark:border-zinc-600 bg-zinc-300 dark:bg-zinc-950" />
                         )}
                       </div>
 
                       <Link
                         href={`/sobre/${item.slug}`}
-                        className={`flex gap-3 flex-1 rounded-xl border p-4 hover:bg-zinc-900/50 transition-colors group ${
+                        className={`flex gap-3 flex-1 rounded-xl border p-4 hover:bg-zinc-100 dark:hover:bg-zinc-900/50 transition-colors group ${
                           item.current
-                            ? "border-emerald-500/20 bg-zinc-900/60"
-                            : "border-zinc-800/60 bg-zinc-900/20"
+                            ? "border-emerald-500/20 bg-emerald-50/60 dark:bg-zinc-900/60"
+                            : "border-zinc-200 dark:border-zinc-800/60 bg-white/70 dark:bg-zinc-900/20"
                         }`}
                       >
                         <div className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg border border-zinc-800/60 bg-white">
@@ -554,7 +536,7 @@ export default function Home() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                            <span className="text-sm font-semibold text-white">
+                            <span className="text-sm font-semibold text-black dark:text-white group-hover:text-emerald-400 transition-colors">
                               {item.title}
                             </span>
                             <Badge
@@ -571,7 +553,7 @@ export default function Home() {
                           <p className="text-xs text-zinc-500">
                             {item.org} · {item.period}
                           </p>
-                          <p className="mt-1.5 text-xs text-zinc-400 leading-relaxed">
+                          <p className="mt-1.5 text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                             {item.desc}
                           </p>
                         </div>
@@ -586,11 +568,11 @@ export default function Home() {
 
           {/* GitHub activity */}
           <ScrollReveal delay={200} className="mt-10">
-            <div className="rounded-xl border border-zinc-800/60 overflow-hidden">
-              <div className="flex items-center gap-2 px-4 py-3 bg-zinc-950 border-b border-zinc-800/60">
+            <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 overflow-hidden">
+              <div className="flex items-center gap-2 px-4 py-3 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800/60">
                 <svg
                   viewBox="0 0 16 16"
-                  className="h-4 w-4 text-zinc-400 fill-current"
+                  className="h-4 w-4 text-zinc-500 dark:text-zinc-400 fill-current"
                   aria-hidden="true"
                 >
                   <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
@@ -599,12 +581,12 @@ export default function Home() {
                   href="https://github.com/Alanlan21"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs text-zinc-400 hover:text-zinc-200 transition-colors font-mono"
+                  className="text-xs text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 transition-colors font-mono"
                 >
                   github.com/Alanlan21
                 </a>
               </div>
-              <div className="bg-[#0d1117] px-5 py-5">
+              <div className="bg-white dark:bg-[#0d1117] px-5 py-5">
                 <ContributionGraph username="Alanlan21" />
               </div>
             </div>
@@ -617,10 +599,10 @@ export default function Home() {
 
       {/* Projects Section */}
       <section id="trabalho" className="relative section-glow-violet">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/50 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent dark:via-zinc-950/50 to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-grid-lines opacity-50" />
 
-        <div className="relative max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           {/* Section header */}
           <ScrollReveal className="flex items-end justify-between mb-10 lg:mb-14">
             <div className="space-y-2">
@@ -629,7 +611,7 @@ export default function Home() {
                 Projetos
               </h2>
               <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-                Projetos onde aprendi construindo
+                Trabalhos selecionados
               </p>
             </div>
             <Link
@@ -674,7 +656,7 @@ export default function Home() {
                             {project.category}
                           </Badge>
                         </div>
-                        <p className="text-zinc-400 text-sm truncate">
+                        <p className="text-zinc-600 dark:text-zinc-400 text-sm truncate">
                           {project.tagline}
                         </p>
                       </div>
@@ -685,7 +667,7 @@ export default function Home() {
                       {project.tech.slice(0, 3).map((tech) => (
                         <span
                           key={tech}
-                          className="text-[11px] font-mono text-zinc-500 bg-zinc-800/50 px-2 py-0.5 rounded"
+                          className="text-[11px] font-mono text-zinc-600 dark:text-zinc-500 bg-zinc-200/80 dark:bg-zinc-800/50 px-2 py-0.5 rounded"
                         >
                           {tech}
                         </span>
@@ -704,9 +686,9 @@ export default function Home() {
                   {/* Expanded content - visible on hover */}
                   <div className="project-detail">
                     <div className="pt-3 pb-1">
-                      <p className="text-sm text-zinc-400 leading-relaxed">
+                      <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                         {project.highlights[0]}
-                        <span className="text-zinc-600 mx-2">·</span>
+                        <span className="text-zinc-400 dark:text-zinc-600 mx-2">·</span>
                         {project.decision}
                       </p>
                     </div>
@@ -716,12 +698,24 @@ export default function Home() {
             ))}
           </ScrollReveal>
 
+          {/* CTA contato */}
+          <div className="mt-10 flex items-center gap-2 text-sm text-zinc-500">
+            <span>Tem um projeto em mente?</span>
+            <Link
+              href="/#contato"
+              className="text-emerald-400 hover:text-emerald-300 transition-colors flex items-center gap-1 group"
+            >
+              Fala comigo
+              <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+
           {/* Mobile: Ver todos link */}
           <Link
-            href="/trabalho"
-            className="sm:hidden flex items-center justify-center gap-2 mt-8 text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
+            href="/projetos"
+            className="sm:hidden flex items-center justify-center gap-2 mt-6 text-sm text-zinc-400 hover:text-emerald-400 transition-colors"
           >
-            <span>Ver todos os trabalho</span>
+            <span>Ver todos os projetos</span>
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
@@ -733,7 +727,7 @@ export default function Home() {
       {/* Contato Section */}
       <section id="contato" className="relative section-glow-neutral">
         <div className="absolute inset-0 bg-grid-lines opacity-35" />
-        <div className="relative max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           <ScrollReveal className="mb-10">
             <div className="w-8 h-0.5 bg-zinc-500/70 mb-3 rounded-full" />
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
@@ -776,11 +770,11 @@ export default function Home() {
                         ? "noopener noreferrer"
                         : undefined
                     }
-                    className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-900/40 px-5 py-4 hover:border-emerald-500/50 transition-colors group"
+                    className="flex items-center gap-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900/40 px-5 py-4 hover:border-emerald-500/50 transition-colors group"
                   >
-                    <Icon className="h-5 w-5 text-zinc-400 group-hover:text-emerald-400 transition-colors shrink-0" />
+                    <Icon className="h-5 w-5 text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors shrink-0" />
                     <div>
-                      <p className="text-sm font-medium text-white">{name}</p>
+                      <p className="text-sm font-medium text-zinc-900 dark:text-white">{name}</p>
                       <p className="text-xs text-zinc-500 font-mono truncate">
                         {value}
                       </p>
@@ -791,27 +785,27 @@ export default function Home() {
             </div>
 
             <div className="space-y-4">
-              <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-5">
+              <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/30 p-5">
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
                   Disponibilidade
                 </p>
                 <div className="flex items-center gap-2 mb-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-sm text-white font-medium">
+                  <span className="text-sm text-zinc-900 dark:text-white font-medium">
                     Disponível para trabalho
                   </span>
                 </div>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
                   Fico feliz em ouvir sobre projetos, oportunidades ou só bater
                   um papo sobre tech. Respondo rápido.
                 </p>
               </div>
 
-              <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/30 p-5">
+              <div className="rounded-xl border border-zinc-200 dark:border-zinc-800/60 bg-white dark:bg-zinc-900/30 p-5">
                 <p className="text-xs font-medium text-zinc-500 mb-3 uppercase tracking-widest">
                   Localização
                 </p>
-                <p className="text-sm text-zinc-400">
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
                   Fortaleza, CE. Aberto a remoto ou híbrido.
                 </p>
               </div>
@@ -822,7 +816,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border">
-        <div className="max-w-[1400px] 2xl:max-w-[1600px] mx-auto px-8 lg:px-16 xl:px-24 py-8">
+        <div className="max-w-350 2xl:max-w-400 mx-auto px-8 lg:px-16 xl:px-24 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-emerald-500">$</span> alan.dev ©

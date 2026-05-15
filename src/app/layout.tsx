@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Sidebar } from "@/components/sidebar";
+import { Header } from "@/components/header";
 import "./globals.css";
 
 const inter = Inter({
@@ -50,7 +51,12 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased">
         <Providers>
           <Sidebar />
-          <div className="lg:pl-64">{children}</div>
+          <div className="lg:pl-64">
+            <div className="lg:hidden">
+              <Header />
+            </div>
+            {children}
+          </div>
         </Providers>
       </body>
     </html>

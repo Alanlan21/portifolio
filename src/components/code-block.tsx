@@ -79,7 +79,7 @@ export function CodeBlock({
       <div className="overflow-x-auto">
         {highlightedHtml ? (
           <div
-            className="p-4 text-sm [&_pre]:!bg-transparent [&_code]:!bg-transparent"
+            className="p-4 text-sm [&_pre]:bg-transparent! [&_code]:bg-transparent!"
             dangerouslySetInnerHTML={{ __html: highlightedHtml }}
           />
         ) : (

@@ -86,7 +86,7 @@ export function TechBadge({
     return (
       <Tooltip>
         <TooltipTrigger>
-          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-800/60 border border-zinc-700/40 hover:border-zinc-600/60 hover:bg-zinc-800/80 transition-all cursor-default">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-zinc-100 dark:bg-zinc-800/60 border border-zinc-200 dark:border-zinc-700/40 hover:border-zinc-300 dark:hover:border-zinc-600/60 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/80 transition-all cursor-default">
             <div className="w-5 h-5 flex items-center justify-center shrink-0">
               {tech ? (
                 <Image
@@ -103,7 +103,7 @@ export function TechBadge({
                 </span>
               )}
             </div>
-            <span className="text-sm text-zinc-300">{name}</span>
+            <span className="text-sm text-zinc-700 dark:text-zinc-300">{name}</span>
           </div>
         </TooltipTrigger>
         <TooltipContent>
@@ -119,8 +119,8 @@ export function TechBadge({
         <div className="flex flex-col items-center gap-2 group cursor-default">
           <div
             className={cn(
-              "flex items-center justify-center rounded-xl bg-zinc-800/70 border border-zinc-700/50 shrink-0 transition-all",
-              "group-hover:border-zinc-600/70 group-hover:bg-zinc-800/90 group-hover:scale-105",
+              "flex items-center justify-center rounded-xl bg-zinc-100 dark:bg-zinc-800/70 border border-zinc-200 dark:border-zinc-700/50 shrink-0 transition-all",
+              "group-hover:border-zinc-300 dark:group-hover:border-zinc-600/70 group-hover:bg-zinc-200/60 dark:group-hover:bg-zinc-800/90 group-hover:scale-105",
               sizes.container,
             )}
           >

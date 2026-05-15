@@ -12,7 +12,7 @@ export interface ExperienceFrontmatter {
   organization: string;
   period: string;
   logo: string;
-  type: "work" | "education";
+  type: "work" | "education" | "estagio";
   tags: string[];
   description: string;
   location?: string;

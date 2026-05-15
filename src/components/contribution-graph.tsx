@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTheme } from "next-themes";
 
 interface Contribution {
   date: string;
@@ -13,8 +14,7 @@ interface ApiResponse {
   contributions: Contribution[];
 }
 
-// GitHub dark theme palette
-const COLORS = {
+const COLORS_DARK = {
   0: "#161b22",
   1: "#0e4429",
   2: "#006d32",
@@ -22,10 +22,20 @@ const COLORS = {
   4: "#39d353",
 } as const;
 
+const COLORS_LIGHT = {
+  0: "#ebedf0",
+  1: "#9be9a8",
+  2: "#40c463",
+  3: "#30a14e",
+  4: "#216e39",
+} as const;
+
 const MONTHS = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
 const DAYS = ["", "Seg", "", "Qua", "", "Sex", ""];
 
 export function ContributionGraph({ username }: { username: string }) {
+  const { resolvedTheme } = useTheme();
+  const COLORS = resolvedTheme === "dark" ? COLORS_DARK : COLORS_LIGHT;
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState(true);

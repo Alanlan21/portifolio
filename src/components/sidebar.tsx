@@ -20,6 +20,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { useActiveSection } from "@/hooks/use-active-section";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navigation = [
   { name: "Início", href: "/#inicio", icon: Home },
@@ -221,11 +222,12 @@ export function Sidebar() {
             })}
           </ul>
 
-          {/* Version */}
-          <div className="mt-auto pt-4 border-t border-border">
+          {/* Version + Theme toggle */}
+          <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
             <p className="text-xs text-muted-foreground font-mono">
               <span className="text-emerald-500">v</span>1.0.0
             </p>
+            <ThemeToggle />
           </div>
         </nav>
       </div>

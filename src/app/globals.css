@@ -526,6 +526,168 @@
     }
   }
 
+  /* ─── Light mode overrides ──────────────────────────────────── */
+
+  /* Hero name: dark-to-emerald gradient on light bg */
+  html:not(.dark) .text-gradient-hero {
+    background: linear-gradient(
+      135deg,
+      oklch(0.15 0 0) 0%,
+      oklch(0.4 0.2 160) 50%,
+      oklch(0.15 0 0) 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Hero top overlay: override the dark from-zinc-950 gradient stop */
+  html:not(.dark) .hero-gradient-overlay {
+    --tw-gradient-from: oklch(0.93 0 0);
+    --tw-gradient-via: var(--background);
+    --tw-gradient-to: var(--background);
+  }
+
+  /* Fade-bottom: to light background */
+  html:not(.dark) .fade-bottom {
+    background: linear-gradient(to bottom, transparent 0%, oklch(1 0 0) 100%);
+  }
+
+  /* Grid lines: dark strokes on light bg */
+  html:not(.dark) .bg-grid-lines {
+    background-image:
+      linear-gradient(to right, oklch(0 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0 0 0 / 0.04) 1px, transparent 1px);
+  }
+
+  /* Section dividers: dark lines */
+  html:not(.dark) .section-divider::before {
+    background: linear-gradient(
+      to right,
+      transparent 0%,
+      oklch(0 0 0 / 0.06) 15%,
+      oklch(0 0 0 / 0.12) 50%,
+      oklch(0 0 0 / 0.06) 85%,
+      transparent 100%
+    );
+  }
+
+  /* Section glows: reduced opacity on light bg */
+  html:not(.dark) .section-glow-emerald::before {
+    background: radial-gradient(
+      ellipse at top center,
+      oklch(0.55 0.18 160 / 0.07) 0%,
+      oklch(0.55 0.18 160 / 0.02) 50%,
+      transparent 75%
+    );
+  }
+
+  html:not(.dark) .section-glow-violet::before {
+    background: radial-gradient(
+      ellipse at top center,
+      oklch(0.55 0.18 280 / 0.07) 0%,
+      oklch(0.55 0.18 280 / 0.02) 50%,
+      transparent 75%
+    );
+  }
+
+  /* Social links: light surface */
+  html:not(.dark) .social-link {
+    background: oklch(0 0 0 / 0.05);
+    color: oklch(0.35 0 0);
+    border-color: oklch(0 0 0 / 0.1);
+  }
+
+  /* Bento cards: solid white surface — sem backdrop-blur em light mode */
+  html:not(.dark) .bento-card {
+    background: oklch(0.985 0 0);
+    border-color: oklch(0 0 0 / 0.08);
+    backdrop-filter: none;
+  }
+
+  html:not(.dark) .bento-card:hover {
+    border-color: oklch(0.45 0.15 160 / 0.35);
+    box-shadow: 0 0 24px -8px oklch(0.45 0.15 160 / 0.12);
+  }
+
+  html:not(.dark) .bento-highlight {
+    border-color: oklch(0.45 0.15 160 / 0.3);
+    background: linear-gradient(
+      135deg,
+      oklch(0.96 0.015 160) 0%,
+      oklch(0.985 0 0) 100%
+    );
+    backdrop-filter: none;
+  }
+
+  html:not(.dark) .bento-backend {
+    background: linear-gradient(
+      135deg,
+      oklch(0.965 0.01 160) 0%,
+      oklch(0.985 0 0) 100%
+    );
+    border-color: oklch(0.5 0.12 160 / 0.18);
+    backdrop-filter: none;
+  }
+
+  html:not(.dark) .bento-frontend {
+    background: linear-gradient(
+      135deg,
+      oklch(0.965 0.01 280) 0%,
+      oklch(0.985 0 0) 100%
+    );
+    border-color: oklch(0.5 0.12 280 / 0.18);
+    backdrop-filter: none;
+  }
+
+  html:not(.dark) .bento-devops {
+    background: linear-gradient(
+      135deg,
+      oklch(0.965 0.01 60) 0%,
+      oklch(0.985 0 0) 100%
+    );
+    border-color: oklch(0.5 0.12 60 / 0.18);
+    backdrop-filter: none;
+  }
+
+  /* Terminal card: stays intentionally dark even in light mode */
+  html:not(.dark) .bento-terminal {
+    border-color: oklch(0.4 0.08 200 / 0.2);
+    background: linear-gradient(
+      145deg,
+      oklch(0.11 0.01 200 / 0.5) 0%,
+      oklch(0.09 0 0 / 0.6) 100%
+    );
+    backdrop-filter: none;
+  }
+
+  /* Project items: white surface */
+  html:not(.dark) .project-item-inner {
+    border-color: oklch(0 0 0 / 0.08);
+    background: linear-gradient(
+      135deg,
+      oklch(0.99 0 0 / 0.95) 0%,
+      oklch(0.97 0 0) 100%
+    );
+    box-shadow:
+      0 2px 8px -2px oklch(0 0 0 / 0.06),
+      inset 0 1px 0 oklch(1 0 0);
+  }
+
+  html:not(.dark) .project-item:hover .project-item-inner {
+    border-color: oklch(0.45 0.15 160 / 0.3);
+    background: linear-gradient(
+      135deg,
+      oklch(0.97 0.015 160 / 0.35) 0%,
+      oklch(0.99 0 0) 100%
+    );
+    box-shadow:
+      0 0 0 1px oklch(0.45 0.15 160 / 0.1),
+      0 8px 32px -8px oklch(0.4 0.15 160 / 0.12),
+      0 4px 16px -4px oklch(0 0 0 / 0.05);
+    transform: translateY(-2px);
+  }
+
   /* ─── Scroll reveal ─────────────────────────────────────────── */
   .reveal-hidden {
     opacity: 0;
