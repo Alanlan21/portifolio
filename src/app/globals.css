@@ -591,6 +591,26 @@
     );
   }
 
+  /* Aurora: slightly more present on light bg */
+  html:not(.dark) .aurora {
+    background:
+      radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        oklch(0.55 0.18 160 / 0.1) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 80% 0%,
+        oklch(0.5 0.15 200 / 0.07) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse 50% 30% at 20% 10%,
+        oklch(0.55 0.1 280 / 0.05) 0%,
+        transparent 40%
+      );
+  }
+
   /* Social links: light surface */
   html:not(.dark) .social-link {
     background: oklch(0 0 0 / 0.05);
@@ -650,15 +670,28 @@
     backdrop-filter: none;
   }
 
-  /* Terminal card: stays intentionally dark even in light mode */
+  /* Terminal card: opaque dark panel in light mode — VS Code dark window feel */
   html:not(.dark) .bento-terminal {
-    border-color: oklch(0.4 0.08 200 / 0.2);
+    border-color: oklch(0.35 0.07 215 / 0.55);
     background: linear-gradient(
       145deg,
-      oklch(0.11 0.01 200 / 0.5) 0%,
-      oklch(0.09 0 0 / 0.6) 100%
+      oklch(0.14 0.015 220) 0%,
+      oklch(0.10 0.005 200) 100%
     );
+    box-shadow:
+      0 20px 64px -8px oklch(0 0 0 / 0.22),
+      0 6px 20px -4px oklch(0 0 0 / 0.14),
+      inset 0 1px 0 oklch(1 0 0 / 0.06);
     backdrop-filter: none;
+  }
+
+  html:not(.dark) .bento-terminal:hover {
+    border-color: oklch(0.52 0.12 215 / 0.55);
+    box-shadow:
+      0 24px 72px -8px oklch(0 0 0 / 0.26),
+      0 8px 28px -4px oklch(0 0 0 / 0.16),
+      0 0 0 1px oklch(0.52 0.12 215 / 0.15),
+      inset 0 1px 0 oklch(1 0 0 / 0.07);
   }
 
   /* Project items: white surface */

@@ -91,46 +91,54 @@ export default function Home() {
               <div className="bento-card bento-highlight p-6 lg:p-8 flex-1">
                 <div className="flex items-start gap-4">
                   <div className="space-y-5 flex-1 min-w-0">
-                  <Badge
-                    variant="outline"
-                    className="border-emerald-500/40 bg-emerald-500/10 text-emerald-400"
-                  >
-                    <span className="mr-1.5 animate-pulse">●</span> {t.status.available}
-                  </Badge>
-
-                  <div>
-                    <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
-                      <span className="text-gradient-hero">Alan Regis</span>
-                      <br />
-                      <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
-                        Software Developer
-                      </span>
-                    </h1>
-                  </div>
-
-                  <div className="flex flex-wrap items-center gap-3 pt-2">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
-                    >
-                      <Link href="/#trabalho">
-                        {t.home.exploreCta}
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
+                    <Badge
                       variant="outline"
-                      size="lg"
-                      className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+                      className="border-emerald-600/50 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                     >
-                      <a href="/cv-alan-regis.pdf" download>
-                        <Download className="h-4 w-4" />
-                        {t.home.cv}
-                      </a>
-                    </Button>
-                  </div>
+                      <span className="mr-1.5 animate-pulse">●</span>{" "}
+                      {t.status.available}
+                    </Badge>
+
+                    <div>
+                      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
+                        <span className="text-gradient-hero">Alan Regis</span>
+                        <br />
+                        <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
+                          Software Developer
+                        </span>
+                      </h1>
+                    </div>
+
+                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                      <Button
+                        asChild
+                        size="lg"
+                        className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
+                      >
+                        <Link href="/#trabalho">
+                          {t.home.exploreCta}
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        variant="outline"
+                        size="lg"
+                        className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+                      >
+                        <a
+                          href={
+                            lang === "en"
+                              ? "/cv-alan-regis-en.pdf"
+                              : "/cv-alan-regis.pdf"
+                          }
+                          download
+                        >
+                          <Download className="h-4 w-4" />
+                          {t.home.cv}
+                        </a>
+                      </Button>
+                    </div>
                   </div>
                   <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-emerald-500/70 ring-2 ring-emerald-500/20 shrink-0 hidden sm:block">
                     <Image
@@ -149,7 +157,7 @@ export default function Home() {
                 <div className="bento-card bento-backend p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
-                    <div className="text-[10px] font-mono text-emerald-400/80 uppercase tracking-widest">
+                    <div className="text-[10px] font-mono text-emerald-700/90 dark:text-emerald-400/80 uppercase tracking-widest">
                       Backend
                     </div>
                   </div>
@@ -158,7 +166,7 @@ export default function Home() {
                       <Badge
                         key={skill}
                         variant="outline"
-                        className="font-mono text-[10px] text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
+                        className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400 border-emerald-600/40 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10"
                       >
                         {skill}
                       </Badge>
@@ -168,7 +176,7 @@ export default function Home() {
                 <div className="bento-card bento-frontend p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500/60"></div>
-                    <div className="text-[10px] font-mono text-violet-400/80 uppercase tracking-widest">
+                    <div className="text-[10px] font-mono text-violet-700/90 dark:text-violet-400/80 uppercase tracking-widest">
                       Frontend
                     </div>
                   </div>
@@ -177,7 +185,7 @@ export default function Home() {
                       <Badge
                         key={skill}
                         variant="outline"
-                        className="font-mono text-[10px] text-violet-400 border-violet-500/30 bg-violet-500/10"
+                        className="font-mono text-[10px] text-violet-700 dark:text-violet-400 border-violet-600/40 dark:border-violet-500/30 bg-violet-50 dark:bg-violet-500/10"
                       >
                         {skill}
                       </Badge>
@@ -187,7 +195,7 @@ export default function Home() {
                 <div className="bento-card bento-devops p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60"></div>
-                    <div className="text-[10px] font-mono text-amber-400/80 uppercase tracking-widest">
+                    <div className="text-[10px] font-mono text-amber-700/90 dark:text-amber-400/80 uppercase tracking-widest">
                       DevOps
                     </div>
                   </div>
@@ -196,7 +204,7 @@ export default function Home() {
                       <Badge
                         key={skill}
                         variant="outline"
-                        className="font-mono text-[10px] text-amber-400 border-amber-500/30 bg-amber-500/10"
+                        className="font-mono text-[10px] text-amber-700 dark:text-amber-400 border-amber-600/40 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10"
                       >
                         {skill}
                       </Badge>
@@ -321,9 +329,25 @@ export default function Home() {
               <div>
                 <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl mb-6">
                   {lang === "en" ? (
-                    <>Focused on{" "}<span className="text-zinc-900 dark:text-white font-medium">REST APIs</span>{" "}with Node.js and NestJS. Two years building production systems, from power plants to public institutions. With hands-on frontend experience using React.</>
+                    <>
+                      Focused on{" "}
+                      <span className="text-zinc-900 dark:text-white font-medium">
+                        REST APIs
+                      </span>{" "}
+                      with Node.js and NestJS. Two years building production
+                      systems, from power plants to public institutions. With
+                      hands-on frontend experience using React.
+                    </>
                   ) : (
-                    <>Foco em{" "}<span className="text-zinc-900 dark:text-white font-medium">APIs REST</span>{" "}com Node.js e NestJS. Dois anos desenvolvendo sistemas em produção, de usinas termelétricas a instituições públicas. Com atuação prática em frontend com React.</>
+                    <>
+                      Foco em{" "}
+                      <span className="text-zinc-900 dark:text-white font-medium">
+                        APIs REST
+                      </span>{" "}
+                      com Node.js e NestJS. Dois anos desenvolvendo sistemas em
+                      produção, de usinas termelétricas a instituições públicas.
+                      Com atuação prática em frontend com React.
+                    </>
                   )}
                 </p>
               </div>
@@ -413,7 +437,7 @@ export default function Home() {
                         </div>
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-2 mb-0.5">
-                            <span className="text-sm font-semibold text-black dark:text-white group-hover:text-emerald-400 transition-colors">
+                            <span className="text-sm font-semibold text-black dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
                               {item.title}
                             </span>
                             <Badge
@@ -565,7 +589,9 @@ export default function Home() {
                     <div className="pt-3 pb-1">
                       <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
                         {project.highlights[0]}
-                        <span className="text-zinc-400 dark:text-zinc-600 mx-2">·</span>
+                        <span className="text-zinc-400 dark:text-zinc-600 mx-2">
+                          ·
+                        </span>
                         {project.decision}
                       </p>
                     </div>
@@ -651,7 +677,9 @@ export default function Home() {
                   >
                     <Icon className="h-5 w-5 text-zinc-500 dark:text-zinc-400 group-hover:text-emerald-500 dark:group-hover:text-emerald-400 transition-colors shrink-0" />
                     <div>
-                      <p className="text-sm font-medium text-zinc-900 dark:text-white">{name}</p>
+                      <p className="text-sm font-medium text-zinc-900 dark:text-white">
+                        {name}
+                      </p>
                       <p className="text-xs text-zinc-500 font-mono truncate">
                         {value}
                       </p>
