@@ -251,14 +251,6 @@ export function KittyTerminal({ className }: KittyTerminalProps) {
         })}
       </div>
 
-      {/* Bottom status bar */}
-      <div className="kitty-statusbar">
-        <span className="kitty-status-seg kitty-status-mode">NORMAL</span>
-        <span className="kitty-status-seg kitty-status-file">portfolio.tsx</span>
-        <span className="kitty-status-spacer" />
-        <span className="kitty-status-seg kitty-status-utf">UTF-8</span>
-        <span className="kitty-status-seg kitty-status-pos">100%  19:42</span>
-      </div>
     </div>
   );
 }
