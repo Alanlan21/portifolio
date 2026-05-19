@@ -48,38 +48,39 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* Solarized Light palette */
+  --background: oklch(0.965 0.024 88);      /* base3  — creme quente */
+  --foreground: oklch(0.26 0.038 218);      /* base03 — azul-acinzentado escuro */
+  --card: oklch(0.915 0.022 85);            /* base2  — superfície de card */
+  --card-foreground: oklch(0.26 0.038 218);
+  --popover: oklch(0.915 0.022 85);
+  --popover-foreground: oklch(0.26 0.038 218);
+  --primary: oklch(0.26 0.038 218);
+  --primary-foreground: oklch(0.965 0.024 88);
+  --secondary: oklch(0.875 0.022 86);
+  --secondary-foreground: oklch(0.26 0.038 218);
+  --muted: oklch(0.875 0.022 86);
+  --muted-foreground: oklch(0.50 0.046 207); /* base0  — cinza-azul para texto secundário */
+  --accent: oklch(0.875 0.022 86);
+  --accent-foreground: oklch(0.26 0.038 218);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --border: oklch(0.845 0.022 86);           /* base1  — borda creme mais escura */
+  --input: oklch(0.845 0.022 86);
+  --ring: oklch(0.65 0.18 160);
   --chart-1: oklch(0.809 0.105 251.813);
   --chart-2: oklch(0.623 0.214 259.815);
   --chart-3: oklch(0.546 0.245 262.881);
   --chart-4: oklch(0.488 0.243 264.376);
   --chart-5: oklch(0.424 0.199 265.638);
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --sidebar: oklch(0.915 0.022 85);
+  --sidebar-foreground: oklch(0.26 0.038 218);
+  --sidebar-primary: oklch(0.26 0.038 218);
+  --sidebar-primary-foreground: oklch(0.965 0.024 88);
+  --sidebar-accent: oklch(0.875 0.022 86);
+  --sidebar-accent-foreground: oklch(0.26 0.038 218);
+  --sidebar-border: oklch(0.845 0.022 86);
+  --sidebar-ring: oklch(0.65 0.18 160);
 }
 
 .dark {
@@ -321,7 +322,7 @@
   /* Bento card style */
   .bento-card {
     @apply relative rounded-xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-sm;
-    @apply transition-all duration-300;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
   }
 
   .bento-card::before {
@@ -528,56 +529,58 @@
 
   /* ─── Light mode overrides ──────────────────────────────────── */
 
-  /* Hero name: dark-to-emerald gradient on light bg */
+  /* ── Solarized Light overrides ─────────────────────────────── */
+
+  /* Hero name: Solarized base03 → teal accent → base03 */
   html:not(.dark) .text-gradient-hero {
     background: linear-gradient(
       135deg,
-      oklch(0.15 0 0) 0%,
-      oklch(0.4 0.2 160) 50%,
-      oklch(0.15 0 0) 100%
+      oklch(0.22 0.04 218) 0%,
+      oklch(0.48 0.18 168) 50%,
+      oklch(0.22 0.04 218) 100%
     );
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
   }
 
-  /* Hero top overlay: override the dark from-zinc-950 gradient stop */
+  /* Hero top overlay: warm cream instead of near-black */
   html:not(.dark) .hero-gradient-overlay {
-    --tw-gradient-from: oklch(0.93 0 0);
+    --tw-gradient-from: oklch(0.945 0.024 88);
     --tw-gradient-via: var(--background);
     --tw-gradient-to: var(--background);
   }
 
-  /* Fade-bottom: to light background */
+  /* Fade-bottom: to warm cream */
   html:not(.dark) .fade-bottom {
-    background: linear-gradient(to bottom, transparent 0%, oklch(1 0 0) 100%);
+    background: linear-gradient(to bottom, transparent 0%, oklch(0.965 0.024 88) 100%);
   }
 
-  /* Grid lines: dark strokes on light bg */
+  /* Grid lines: warm tan strokes */
   html:not(.dark) .bg-grid-lines {
     background-image:
-      linear-gradient(to right, oklch(0 0 0 / 0.04) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0 0 0 / 0.04) 1px, transparent 1px);
+      linear-gradient(to right, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px);
   }
 
-  /* Section dividers: dark lines */
+  /* Section dividers: warm tan */
   html:not(.dark) .section-divider::before {
     background: linear-gradient(
       to right,
       transparent 0%,
-      oklch(0 0 0 / 0.06) 15%,
-      oklch(0 0 0 / 0.12) 50%,
-      oklch(0 0 0 / 0.06) 85%,
+      oklch(0.26 0.038 218 / 0.07) 15%,
+      oklch(0.26 0.038 218 / 0.13) 50%,
+      oklch(0.26 0.038 218 / 0.07) 85%,
       transparent 100%
     );
   }
 
-  /* Section glows: reduced opacity on light bg */
+  /* Section glows: emerald/violet on warm base */
   html:not(.dark) .section-glow-emerald::before {
     background: radial-gradient(
       ellipse at top center,
-      oklch(0.55 0.18 160 / 0.07) 0%,
-      oklch(0.55 0.18 160 / 0.02) 50%,
+      oklch(0.52 0.16 160 / 0.1) 0%,
+      oklch(0.52 0.16 160 / 0.03) 50%,
       transparent 75%
     );
   }
@@ -585,92 +588,101 @@
   html:not(.dark) .section-glow-violet::before {
     background: radial-gradient(
       ellipse at top center,
-      oklch(0.55 0.18 280 / 0.07) 0%,
-      oklch(0.55 0.18 280 / 0.02) 50%,
+      oklch(0.52 0.16 280 / 0.09) 0%,
+      oklch(0.52 0.16 280 / 0.02) 50%,
       transparent 75%
     );
   }
 
-  /* Aurora: slightly more present on light bg */
+  /* Aurora: warm teal tones on cream base */
   html:not(.dark) .aurora {
     background:
       radial-gradient(
         ellipse 80% 50% at 50% -20%,
-        oklch(0.55 0.18 160 / 0.1) 0%,
+        oklch(0.52 0.16 160 / 0.13) 0%,
         transparent 60%
       ),
       radial-gradient(
         ellipse 60% 40% at 80% 0%,
-        oklch(0.5 0.15 200 / 0.07) 0%,
+        oklch(0.50 0.13 200 / 0.09) 0%,
         transparent 40%
       ),
       radial-gradient(
         ellipse 50% 30% at 20% 10%,
-        oklch(0.55 0.1 280 / 0.05) 0%,
+        oklch(0.75 0.08 80 / 0.12) 0%,
         transparent 40%
       );
   }
 
-  /* Social links: light surface */
+  /* Social links: Solarized surface */
   html:not(.dark) .social-link {
-    background: oklch(0 0 0 / 0.05);
-    color: oklch(0.35 0 0);
-    border-color: oklch(0 0 0 / 0.1);
+    background: oklch(0.875 0.022 86);
+    color: oklch(0.50 0.046 207);
+    border-color: oklch(0.82 0.022 86);
   }
 
-  /* Bento cards: solid white surface — sem backdrop-blur em light mode */
+  /* Bento cards: warm cream surface */
   html:not(.dark) .bento-card {
-    background: oklch(0.985 0 0);
-    border-color: oklch(0 0 0 / 0.08);
+    background: oklch(0.915 0.022 85);
+    border-color: oklch(0.845 0.022 86);
     backdrop-filter: none;
+    box-shadow:
+      0 1px 4px oklch(0.26 0.038 218 / 0.07),
+      inset 0 1px 0 oklch(1 0 0 / 0.45);
   }
 
   html:not(.dark) .bento-card:hover {
-    border-color: oklch(0.45 0.15 160 / 0.35);
-    box-shadow: 0 0 24px -8px oklch(0.45 0.15 160 / 0.12);
+    border-color: oklch(0.48 0.16 165 / 0.35);
+    box-shadow:
+      0 0 28px -8px oklch(0.48 0.16 165 / 0.14),
+      0 2px 8px oklch(0.26 0.038 218 / 0.06),
+      inset 0 1px 0 oklch(1 0 0 / 0.45);
   }
 
   html:not(.dark) .bento-highlight {
-    border-color: oklch(0.45 0.15 160 / 0.3);
+    border-color: oklch(0.48 0.16 165 / 0.3);
     background: linear-gradient(
       135deg,
-      oklch(0.96 0.015 160) 0%,
-      oklch(0.985 0 0) 100%
+      oklch(0.90 0.03 135) 0%,
+      oklch(0.915 0.022 85) 100%
     );
+    box-shadow:
+      0 1px 4px oklch(0.26 0.038 218 / 0.07),
+      inset 0 1px 0 oklch(1 0 0 / 0.5);
     backdrop-filter: none;
   }
 
   html:not(.dark) .bento-backend {
     background: linear-gradient(
       135deg,
-      oklch(0.965 0.01 160) 0%,
-      oklch(0.985 0 0) 100%
+      oklch(0.90 0.028 148) 0%,
+      oklch(0.915 0.022 85) 100%
     );
-    border-color: oklch(0.5 0.12 160 / 0.18);
+    border-color: oklch(0.52 0.14 160 / 0.2);
     backdrop-filter: none;
   }
 
   html:not(.dark) .bento-frontend {
     background: linear-gradient(
       135deg,
-      oklch(0.965 0.01 280) 0%,
-      oklch(0.985 0 0) 100%
+      oklch(0.90 0.022 270) 0%,
+      oklch(0.915 0.022 85) 100%
     );
-    border-color: oklch(0.5 0.12 280 / 0.18);
+    border-color: oklch(0.52 0.14 280 / 0.2);
     backdrop-filter: none;
   }
 
   html:not(.dark) .bento-devops {
     background: linear-gradient(
       135deg,
-      oklch(0.965 0.01 60) 0%,
-      oklch(0.985 0 0) 100%
+      oklch(0.90 0.025 80) 0%,
+      oklch(0.915 0.022 85) 100%
     );
-    border-color: oklch(0.5 0.12 60 / 0.18);
+    border-color: oklch(0.55 0.12 75 / 0.22);
     backdrop-filter: none;
   }
 
-  /* Terminal card: opaque dark panel in light mode — VS Code dark window feel */
+  /* Terminal card: dark VS Code panel contrasting with warm Solarized bg */
   html:not(.dark) .bento-terminal {
     border-color: oklch(0.35 0.07 215 / 0.55);
     background: linear-gradient(
@@ -679,8 +691,8 @@
       oklch(0.10 0.005 200) 100%
     );
     box-shadow:
-      0 20px 64px -8px oklch(0 0 0 / 0.22),
-      0 6px 20px -4px oklch(0 0 0 / 0.14),
+      0 20px 64px -8px oklch(0.26 0.038 218 / 0.2),
+      0 6px 20px -4px oklch(0.26 0.038 218 / 0.1),
       inset 0 1px 0 oklch(1 0 0 / 0.06);
     backdrop-filter: none;
   }
@@ -688,36 +700,36 @@
   html:not(.dark) .bento-terminal:hover {
     border-color: oklch(0.52 0.12 215 / 0.55);
     box-shadow:
-      0 24px 72px -8px oklch(0 0 0 / 0.26),
-      0 8px 28px -4px oklch(0 0 0 / 0.16),
+      0 24px 72px -8px oklch(0.26 0.038 218 / 0.24),
+      0 8px 28px -4px oklch(0.26 0.038 218 / 0.12),
       0 0 0 1px oklch(0.52 0.12 215 / 0.15),
       inset 0 1px 0 oklch(1 0 0 / 0.07);
   }
 
-  /* Project items: white surface */
+  /* Project items: warm cream surface */
   html:not(.dark) .project-item-inner {
-    border-color: oklch(0 0 0 / 0.08);
+    border-color: oklch(0.845 0.022 86);
     background: linear-gradient(
       135deg,
-      oklch(0.99 0 0 / 0.95) 0%,
-      oklch(0.97 0 0) 100%
+      oklch(0.935 0.022 86) 0%,
+      oklch(0.915 0.022 85) 100%
     );
     box-shadow:
-      0 2px 8px -2px oklch(0 0 0 / 0.06),
-      inset 0 1px 0 oklch(1 0 0);
+      0 1px 3px oklch(0.26 0.038 218 / 0.07),
+      inset 0 1px 0 oklch(1 0 0 / 0.4);
   }
 
   html:not(.dark) .project-item:hover .project-item-inner {
-    border-color: oklch(0.45 0.15 160 / 0.3);
+    border-color: oklch(0.48 0.16 165 / 0.32);
     background: linear-gradient(
       135deg,
-      oklch(0.97 0.015 160 / 0.35) 0%,
-      oklch(0.99 0 0) 100%
+      oklch(0.905 0.032 145) 0%,
+      oklch(0.915 0.022 85) 100%
     );
     box-shadow:
-      0 0 0 1px oklch(0.45 0.15 160 / 0.1),
-      0 8px 32px -8px oklch(0.4 0.15 160 / 0.12),
-      0 4px 16px -4px oklch(0 0 0 / 0.05);
+      0 0 0 1px oklch(0.48 0.16 165 / 0.1),
+      0 8px 32px -8px oklch(0.45 0.16 165 / 0.14),
+      0 2px 8px oklch(0.26 0.038 218 / 0.06);
     transform: translateY(-2px);
   }
 
@@ -806,8 +818,8 @@
 
   /* ─── Spotlight cursor ─────────────────────────────────────── */
   :root {
-    --spotlight-color: oklch(0.45 0.15 160 / 0.04);
-    --card-glow-color: oklch(0.55 0.18 160 / 0.12);
+    --spotlight-color: oklch(0.48 0.16 168 / 0.06);
+    --card-glow-color: oklch(0.52 0.18 165 / 0.18);
   }
   .dark {
     --spotlight-color: oklch(0.6 0.18 160 / 0.07);
@@ -892,6 +904,95 @@
   .reveal-visible {
     opacity: 1;
     transform: translateY(0) scale(1);
+  }
+
+  /* ─── Preloader / splash screen ────────────────────────────── */
+  .preloader-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: var(--background);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .preloader-exit {
+    opacity: 0;
+    transform: translateY(-10px);
+    pointer-events: none;
+  }
+
+  .preloader-content {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--font-mono);
+  }
+
+  .preloader-prompt {
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+    font-weight: 700;
+    color: oklch(0.65 0.22 160);
+    text-shadow: 0 0 20px oklch(0.65 0.22 160 / 0.5);
+  }
+
+  .preloader-name {
+    font-size: clamp(1.4rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: oklch(0.92 0 0);
+  }
+
+  .dark .preloader-name {
+    color: oklch(0.92 0 0);
+  }
+
+  html:not(.dark) .preloader-name {
+    color: oklch(0.26 0.038 218);
+  }
+
+  .preloader-cursor {
+    display: inline-block;
+    width: 2px;
+    height: clamp(1.4rem, 4vw, 2.5rem);
+    background: oklch(0.65 0.22 160);
+    box-shadow: 0 0 12px oklch(0.65 0.22 160 / 0.6);
+    animation: preloader-blink 0.9s step-end infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+  }
+
+  @keyframes preloader-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .preloader-bar {
+    width: 120px;
+    height: 1px;
+    background: oklch(0 0 0 / 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .preloader-bar::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, oklch(0.65 0.22 160), transparent);
+    animation: preloader-scan 1.2s ease-in-out infinite;
+  }
+
+  @keyframes preloader-scan {
+    from { left: -40%; }
+    to   { left: 140%; }
   }
 
   .section-glow-neutral::before {

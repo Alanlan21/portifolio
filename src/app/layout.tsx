@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
 import { SpotlightCursor } from "@/components/spotlight-cursor";
 import { ViewTransitions } from "@/components/view-transitions";
+import { Preloader } from "@/components/preloader";
 import "./globals.css";
 
 const inter = Inter({
@@ -54,6 +55,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-background font-sans antialiased">
         <div className="scroll-progress" aria-hidden="true" />
         <Providers>
+          <Preloader />
           <SpotlightCursor />
           <ViewTransitions />
           <Sidebar />
