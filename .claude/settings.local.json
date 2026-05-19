@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(not exist *)",
+      "Skill(anthropic-skills:web-artifacts-builder)",
+      "Skill(anthropic-skills:web-artifacts-builder:*)",
+      "Read(//c/Users/Alan/AppData/Roaming/Claude/local-agent-mode-sessions/skills-plugin/106338d8-d51b-409d-9968-67c870f26209/75227e0c-77cf-4fda-a643-a566f99d1985/skills/web-artifacts-builder/**)",
+      "Bash(bash scripts/bundle-artifact.sh portfolio-analysis)",
+      "Bash(bash ../scripts/bundle-artifact.sh)",
+      "Bash(pnpm build *)",
+      "Bash(pnpm exec *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(gh pr create --title 'feat: efeitos visuais avançados — spotlight, glow, scramble, magnetic, view transitions' --body ' *)",
+      "Bash(git commit --amend -m ' *)",
+      "Bash(gh pr *)"
+    ]
+  }
+}
