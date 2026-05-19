@@ -397,29 +397,6 @@
     border-color: oklch(0.5 0.12 60 / 0.12);
   }
 
-  /* Featured project card */
-  .featured-project {
-    @apply relative rounded-2xl border bg-card/60 backdrop-blur-sm;
-    border-color: oklch(0.5 0.1 160 / 0.15);
-    background: linear-gradient(
-      135deg,
-      oklch(0.13 0.01 160 / 0.2) 0%,
-      oklch(0.11 0 0 / 0.4) 50%,
-      oklch(0.1 0 0 / 0.5) 100%
-    );
-    box-shadow:
-      0 4px 24px -8px oklch(0 0 0 / 0.4),
-      inset 0 1px 0 oklch(1 0 0 / 0.03);
-  }
-
-  .featured-project:hover {
-    border-color: oklch(0.6 0.15 160 / 0.4);
-    box-shadow:
-      0 8px 40px -12px oklch(0.5 0.15 160 / 0.2),
-      0 4px 24px -8px oklch(0 0 0 / 0.3),
-      inset 0 1px 0 oklch(1 0 0 / 0.05);
-  }
-
   /* Projects list with progressive disclosure */
   .project-item {
     @apply relative;
@@ -489,6 +466,19 @@
   .project-item:hover .project-detail {
     grid-template-rows: 1fr;
     opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-item:hover .project-item-inner {
+      transform: none;
+    }
+  }
+
+  @media (max-width: 1023px) {
+    .project-detail {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
   }
 
   /* Staggered entrance for list items */
@@ -676,7 +666,7 @@
     background: linear-gradient(
       145deg,
       oklch(0.14 0.015 220) 0%,
-      oklch(0.10 0.005 200) 100%
+      oklch(0.1 0.005 200) 100%
     );
     box-shadow:
       0 20px 64px -8px oklch(0 0 0 / 0.22),

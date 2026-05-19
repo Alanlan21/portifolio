@@ -3,37 +3,100 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
+import Script from "next/script";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
+const siteUrl = "https://alanregis.dev";
+
 export const metadata: Metadata = {
-  title: "Alan Regis | Backend Developer",
+  metadataBase: new URL(siteUrl),
+  title: "Alan Regis | Software Developer",
   description:
-    "Portfolio de desenvolvimento backend com foco em arquitetura, seguranca e sistemas distribuidos. NestJS, TypeScript, Python e Docker.",
+    "Portfolio de Alan Regis — desenvolvedor backend com foco em arquitetura, segurança e sistemas distribuídos. NestJS, TypeScript, Python e Docker.",
   keywords: [
-    "backend",
-    "developer",
+    "backend developer",
     "nestjs",
     "typescript",
     "python",
     "docker",
     "portfolio",
+    "Alan Regis",
+    "software engineer",
+    "fortaleza",
   ],
-  authors: [{ name: "Alan Regis" }],
+  authors: [{ name: "Alan Regis", url: siteUrl }],
+  alternates: {
+    canonical: siteUrl,
+    languages: {
+      "pt-BR": siteUrl,
+      "en-US": `${siteUrl}/en`,
+    },
+  },
   openGraph: {
-    title: "Alan Regis | Backend Developer",
+    title: "Alan Regis | Software Developer",
     description:
-      "Portfolio de desenvolvimento backend com foco em arquitetura, seguranca e sistemas distribuidos.",
+      "Desenvolvedor backend especializado em arquitetura de sistemas, segurança e APIs críticas em produção.",
     type: "website",
+    url: siteUrl,
+    locale: "pt_BR",
+    siteName: "Alan Regis",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Alan Regis — Software Developer",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Alan Regis | Software Developer",
+    description:
+      "Desenvolvedor backend especializado em arquitetura de sistemas, segurança e APIs críticas em produção.",
+    images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Alan Regis",
+  url: siteUrl,
+  jobTitle: "Software Developer",
+  description:
+    "Desenvolvedor backend especializado em NestJS, TypeScript, Python e arquitetura de sistemas distribuídos.",
+  sameAs: ["https://github.com/Alanlan21", "https://linkedin.com/in/alanregis"],
+  knowsAbout: [
+    "NestJS",
+    "TypeScript",
+    "Python",
+    "Docker",
+    "REST APIs",
+    "PostgreSQL",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Fortaleza",
+    addressRegion: "CE",
+    addressCountry: "BR",
   },
 };
 
@@ -47,9 +110,13 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${inter.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
-      data-scroll-behavior="smooth"
     >
       <body className="min-h-screen bg-background font-sans antialiased">
+        <Script
+          id="json-ld"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Providers>
           <Sidebar />
           <div className="lg:pl-64">
