@@ -3,12 +3,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-declare global {
-  interface Document {
-    startViewTransition?: (cb: () => void) => { ready: Promise<void> };
-  }
-}
-
 export function ViewTransitions() {
   const router = useRouter();
 
