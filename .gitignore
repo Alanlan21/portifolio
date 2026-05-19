@@ -43,3 +43,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# claude code workspace
+.claude/
+
+# package manager (using pnpm)
+package-lock.json
