@@ -3,7 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
-import Script from "next/script";
+import { SpotlightCursor } from "@/components/spotlight-cursor";
+import { ViewTransitions } from "@/components/view-transitions";
 import "./globals.css";
 
 const inter = Inter({
@@ -112,12 +113,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">
-        <Script
-          id="json-ld"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <div className="scroll-progress" aria-hidden="true" />
         <Providers>
+          <SpotlightCursor />
+          <ViewTransitions />
           <Sidebar />
           <div className="lg:pl-64">
             <div className="lg:hidden">
