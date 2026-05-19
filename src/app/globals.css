@@ -50,6 +50,18 @@
 :root {
   /* Solarized Light palette */
   --background: oklch(0.965 0.024 88);      /* base3  — creme quente */
+  /* Emerald → Solarized green (#859900 olive): terroso em vez de neon,
+     respeita a base creme e mantém a semântica de "verde = disponível/backend" */
+  --color-emerald-50:  oklch(0.962 0.018 128);
+  --color-emerald-100: oklch(0.928 0.038 128);
+  --color-emerald-200: oklch(0.875 0.072 128);
+  --color-emerald-300: oklch(0.795 0.105 128);
+  --color-emerald-400: oklch(0.715 0.128 128);
+  --color-emerald-500: oklch(0.625 0.135 128);
+  --color-emerald-600: oklch(0.540 0.123 128);
+  --color-emerald-700: oklch(0.455 0.108 128);
+  --color-emerald-800: oklch(0.375 0.088 128);
+  --color-emerald-900: oklch(0.290 0.068 128);
   --foreground: oklch(0.26 0.038 218);      /* base03 — azul-acinzentado escuro */
   --card: oklch(0.915 0.022 85);            /* base2  — superfície de card */
   --card-foreground: oklch(0.26 0.038 218);
@@ -84,6 +96,17 @@
 }
 
 .dark {
+  /* Restaura emerald original (verde vibrante funciona bem no dark) */
+  --color-emerald-50:  lab(97.8462% -6.94963 1.85487);
+  --color-emerald-100: lab(93.1865% -22.2551 6.73538);
+  --color-emerald-200: lab(87.5908% -39.9617 12.5016);
+  --color-emerald-300: lab(83.9203% -48.7124 13.8849);
+  --color-emerald-400: lab(75.0771% -60.7313 19.4146);
+  --color-emerald-500: lab(66.9756% -58.27  19.5419);
+  --color-emerald-600: lab(55.0481% -49.9246 15.93);
+  --color-emerald-700: lab(44.4871% -41.0396 11.0361);
+  --color-emerald-800: lab(34.5083% -31.7808  7.55765);
+  --color-emerald-900: lab(26.6408% -24.1296  4.85315);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -171,6 +194,22 @@
     50% {
       background-position: 100% center;
     }
+  }
+
+  /* Central connecting glow (between hero columns) */
+  .hero-center-glow {
+    background: radial-gradient(
+      ellipse at center,
+      oklch(0.6 0.15 160 / 0.08) 0%,
+      transparent 50%
+    );
+  }
+  html:not(.dark) .hero-center-glow {
+    background: radial-gradient(
+      ellipse at center,
+      oklch(0.60 0.155 245 / 0.08) 0%,
+      transparent 55%
+    );
   }
 
   /* Aurora ambient glow */
@@ -531,12 +570,12 @@
 
   /* ── Solarized Light overrides ─────────────────────────────── */
 
-  /* Hero name: Solarized base03 → teal accent → base03 */
+  /* Hero name: Solarized base03 → blue accent → base03 */
   html:not(.dark) .text-gradient-hero {
     background: linear-gradient(
       135deg,
       oklch(0.22 0.04 218) 0%,
-      oklch(0.48 0.18 168) 50%,
+      oklch(0.55 0.155 245) 50%,
       oklch(0.22 0.04 218) 100%
     );
     background-size: 200% auto;
@@ -575,12 +614,12 @@
     );
   }
 
-  /* Section glows: emerald/violet on warm base */
+  /* Section glow Sobre: olive green sutil (combina com o accent da seção) */
   html:not(.dark) .section-glow-emerald::before {
     background: radial-gradient(
       ellipse at top center,
-      oklch(0.52 0.16 160 / 0.1) 0%,
-      oklch(0.52 0.16 160 / 0.03) 50%,
+      oklch(0.62 0.13 128 / 0.10) 0%,
+      oklch(0.62 0.13 128 / 0.03) 50%,
       transparent 75%
     );
   }
@@ -594,22 +633,22 @@
     );
   }
 
-  /* Aurora: warm teal tones on cream base */
+  /* Aurora: tons quentes do Solarized + leve toque de blue */
   html:not(.dark) .aurora {
     background:
       radial-gradient(
         ellipse 80% 50% at 50% -20%,
-        oklch(0.52 0.16 160 / 0.13) 0%,
+        oklch(0.60 0.155 245 / 0.10) 0%,
         transparent 60%
       ),
       radial-gradient(
         ellipse 60% 40% at 80% 0%,
-        oklch(0.50 0.13 200 / 0.09) 0%,
+        oklch(0.75 0.10 80 / 0.11) 0%,
         transparent 40%
       ),
       radial-gradient(
         ellipse 50% 30% at 20% 10%,
-        oklch(0.75 0.08 80 / 0.12) 0%,
+        oklch(0.78 0.07 60 / 0.12) 0%,
         transparent 40%
       );
   }
@@ -619,6 +658,18 @@
     background: oklch(0.875 0.022 86);
     color: oklch(0.50 0.046 207);
     border-color: oklch(0.82 0.022 86);
+  }
+
+  html:not(.dark) .social-link:hover {
+    border-color: oklch(0.55 0.155 245 / 0.40);
+    box-shadow: 0 0 16px -4px oklch(0.55 0.155 245 / 0.30);
+  }
+
+  html:not(.dark) .btn-glow:hover {
+    box-shadow:
+      0 4px 20px -2px oklch(0.55 0.155 245 / 0.40),
+      0 10px 30px -5px oklch(0.55 0.155 245 / 0.22),
+      inset 0 1px 0 oklch(1 0 0 / 0.18);
   }
 
   /* Bento cards: warm cream surface */
@@ -632,18 +683,18 @@
   }
 
   html:not(.dark) .bento-card:hover {
-    border-color: oklch(0.48 0.16 165 / 0.35);
+    border-color: oklch(0.55 0.155 245 / 0.32);
     box-shadow:
-      0 0 28px -8px oklch(0.48 0.16 165 / 0.14),
+      0 0 28px -8px oklch(0.55 0.155 245 / 0.14),
       0 2px 8px oklch(0.26 0.038 218 / 0.06),
       inset 0 1px 0 oklch(1 0 0 / 0.45);
   }
 
   html:not(.dark) .bento-highlight {
-    border-color: oklch(0.48 0.16 165 / 0.3);
+    border-color: oklch(0.845 0.022 86);
     background: linear-gradient(
       135deg,
-      oklch(0.90 0.03 135) 0%,
+      oklch(0.935 0.030 88) 0%,
       oklch(0.915 0.022 85) 100%
     );
     box-shadow:
@@ -655,10 +706,10 @@
   html:not(.dark) .bento-backend {
     background: linear-gradient(
       135deg,
-      oklch(0.90 0.028 148) 0%,
+      oklch(0.92 0.038 128) 0%,
       oklch(0.915 0.022 85) 100%
     );
-    border-color: oklch(0.52 0.14 160 / 0.2);
+    border-color: oklch(0.55 0.12 128 / 0.22);
     backdrop-filter: none;
   }
 
@@ -682,28 +733,21 @@
     backdrop-filter: none;
   }
 
-  /* Terminal card: dark VS Code panel contrasting with warm Solarized bg */
+  /* Terminal bento: borda e shadow neutros — o KittyTerminal traz sua própria palette */
   html:not(.dark) .bento-terminal {
-    border-color: oklch(0.35 0.07 215 / 0.55);
-    background: linear-gradient(
-      145deg,
-      oklch(0.14 0.015 220) 0%,
-      oklch(0.10 0.005 200) 100%
-    );
+    border-color: oklch(0.82 0.025 88);
+    background: transparent;
     box-shadow:
-      0 20px 64px -8px oklch(0.26 0.038 218 / 0.2),
-      0 6px 20px -4px oklch(0.26 0.038 218 / 0.1),
-      inset 0 1px 0 oklch(1 0 0 / 0.06);
+      0 4px 18px -6px oklch(0.26 0.038 218 / 0.14),
+      0 1px 3px oklch(0.26 0.038 218 / 0.08);
     backdrop-filter: none;
   }
 
   html:not(.dark) .bento-terminal:hover {
-    border-color: oklch(0.52 0.12 215 / 0.55);
+    border-color: oklch(0.55 0.155 245 / 0.4);
     box-shadow:
-      0 24px 72px -8px oklch(0.26 0.038 218 / 0.24),
-      0 8px 28px -4px oklch(0.26 0.038 218 / 0.12),
-      0 0 0 1px oklch(0.52 0.12 215 / 0.15),
-      inset 0 1px 0 oklch(1 0 0 / 0.07);
+      0 8px 32px -8px oklch(0.55 0.155 245 / 0.18),
+      0 2px 8px oklch(0.26 0.038 218 / 0.08);
   }
 
   /* Project items: warm cream surface */
@@ -720,15 +764,15 @@
   }
 
   html:not(.dark) .project-item:hover .project-item-inner {
-    border-color: oklch(0.48 0.16 165 / 0.32);
+    border-color: oklch(0.55 0.155 245 / 0.30);
     background: linear-gradient(
       135deg,
-      oklch(0.905 0.032 145) 0%,
+      oklch(0.925 0.030 88) 0%,
       oklch(0.915 0.022 85) 100%
     );
     box-shadow:
-      0 0 0 1px oklch(0.48 0.16 165 / 0.1),
-      0 8px 32px -8px oklch(0.45 0.16 165 / 0.14),
+      0 0 0 1px oklch(0.55 0.155 245 / 0.10),
+      0 8px 32px -8px oklch(0.55 0.155 245 / 0.14),
       0 2px 8px oklch(0.26 0.038 218 / 0.06);
     transform: translateY(-2px);
   }
@@ -818,8 +862,8 @@
 
   /* ─── Spotlight cursor ─────────────────────────────────────── */
   :root {
-    --spotlight-color: oklch(0.48 0.16 168 / 0.06);
-    --card-glow-color: oklch(0.52 0.18 165 / 0.18);
+    --spotlight-color: oklch(0.55 0.155 245 / 0.07);
+    --card-glow-color: oklch(0.55 0.155 245 / 0.18);
   }
   .dark {
     --spotlight-color: oklch(0.6 0.18 160 / 0.07);
@@ -870,6 +914,15 @@
     to   { transform: scaleX(1); }
   }
 
+  /* Scroll progress bar: Solarized blue → cyan no light mode */
+  html:not(.dark) .scroll-progress {
+    background: linear-gradient(
+      90deg,
+      oklch(0.55 0.155 245),
+      oklch(0.62 0.12 195)
+    );
+  }
+
   /* Fallback for browsers without scroll-driven animations */
   @supports not (animation-timeline: scroll()) {
     .scroll-progress { display: none; }
@@ -905,6 +958,437 @@
     opacity: 1;
     transform: translateY(0) scale(1);
   }
+
+  /* ─── Kitty Terminal (oh-my-zsh + fastfetch aesthetic) ─────── */
+  .kitty-terminal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: inherit;
+    overflow: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.55;
+    color: var(--kitty-fg);
+    background: var(--kitty-bg);
+
+    /* Solarized Dark — modo escuro */
+    --kitty-bg:        oklch(0.18 0.018 220);
+    --kitty-bg-bar:    oklch(0.21 0.015 220);
+    --kitty-bg-tab:    oklch(0.16 0.015 220);
+    --kitty-border:    oklch(0.30 0.020 220);
+    --kitty-fg:        oklch(0.80 0.025 205);
+    --kitty-fg-dim:    oklch(0.55 0.028 210);
+    --kitty-fg-dimmer: oklch(0.42 0.022 215);
+    --kitty-blue:      oklch(0.70 0.16 245);
+    --kitty-cyan:      oklch(0.74 0.13 185);
+    --kitty-green:     oklch(0.74 0.16 130);
+    --kitty-yellow:    oklch(0.80 0.14 80);
+    --kitty-orange:    oklch(0.74 0.16 45);
+    --kitty-red:       oklch(0.70 0.18 25);
+    --kitty-magenta:   oklch(0.68 0.17 340);
+    --kitty-violet:    oklch(0.70 0.16 290);
+  }
+
+  html:not(.dark) .kitty-terminal {
+    /* Solarized Light — modo claro autêntico */
+    --kitty-bg:        oklch(0.965 0.024 88);
+    --kitty-bg-bar:    oklch(0.905 0.025 88);
+    --kitty-bg-tab:    oklch(0.875 0.025 88);
+    --kitty-border:    oklch(0.81 0.025 88);
+    --kitty-fg:        oklch(0.40 0.038 215);
+    --kitty-fg-dim:    oklch(0.55 0.040 207);
+    --kitty-fg-dimmer: oklch(0.66 0.035 207);
+    --kitty-blue:      oklch(0.50 0.15 240);
+    --kitty-cyan:      oklch(0.52 0.13 178);
+    --kitty-green:     oklch(0.55 0.14 125);
+    --kitty-yellow:    oklch(0.62 0.15 75);
+    --kitty-orange:    oklch(0.58 0.18 45);
+    --kitty-red:       oklch(0.55 0.20 25);
+    --kitty-magenta:   oklch(0.55 0.17 330);
+    --kitty-violet:    oklch(0.50 0.16 290);
+  }
+
+  /* Title bar com tabs estilo kitty */
+  .kitty-titlebar {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.55rem 0.75rem 0;
+    background: var(--kitty-bg-bar);
+    border-bottom: 1px solid var(--kitty-border);
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .kitty-traffic {
+    display: flex;
+    gap: 0.375rem;
+    padding-bottom: 0.5rem;
+  }
+
+  .kitty-light {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    opacity: 0.9;
+  }
+  .kitty-light--red    { background: oklch(0.65 0.20 25); }
+  .kitty-light--yellow { background: oklch(0.78 0.15 75); }
+  .kitty-light--green  { background: oklch(0.65 0.16 130); }
+
+  .kitty-tabs {
+    display: flex;
+    gap: 0.125rem;
+    margin-left: 0.5rem;
+    align-self: flex-end;
+  }
+
+  .kitty-tab {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem 0.35rem;
+    background: var(--kitty-bg-tab);
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    font-size: 0.66rem;
+    color: var(--kitty-fg-dim);
+    border: 1px solid var(--kitty-border);
+    border-bottom: none;
+    position: relative;
+    top: 1px;
+  }
+
+  .kitty-tab--active {
+    background: var(--kitty-bg);
+    color: var(--kitty-fg);
+  }
+
+  .kitty-tab-icon {
+    color: var(--kitty-magenta);
+    font-weight: 700;
+  }
+  .kitty-tab-icon--dim,
+  .kitty-tab-label--dim {
+    color: var(--kitty-fg-dimmer);
+  }
+
+  .kitty-title-text {
+    position: absolute;
+    top: 0.55rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.66rem;
+    color: var(--kitty-fg-dimmer);
+    letter-spacing: 0.02em;
+    pointer-events: none;
+  }
+
+  /* Body — onde tudo acontece */
+  .kitty-body {
+    flex: 1;
+    overflow: auto;
+    padding: 0.875rem 1rem;
+    background: var(--kitty-bg);
+  }
+
+  /* Powerlevel10k-style prompt */
+  .kitty-pl-block {
+    margin-bottom: 0.25rem;
+  }
+  .kitty-pl-block + .kitty-pl-block,
+  .kitty-output + .kitty-pl-block {
+    margin-top: 0.6rem;
+  }
+
+  .kitty-pl-line {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .kitty-pl-corner {
+    color: var(--kitty-fg-dimmer);
+  }
+  .kitty-pl-sep,
+  .kitty-pl-dim {
+    color: var(--kitty-fg-dimmer);
+  }
+  .kitty-pl-user   { color: var(--kitty-green);   font-weight: 600; }
+  .kitty-pl-host   { color: var(--kitty-yellow);  font-weight: 600; }
+  .kitty-pl-path   { color: var(--kitty-blue);    font-weight: 500; }
+  .kitty-pl-branch { color: var(--kitty-magenta); }
+  .kitty-pl-status { color: var(--kitty-green);   font-weight: 700; }
+  .kitty-pl-arrow  { color: var(--kitty-cyan);    font-weight: 700; }
+  .kitty-pl-cmd    { color: var(--kitty-fg); }
+
+  .kitty-cursor {
+    display: inline-block;
+    width: 0.45em;
+    height: 1em;
+    background: var(--kitty-fg);
+    vertical-align: text-bottom;
+    margin-left: 0.15rem;
+    animation: kitty-blink 1.05s step-end infinite;
+  }
+
+  @keyframes kitty-blink {
+    0%, 50%   { opacity: 1; }
+    51%, 100% { opacity: 0; }
+  }
+
+  /* Command output blocks — visual hierarchy:
+     foreground = main info, dim = secondary, cyan = labels/keys */
+  .kitty-output {
+    padding: 0.2rem 0 0.45rem 0.85rem;
+    margin: 0.05rem 0 0.35rem 0.35rem;
+    border-left: 2px solid var(--kitty-border);
+    color: var(--kitty-fg);
+    line-height: 1.55;
+  }
+
+  /* whoami → name card */
+  .kitty-output--name { padding-top: 0.35rem; padding-bottom: 0.55rem; }
+  .kitty-name {
+    color: var(--kitty-fg);
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  .kitty-name-sub {
+    color: var(--kitty-fg-dimmer);
+    font-size: 0.78em;
+    margin-top: 0.1rem;
+  }
+
+  /* echo $STATUS → availability line */
+  .kitty-status-line {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .kitty-pulse-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--kitty-green);
+    box-shadow: 0 0 10px color-mix(in oklch, var(--kitty-green), transparent 35%);
+    flex-shrink: 0;
+    animation: kitty-pulse 1.8s ease-in-out infinite;
+  }
+  .kitty-status-text {
+    color: var(--kitty-fg);
+    font-weight: 500;
+  }
+
+  @keyframes kitty-pulse {
+    0%, 100% { opacity: 1;   transform: scale(1); }
+    50%      { opacity: 0.55; transform: scale(0.82); }
+  }
+
+  /* cat skills.json → grouped list */
+  .kitty-skills {
+    display: flex;
+    flex-direction: column;
+    gap: 0.18rem;
+  }
+  .kitty-skill-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.7rem;
+  }
+  .kitty-skill-label {
+    color: var(--kitty-cyan);
+    font-weight: 600;
+    min-width: 4.2rem;
+  }
+  .kitty-skill-list {
+    color: var(--kitty-fg);
+  }
+  .kitty-skill-item { color: var(--kitty-fg); }
+  .kitty-skill-sep  { color: var(--kitty-fg-dimmer); }
+
+  /* cat ./now → focused single line */
+  .kitty-now-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+  }
+  .kitty-now-arrow {
+    color: var(--kitty-cyan);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .kitty-now-text {
+    color: var(--kitty-fg);
+    font-weight: 500;
+  }
+
+  /* ls projects/ → file listing */
+  .kitty-ls {
+    display: flex;
+    flex-direction: column;
+    gap: 0.12rem;
+  }
+  .kitty-ls-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .kitty-ls-name {
+    color: var(--kitty-cyan);
+    font-weight: 600;
+    min-width: 10rem;
+  }
+  .kitty-ls-desc {
+    color: var(--kitty-fg-dimmer);
+    font-size: 0.9em;
+  }
+
+  /* Status bar inferior (vim-like) */
+  .kitty-statusbar {
+    display: flex;
+    align-items: stretch;
+    background: var(--kitty-bg-bar);
+    border-top: 1px solid var(--kitty-border);
+    font-size: 0.62rem;
+    flex-shrink: 0;
+  }
+
+  .kitty-status-seg {
+    padding: 0.25rem 0.7rem;
+    color: var(--kitty-fg-dim);
+    display: flex;
+    align-items: center;
+  }
+
+  .kitty-status-mode {
+    background: var(--kitty-green);
+    color: var(--kitty-bg);
+    font-weight: 700;
+    letter-spacing: 0.05em;
+  }
+
+  .kitty-status-file {
+    color: var(--kitty-fg);
+    border-right: 1px solid var(--kitty-border);
+  }
+
+  .kitty-status-spacer {
+    flex: 1;
+  }
+
+  .kitty-status-utf,
+  .kitty-status-pos {
+    border-left: 1px solid var(--kitty-border);
+  }
+
+  .kitty-status-pos {
+    color: var(--kitty-cyan);
+  }
+
+  /* ─── Code card (syntax highlighted snippet) ───────────────── */
+  .code-card-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: oklch(0.10 0.008 222);
+    border-radius: inherit;
+    overflow: hidden;
+  }
+
+  .code-card-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.55rem 0.875rem;
+    background: oklch(0.13 0.01 220);
+    border-bottom: 1px solid oklch(1 0 0 / 0.06);
+    flex-shrink: 0;
+  }
+
+  .code-card-title {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: oklch(0.62 0.02 220);
+    flex: 1;
+    text-align: center;
+    letter-spacing: 0.01em;
+  }
+
+  .code-card-badge {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    color: oklch(0.72 0.16 295);
+    background: oklch(0.72 0.16 295 / 0.12);
+    padding: 0.1rem 0.45rem;
+    border-radius: 4px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .code-card-body {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    line-height: 1.65;
+    padding: 0.6rem 0;
+    background: oklch(0.10 0.008 222);
+  }
+
+  .code-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0;
+    padding: 0 0.75rem;
+    min-height: 1.65em;
+  }
+
+  .code-line:hover {
+    background: oklch(1 0 0 / 0.025);
+  }
+
+  .code-ln {
+    color: oklch(0.36 0.02 220);
+    user-select: none;
+    min-width: 1.8rem;
+    text-align: right;
+    padding-right: 0.875rem;
+    flex-shrink: 0;
+    font-size: 0.68rem;
+  }
+
+  .code-content {
+    white-space: pre;
+  }
+
+  /* Blinking cursor at end */
+  .code-cursor {
+    display: inline-block;
+    width: 0.45em;
+    height: 1.1em;
+    background: oklch(0.65 0.22 160);
+    vertical-align: text-bottom;
+    animation: preloader-blink 1.1s step-end infinite;
+    opacity: 0.7;
+  }
+
+  /* Syntax token colors — dark background (both themes, card is always dark) */
+  .code-kw   { color: oklch(0.72 0.16 295); }   /* violet — keywords */
+  .code-dec  { color: oklch(0.73 0.17 48);  }   /* amber  — decorators */
+  .code-cls  { color: oklch(0.74 0.14 215); }   /* cyan-blue — class names */
+  .code-str  { color: oklch(0.66 0.16 160); }   /* emerald — strings */
+  .code-prop { color: oklch(0.80 0.08 215); }   /* light blue — properties */
+  .code-punc { color: oklch(0.58 0.02 220); }   /* muted — punctuation */
+  .code-cmt  { color: oklch(0.42 0.02 220); font-style: italic; }
 
   /* ─── Preloader / splash screen ────────────────────────────── */
   .preloader-overlay {

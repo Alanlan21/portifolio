@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
-import { Terminal, TerminalLine } from "@/components/terminal";
+import { KittyTerminal } from "@/components/kitty-terminal";
 import { TechStack } from "@/components/tech-stack";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -31,7 +31,6 @@ const skills = {
 export default function Home() {
   const { lang, t } = useLanguage();
   const projects = t.projectsData;
-  const terminalProjects = t.terminalProjects;
 
   return (
     <div className="min-h-screen bg-background">
@@ -48,7 +47,7 @@ export default function Home() {
 
         {/* Connecting glow */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-250 h-150 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,oklch(0.6_0.15_160/0.08)_0%,transparent_50%)]" />
+          <div className="absolute inset-0 hero-center-glow" />
         </div>
 
         {/* Main content - Bento Grid */}
@@ -223,84 +222,8 @@ export default function Home() {
 
             {/* Right column: Terminal */}
             <div className="lg:col-span-5 flex flex-col gap-4">
-              {/* Terminal card */}
               <GlowCard className="bento-card bento-terminal p-0 overflow-hidden flex-1">
-                <Terminal
-                  title="~/alan.dev"
-                  className="w-full h-full border-0 bg-transparent rounded-none"
-                >
-                  <div className="space-y-3">
-                    <TerminalLine
-                      command="whoami"
-                      output={
-                        <span className="text-emerald-300 font-medium">
-                          Alan Regis
-                        </span>
-                      }
-                      animate={true}
-                      delay={300}
-                    />
-                    <TerminalLine
-                      command="echo $STATUS"
-                      output={
-                        <span className="text-emerald-400">
-                          {t.home.terminalStatus}
-                        </span>
-                      }
-                      animate={true}
-                      delay={900}
-                    />
-                    <TerminalLine
-                      command="cat skills.json | jq .main"
-                      output={
-                        <span className="text-zinc-400 text-sm">
-                          <span className="text-emerald-400">node</span>
-                          <span className="text-zinc-600"> · </span>
-                          <span className="text-emerald-400">nestjs</span>
-                          <span className="text-zinc-600"> · </span>
-                          <span className="text-emerald-400">typescript</span>
-                          <span className="text-zinc-600"> · </span>
-                          <span className="text-violet-400">react</span>
-                          <span className="text-zinc-600"> · </span>
-                          <span className="text-amber-400">docker</span>
-                          <span className="text-zinc-600"> · </span>
-                          <span className="text-amber-400">aws</span>
-                        </span>
-                      }
-                      animate={true}
-                      delay={1500}
-                    />
-                    <TerminalLine
-                      command="cat ./now"
-                      output={
-                        <div className="text-zinc-400 text-sm">
-                          {t.home.terminalNow}
-                        </div>
-                      }
-                      animate={true}
-                      delay={2100}
-                    />
-                    <TerminalLine
-                      command="ls projects/"
-                      output={
-                        <div className="space-y-0.5 text-sm">
-                          {terminalProjects.map((project) => (
-                            <div key={project.name} className="flex gap-2">
-                              <span className="text-cyan-400">
-                                {project.name}/
-                              </span>
-                              <span className="text-zinc-600 text-xs">
-                                # {project.desc}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                      }
-                      animate={true}
-                      delay={2700}
-                    />
-                  </div>
-                </Terminal>
+                <KittyTerminal />
               </GlowCard>
             </div>
           </div>
