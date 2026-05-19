@@ -43,6 +43,17 @@ export const translations = {
       cv: "CV",
       aboutTitle: "Sobre",
       aboutSubtitle: "NestJS · TypeScript · React — 2 anos em produção",
+      aboutDesc: (
+        <>
+          Foco em{" "}
+          <span className="text-zinc-900 dark:text-white font-medium">
+            APIs REST
+          </span>{" "}
+          com Node.js e NestJS. Dois anos desenvolvendo sistemas em produção, de
+          usinas termelétricas a instituições públicas. Com atuação prática em
+          frontend com React.
+        </>
+      ),
       stackMain: "Stack principal",
       stackAlso: "Também trabalho com",
       careerTitle: "Trajetória",
@@ -408,6 +419,17 @@ export const translations = {
       cv: "Resume",
       aboutTitle: "About",
       aboutSubtitle: "NestJS · TypeScript · React — 2 years in production",
+      aboutDesc: (
+        <>
+          Focused on{" "}
+          <span className="text-zinc-900 dark:text-white font-medium">
+            REST APIs
+          </span>{" "}
+          with Node.js and NestJS. Two years building production systems, from
+          power plants to public institutions. With hands-on frontend experience
+          using React.
+        </>
+      ),
       stackMain: "Main stack",
       stackAlso: "Also work with",
       careerTitle: "Career",

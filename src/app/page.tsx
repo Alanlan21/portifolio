@@ -97,7 +97,9 @@ export default function Home() {
                       variant="outline"
                       className="border-emerald-600/50 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
                     >
-                      <span className="mr-1.5 animate-pulse">●</span>{" "}
+                      <span className="mr-1.5 motion-safe:animate-pulse">
+                        ●
+                      </span>{" "}
                       {t.status.available}
                     </Badge>
 
@@ -258,27 +260,7 @@ export default function Home() {
             <div className="space-y-6">
               <div>
                 <p className="text-zinc-600 dark:text-zinc-300 leading-relaxed max-w-2xl mb-6">
-                  {lang === "en" ? (
-                    <>
-                      Focused on{" "}
-                      <span className="text-zinc-900 dark:text-white font-medium">
-                        REST APIs
-                      </span>{" "}
-                      with Node.js and NestJS. Two years building production
-                      systems, from power plants to public institutions. With
-                      hands-on frontend experience using React.
-                    </>
-                  ) : (
-                    <>
-                      Foco em{" "}
-                      <span className="text-zinc-900 dark:text-white font-medium">
-                        APIs REST
-                      </span>{" "}
-                      com Node.js e NestJS. Dois anos desenvolvendo sistemas em
-                      produção, de usinas termelétricas a instituições públicas.
-                      Com atuação prática em frontend com React.
-                    </>
-                  )}
+                  {t.home.aboutDesc}
                 </p>
               </div>
 
@@ -331,7 +313,7 @@ export default function Home() {
                 <div className="space-y-0">
                   {t.timeline.map((item, i) => (
                     <div
-                      key={i}
+                      key={item.slug}
                       className="relative flex gap-4 pl-10 pb-6 last:pb-0"
                     >
                       {/* dot */}
@@ -650,11 +632,11 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border">
-        <div className="max-w-350 2xl:max-w-400 mx-auto px-8 lg:px-16 xl:px-24 py-8">
+        <div className="max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
-              <span className="font-mono text-emerald-500">$</span> alan.dev ©
-              2026
+              <span className="font-mono text-emerald-500">$</span> alan.dev ©{" "}
+              {new Date().getFullYear()}
             </p>
             <div className="flex gap-4">
               <a
