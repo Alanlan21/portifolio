@@ -9,6 +9,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ScrollReveal } from "@/components/scroll-reveal";
 import { ContributionGraph } from "@/components/contribution-graph";
+import { TextScramble } from "@/components/text-scramble";
+import { Magnetic } from "@/components/magnetic";
+import { GlowCard } from "@/components/glow-card";
 import { useLanguage } from "@/lib/i18n";
 
 const skills = {
@@ -54,7 +57,7 @@ export default function Home() {
             {/* Left column: Social + Main intro */}
             <div className="lg:col-span-7 flex flex-col gap-4">
               {/* Social links - top left */}
-              <div className="bento-card p-4 flex items-center gap-4 w-fit">
+              <GlowCard className="bento-card p-4 flex items-center gap-4 w-fit">
                 <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
                   Links
                 </span>
@@ -85,10 +88,10 @@ export default function Home() {
                     <Mail className="h-4 w-4" />
                   </a>
                 </div>
-              </div>
+              </GlowCard>
 
               {/* Main intro card */}
-              <div className="bento-card bento-highlight p-6 lg:p-8 flex-1">
+              <GlowCard className="bento-card bento-highlight p-6 lg:p-8 flex-1">
                 <div className="flex items-start gap-4">
                   <div className="space-y-5 flex-1 min-w-0">
                     <Badge
@@ -101,7 +104,7 @@ export default function Home() {
 
                     <div>
                       <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
-                        <span className="text-gradient-hero">Alan Regis</span>
+                        <TextScramble text="Alan Regis" className="text-gradient-hero" delay={400} />
                         <br />
                         <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
                           Software Developer
@@ -110,34 +113,38 @@ export default function Home() {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-3 pt-2">
-                      <Button
-                        asChild
-                        size="lg"
-                        className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
-                      >
-                        <Link href="/#trabalho">
-                          {t.home.exploreCta}
-                          <ArrowRight className="h-4 w-4" />
-                        </Link>
-                      </Button>
-                      <Button
-                        asChild
-                        variant="outline"
-                        size="lg"
-                        className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
-                      >
-                        <a
-                          href={
-                            lang === "en"
-                              ? "/cv-alan-regis-en.pdf"
-                              : "/cv-alan-regis.pdf"
-                          }
-                          download
+                      <Magnetic strength={0.2}>
+                        <Button
+                          asChild
+                          size="lg"
+                          className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
                         >
-                          <Download className="h-4 w-4" />
-                          {t.home.cv}
-                        </a>
-                      </Button>
+                          <Link href="/#trabalho">
+                            {t.home.exploreCta}
+                            <ArrowRight className="h-4 w-4" />
+                          </Link>
+                        </Button>
+                      </Magnetic>
+                      <Magnetic strength={0.2}>
+                        <Button
+                          asChild
+                          variant="outline"
+                          size="lg"
+                          className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+                        >
+                          <a
+                            href={
+                              lang === "en"
+                                ? "/cv-alan-regis-en.pdf"
+                                : "/cv-alan-regis.pdf"
+                            }
+                            download
+                          >
+                            <Download className="h-4 w-4" />
+                            {t.home.cv}
+                          </a>
+                        </Button>
+                      </Magnetic>
                     </div>
                   </div>
                   <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-emerald-500/70 ring-2 ring-emerald-500/20 shrink-0 hidden sm:block">
@@ -150,11 +157,11 @@ export default function Home() {
                     />
                   </div>
                 </div>
-              </div>
+              </GlowCard>
 
               {/* Skills row */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div className="bento-card bento-backend p-3">
+                <GlowCard className="bento-card bento-backend p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
                     <div className="text-[10px] font-mono text-emerald-700/90 dark:text-emerald-400/80 uppercase tracking-widest">
@@ -172,8 +179,8 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                </div>
-                <div className="bento-card bento-frontend p-3">
+                </GlowCard>
+                <GlowCard className="bento-card bento-frontend p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-500/60"></div>
                     <div className="text-[10px] font-mono text-violet-700/90 dark:text-violet-400/80 uppercase tracking-widest">
@@ -191,8 +198,8 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                </div>
-                <div className="bento-card bento-devops p-3">
+                </GlowCard>
+                <GlowCard className="bento-card bento-devops p-3">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60"></div>
                     <div className="text-[10px] font-mono text-amber-700/90 dark:text-amber-400/80 uppercase tracking-widest">
@@ -210,14 +217,14 @@ export default function Home() {
                       </Badge>
                     ))}
                   </div>
-                </div>
+                </GlowCard>
               </div>
             </div>
 
             {/* Right column: Terminal */}
             <div className="lg:col-span-5 flex flex-col gap-4">
               {/* Terminal card */}
-              <div className="bento-card bento-terminal p-0 overflow-hidden flex-1">
+              <GlowCard className="bento-card bento-terminal p-0 overflow-hidden flex-1">
                 <Terminal
                   title="~/alan.dev"
                   className="w-full h-full border-0 bg-transparent rounded-none"
@@ -294,7 +301,7 @@ export default function Home() {
                     />
                   </div>
                 </Terminal>
-              </div>
+              </GlowCard>
             </div>
           </div>
         </div>
