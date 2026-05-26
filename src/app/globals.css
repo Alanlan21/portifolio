@@ -949,16 +949,15 @@
     transform: translateY(0) scale(1);
   }
 
-  /* ─── Kitty Terminal (oh-my-zsh + fastfetch aesthetic) ─────── */
+  /* ─── Kitty Terminal — neofetch-style hero ─────────────────── */
   .kitty-terminal {
     display: flex;
     flex-direction: column;
-    height: 100%;
     border-radius: inherit;
     overflow: hidden;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    line-height: 1.55;
+    font-size: clamp(0.8rem, 0.7rem + 0.4vw, 0.95rem);
+    line-height: 1.6;
     color: var(--kitty-fg);
     background: var(--kitty-bg);
 
@@ -1075,211 +1074,243 @@
     pointer-events: none;
   }
 
-  /* Body — onde tudo acontece */
+  @media (max-width: 640px) {
+    .kitty-title-text { display: none; }
+  }
+
+  /* Body — scrollable terminal viewport */
   .kitty-body {
-    flex: 1;
-    overflow: auto;
-    padding: 0.875rem 1rem;
+    height: clamp(320px, 40vh, 392px);
+    overflow-y: auto;
+    padding: clamp(1rem, 0.7rem + 1.2vw, 1.5rem);
     background: var(--kitty-bg);
+    cursor: text;
+    scrollbar-width: thin;
+    scrollbar-color: var(--kitty-border) transparent;
+  }
+  .kitty-body::-webkit-scrollbar { width: 8px; }
+  .kitty-body::-webkit-scrollbar-thumb {
+    background: var(--kitty-border);
+    border-radius: 4px;
   }
 
-  /* Powerlevel10k-style prompt */
-  .kitty-pl-block {
-    margin-bottom: 0.25rem;
-  }
-  .kitty-pl-block + .kitty-pl-block,
-  .kitty-output + .kitty-pl-block {
-    margin-top: 0.6rem;
-  }
-
-  .kitty-pl-line {
+  /* Prompt / command line */
+  .kitty-cmd {
     display: flex;
-    flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.35rem;
-    white-space: nowrap;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .kitty-cmd-user  { color: var(--kitty-green);  font-weight: 600; }
+  .kitty-cmd-host  { color: var(--kitty-yellow); font-weight: 600; margin-left: -0.4rem; }
+  .kitty-cmd-cwd   { color: var(--kitty-blue);   font-weight: 500; }
+  .kitty-cmd-arrow { color: var(--kitty-cyan);   font-weight: 700; }
+  .kitty-cmd-text  {
+    color: var(--kitty-fg);
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
-  .kitty-pl-corner {
-    color: var(--kitty-fg-dimmer);
+  /* Active input line */
+  .kitty-cmd--input { position: relative; }
+  .kitty-input-line { display: inline-flex; align-items: baseline; }
+  .kitty-input-native {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    background: transparent;
+    color: transparent;
+    caret-color: transparent;
+    outline: none;
+    font: inherit;
+    padding: 0;
   }
-  .kitty-pl-sep,
-  .kitty-pl-dim {
-    color: var(--kitty-fg-dimmer);
-  }
-  .kitty-pl-user   { color: var(--kitty-green);   font-weight: 600; }
-  .kitty-pl-host   { color: var(--kitty-yellow);  font-weight: 600; }
-  .kitty-pl-path   { color: var(--kitty-blue);    font-weight: 500; }
-  .kitty-pl-branch { color: var(--kitty-magenta); }
-  .kitty-pl-status { color: var(--kitty-green);   font-weight: 700; }
-  .kitty-pl-arrow  { color: var(--kitty-cyan);    font-weight: 700; }
-  .kitty-pl-cmd    { color: var(--kitty-fg); }
 
   .kitty-cursor {
     display: inline-block;
-    width: 0.45em;
-    height: 1em;
+    width: 0.5em;
+    height: 1.05em;
     background: var(--kitty-fg);
     vertical-align: text-bottom;
-    margin-left: 0.15rem;
     animation: kitty-blink 1.05s step-end infinite;
   }
-
   @keyframes kitty-blink {
     0%, 50%   { opacity: 1; }
     51%, 100% { opacity: 0; }
   }
 
-  /* Command output blocks — visual hierarchy:
-     foreground = main info, dim = secondary, cyan = labels/keys */
-  .kitty-output {
-    padding: 0.2rem 0 0.45rem 0.85rem;
-    margin: 0.05rem 0 0.35rem 0.35rem;
-    border-left: 2px solid var(--kitty-border);
+  /* Output blocks */
+  .kitty-out {
+    margin: 0.3rem 0 0.9rem;
     color: var(--kitty-fg);
-    line-height: 1.55;
   }
+  .kitty-out--text { max-width: 58ch; }
+  .kitty-out--text p { margin: 0; }
+  .kitty-out--text p + p { margin-top: 0.5rem; }
+  .kitty-out-dim { color: var(--kitty-fg-dim); }
+  .kitty-err { color: var(--kitty-red); }
 
-  /* whoami → name card */
-  .kitty-output--name { padding-top: 0.35rem; padding-bottom: 0.55rem; }
-  .kitty-name {
+  /* whoami header */
+  .kitty-who-name {
     color: var(--kitty-fg);
-    font-size: 1.05rem;
+    font-size: 1.5em;
     font-weight: 700;
-    letter-spacing: -0.005em;
+    letter-spacing: -0.01em;
   }
-  .kitty-name-sub {
-    color: var(--kitty-fg-dimmer);
-    font-size: 0.78em;
-    margin-top: 0.1rem;
+  .kitty-who-role {
+    color: var(--kitty-fg-dim);
+    margin-top: 0.15rem;
   }
-
-  /* echo $STATUS → availability line */
-  .kitty-status-line {
+  .kitty-who-status {
     display: flex;
     align-items: center;
-    gap: 0.55rem;
+    gap: 0.5rem;
+    margin-top: 0.45rem;
+    color: var(--kitty-green);
+    font-weight: 500;
   }
-  .kitty-pulse-dot {
-    width: 0.6rem;
-    height: 0.6rem;
+  .kitty-dot {
+    width: 0.55rem;
+    height: 0.55rem;
     border-radius: 50%;
     background: var(--kitty-green);
-    box-shadow: 0 0 10px color-mix(in oklch, var(--kitty-green), transparent 35%);
-    flex-shrink: 0;
+    box-shadow: 0 0 8px color-mix(in oklch, var(--kitty-green), transparent 35%);
     animation: kitty-pulse 1.8s ease-in-out infinite;
   }
-  .kitty-status-text {
-    color: var(--kitty-fg);
-    font-weight: 500;
-  }
-
   @keyframes kitty-pulse {
     0%, 100% { opacity: 1;   transform: scale(1); }
-    50%      { opacity: 0.55; transform: scale(0.82); }
+    50%      { opacity: 0.5; transform: scale(0.8); }
   }
 
-  /* cat skills.json → grouped list */
-  .kitty-skills {
+  /* key → value rows */
+  .kitty-row {
     display: flex;
-    flex-direction: column;
-    gap: 0.18rem;
+    gap: 1rem;
+    padding: 0.13rem 0;
   }
-  .kitty-skill-row {
+  .kitty-key {
+    flex-shrink: 0;
+    width: 6.5rem;
+    font-weight: 600;
+  }
+  .kitty-key--green  { color: var(--kitty-green); }
+  .kitty-key--blue   { color: var(--kitty-blue); }
+  .kitty-key--yellow { color: var(--kitty-yellow); }
+  .kitty-val { color: var(--kitty-fg); min-width: 0; }
+  .kitty-proj {
+    flex-shrink: 0;
+    width: 11.5rem;
+    color: var(--kitty-cyan);
+    font-weight: 600;
+  }
+
+  /* links */
+  .kitty-link {
+    color: var(--kitty-blue);
+    text-decoration: none;
+    border-bottom: 1px dotted
+      color-mix(in oklch, var(--kitty-blue), transparent 55%);
+    transition: color 0.15s ease;
+  }
+  .kitty-link:hover { color: var(--kitty-cyan); }
+  .kitty-out-link {
+    display: inline-block;
+    margin-top: 0.55rem;
+    color: var(--kitty-fg-dim);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .kitty-out-link:hover { color: var(--kitty-cyan); }
+
+  /* clickable command tokens */
+  .kitty-cmd-link {
+    flex-shrink: 0;
+    width: 6.5rem;
+    text-align: left;
+    color: var(--kitty-cyan);
+    font: inherit;
+    font-weight: 600;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .kitty-cmd-link:hover {
+    color: var(--kitty-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* hint line */
+  .kitty-hint {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.7rem;
+    gap: 0.4rem 0.85rem;
+    margin-top: 0.3rem;
+    padding-top: 0.7rem;
+    border-top: 1px dashed var(--kitty-border);
   }
-  .kitty-skill-label {
-    color: var(--kitty-cyan);
-    font-weight: 600;
-    min-width: 4.2rem;
-  }
-  .kitty-skill-list {
-    color: var(--kitty-fg);
-  }
-  .kitty-skill-item { color: var(--kitty-fg); }
-  .kitty-skill-sep  { color: var(--kitty-fg-dimmer); }
-
-  /* cat ./now → focused single line */
-  .kitty-now-line {
+  .kitty-hint-cmds {
     display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.95rem;
   }
-  .kitty-now-arrow {
-    color: var(--kitty-cyan);
-    font-weight: 700;
-    flex-shrink: 0;
-  }
-  .kitty-now-text {
+  .kitty-hint .kitty-cmd-link { width: auto; }
+
+  /* whoami one-liner */
+  .kitty-who-tag {
     color: var(--kitty-fg);
     font-weight: 500;
   }
 
-  /* ls projects/ → file listing */
-  .kitty-ls {
+  /* history line numbers */
+  .kitty-history-n {
+    flex-shrink: 0;
+    width: 2rem;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* closed / exit state */
+  .kitty-body--closed {
     display: flex;
     flex-direction: column;
-    gap: 0.12rem;
-  }
-  .kitty-ls-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.6rem;
-  }
-  .kitty-ls-name {
-    color: var(--kitty-cyan);
-    font-weight: 600;
-    min-width: 10rem;
-  }
-  .kitty-ls-desc {
-    color: var(--kitty-fg-dimmer);
-    font-size: 0.9em;
-  }
-
-  /* Status bar inferior (vim-like) */
-  .kitty-statusbar {
-    display: flex;
-    align-items: stretch;
-    background: var(--kitty-bg-bar);
-    border-top: 1px solid var(--kitty-border);
-    font-size: 0.62rem;
-    flex-shrink: 0;
-  }
-
-  .kitty-status-seg {
-    padding: 0.25rem 0.7rem;
-    color: var(--kitty-fg-dim);
-    display: flex;
     align-items: center;
+    justify-content: center;
+    gap: 0.9rem;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity 0.2s ease;
   }
-
-  .kitty-status-mode {
-    background: var(--kitty-green);
-    color: var(--kitty-bg);
-    font-weight: 700;
-    letter-spacing: 0.05em;
+  .kitty-body--closed:hover { opacity: 0.8; }
+  .kitty-reopen {
+    background: none;
+    border: 1px dashed var(--kitty-border);
+    color: var(--kitty-fg-dim);
+    font: inherit;
+    font-size: 0.8em;
+    padding: 0.2rem 0.8rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: color 0.15s ease, border-color 0.15s ease;
   }
-
-  .kitty-status-file {
+  .kitty-reopen:hover {
     color: var(--kitty-fg);
-    border-right: 1px solid var(--kitty-border);
+    border-color: var(--kitty-fg-dim);
   }
 
-  .kitty-status-spacer {
-    flex: 1;
+  @media (max-width: 480px) {
+    .kitty-row { flex-direction: column; gap: 0.1rem; }
+    .kitty-key,
+    .kitty-cmd-link,
+    .kitty-proj { width: auto; }
   }
 
-  .kitty-status-utf,
-  .kitty-status-pos {
-    border-left: 1px solid var(--kitty-border);
-  }
-
-  .kitty-status-pos {
-    color: var(--kitty-cyan);
+  @media (prefers-reduced-motion: reduce) {
+    .kitty-cursor,
+    .kitty-dot { animation: none; }
   }
 
   /* ─── Code card (syntax highlighted snippet) ───────────────── */
