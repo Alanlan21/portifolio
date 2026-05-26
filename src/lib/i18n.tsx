@@ -49,9 +49,8 @@ export const translations = {
           <span className="text-zinc-900 dark:text-white font-medium">
             sistemas de missão crítica
           </span>
-          . Nos últimos dois anos, trabalhei em APIs para controle de segurança
-          em usina termelétrica e instituições públicas, com compliance ISO e
-          LGPD. Stack principal em NestJS, TypeScript e bancos relacionais.
+          . Desenvolvi APIs para controle de segurança em usina termelétrica e
+          instituições públicas, com compliance ISO e LGPD. Stack principal em NestJS, TypeScript e bancos relacionais.
           Cubro toda a cadeia: modelagem, autenticação, deploy e monitoramento
           em produção. Com atuação prática em frontend quando necessário.
         </>
@@ -418,9 +417,8 @@ export const translations = {
           <span className="text-zinc-900 dark:text-white font-medium">
             mission-critical systems
           </span>
-          . Over the past two years I&apos;ve built security and maintenance
-          APIs for a thermoelectric plant and public institutions, with ISO and
-          LGPD compliance. Main stack: NestJS, TypeScript and relational
+          . I&apos;ve built security and maintenance APIs for a thermoelectric
+          plant and public institutions, with ISO and LGPD compliance. Main stack: NestJS, TypeScript and relational
           databases. I cover the full chain: data modeling, auth, deployment and
           production monitoring. With hands-on frontend experience when needed.
         </>
