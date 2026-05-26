@@ -42,23 +42,24 @@ export const translations = {
       exploreCta: "Explorar projetos",
       cv: "CV",
       aboutTitle: "Sobre",
-      aboutSubtitle: "NestJS · TypeScript · React — 2 anos em produção",
+      aboutSubtitle: "",
       aboutDesc: (
         <>
-          Foco em{" "}
+          Sou desenvolvedor backend com experiência em{" "}
           <span className="text-zinc-900 dark:text-white font-medium">
-            APIs REST
-          </span>{" "}
-          com Node.js e NestJS. Dois anos desenvolvendo sistemas em produção, de
-          usinas termelétricas a instituições públicas. Com atuação prática em
-          frontend com React.
+            sistemas de missão crítica
+          </span>
+          . Desenvolvi APIs para controle de segurança em usina termelétrica e
+          instituições públicas, com compliance ISO e LGPD. Stack principal em NestJS, TypeScript e bancos relacionais.
+          Cubro toda a cadeia: modelagem, autenticação, deploy e monitoramento
+          em produção. Com atuação prática em frontend quando necessário.
         </>
       ),
       stackMain: "Stack principal",
       stackAlso: "Também trabalho com",
       careerTitle: "Trajetória",
-      terminalStatus: "Disponível para trabalho",
-      terminalNow: "Pós-graduando em Engenharia de Software com Foco em Devops",
+      terminalNow: "Pós-graduando em Engenharia de Software com foco em DevOps",
+      terminalFocusLabel: "foco",
       projectsTitle: "Projetos",
       projectsSubtitle: "Trabalhos selecionados",
       viewAll: "Ver todos",
@@ -284,15 +285,6 @@ export const translations = {
           "Migrado de Python/Selenium para Node.js + venom-bot para maior estabilidade",
       },
     ],
-    terminalProjects: [
-      {
-        name: "attack-defense-lab",
-        desc: "SOC Cybersec • Red Team vs Blue Team",
-      },
-      { name: "valvecraft", desc: "Jogo educativo • Trompete no navegador" },
-      { name: "unimenu", desc: "Full-stack + Mobile • NestJS + React Native" },
-      { name: "fala-pai", desc: "PWA em produção • ElevenLabs API" },
-    ],
     projectsPageData: [
       {
         title: "Attack & Defense Lab",
@@ -418,24 +410,25 @@ export const translations = {
       exploreCta: "Explore projects",
       cv: "Resume",
       aboutTitle: "About",
-      aboutSubtitle: "NestJS · TypeScript · React — 2 years in production",
+      aboutSubtitle: "",
       aboutDesc: (
         <>
-          Focused on{" "}
+          I&apos;m a backend developer with experience in{" "}
           <span className="text-zinc-900 dark:text-white font-medium">
-            REST APIs
-          </span>{" "}
-          with Node.js and NestJS. Two years building production systems, from
-          power plants to public institutions. With hands-on frontend experience
-          using React.
+            mission-critical systems
+          </span>
+          . I&apos;ve built security and maintenance APIs for a thermoelectric
+          plant and public institutions, with ISO and LGPD compliance. Main stack: NestJS, TypeScript and relational
+          databases. I cover the full chain: data modeling, auth, deployment and
+          production monitoring. With hands-on frontend experience when needed.
         </>
       ),
       stackMain: "Main stack",
       stackAlso: "Also work with",
       careerTitle: "Career",
-      terminalStatus: "Available for work",
       terminalNow:
         "Master's student in Software Engineering with focus on DevOps",
+      terminalFocusLabel: "focus",
       projectsTitle: "Projects",
       projectsSubtitle: "Selected works",
       viewAll: "View all",
@@ -660,15 +653,6 @@ export const translations = {
         decision:
           "Migrated from Python/Selenium to Node.js + venom-bot for better stability",
       },
-    ],
-    terminalProjects: [
-      {
-        name: "attack-defense-lab",
-        desc: "SOC Cybersec • Red Team vs Blue Team",
-      },
-      { name: "valvecraft", desc: "Educational game • Trumpet in the browser" },
-      { name: "unimenu", desc: "Full-stack + Mobile • NestJS + React Native" },
-      { name: "fala-pai", desc: "PWA in production • ElevenLabs API" },
     ],
     projectsPageData: [
       {

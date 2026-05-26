@@ -169,9 +169,6 @@ export default function Home() {
             <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
               {t.home.aboutTitle}
             </h2>
-            <p className="text-zinc-500 text-sm lg:text-base max-w-md">
-              {t.home.aboutSubtitle}
-            </p>
           </ScrollReveal>
 
           <ScrollReveal
