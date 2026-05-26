@@ -50,184 +50,106 @@ export default function Home() {
           <div className="absolute inset-0 hero-center-glow" />
         </div>
 
-        {/* Main content - Bento Grid */}
-        <div className="relative w-full max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {/* Left column: Social + Main intro */}
-            <div className="lg:col-span-7 flex flex-col gap-4">
-              {/* Social links - top left */}
-              <GlowCard className="bento-card p-4 flex items-center gap-4 w-fit">
-                <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">
-                  Links
-                </span>
-                <div className="flex gap-2">
-                  <a
-                    href="https://github.com/Alanlan21"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="GitHub"
-                  >
-                    <Github className="h-4 w-4" />
-                  </a>
-                  <a
-                    href="https://linkedin.com/in/alanregis"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-link"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin className="h-4 w-4" />
-                  </a>
-                  <a
-                    href="mailto:alanregisps@gmail.com"
-                    className="social-link"
-                    aria-label="Email"
-                  >
-                    <Mail className="h-4 w-4" />
-                  </a>
-                </div>
-              </GlowCard>
+        {/* Hero — identity + terminal */}
+        <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-12 py-12 sm:py-16 lg:py-20">
+          <div className="grid grid-cols-1 xl:grid-cols-[1fr_1.75fr] gap-10 xl:gap-12 items-center">
+            {/* Identity */}
+            <div className="flex flex-col gap-7 lg:gap-8">
+              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden">
+                <Image
+                  src="/assets/foto-perfil.jpg"
+                  alt="Alan Regis"
+                  width={128}
+                  height={128}
+                  className="h-full w-full object-cover"
+                  priority
+                />
+              </div>
 
-              {/* Main intro card */}
-              <GlowCard className="bento-card bento-highlight p-6 lg:p-8 flex-1">
-                <div className="flex items-start gap-4">
-                  <div className="space-y-5 flex-1 min-w-0">
-                    <Badge
-                      variant="outline"
-                      className="border-emerald-600/50 dark:border-emerald-500/40 bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400"
+              <div>
+                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                  <TextScramble
+                    text="Alan Regis"
+                    className="text-gradient-hero"
+                    delay={400}
+                  />
+                </h1>
+                <p className="mt-2 text-2xl font-medium text-zinc-500 sm:text-3xl">
+                  Software Developer
+                </p>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <Magnetic strength={0.2}>
+                  <Button
+                    asChild
+                    size="lg"
+                    className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
+                  >
+                    <Link href="/#trabalho">
+                      {t.home.exploreCta}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </Magnetic>
+                <Magnetic strength={0.2}>
+                  <Button
+                    asChild
+                    variant="outline"
+                    size="lg"
+                    className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
+                  >
+                    <a
+                      href={
+                        lang === "en"
+                          ? "/cv-alan-regis-en.pdf"
+                          : "/cv-alan-regis.pdf"
+                      }
+                      download
                     >
-                      <span className="mr-1.5 motion-safe:animate-pulse">
-                        ●
-                      </span>{" "}
-                      {t.status.available}
-                    </Badge>
+                      <Download className="h-4 w-4" />
+                      {t.home.cv}
+                    </a>
+                  </Button>
+                </Magnetic>
+              </div>
 
-                    <div>
-                      <h1 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl">
-                        <TextScramble text="Alan Regis" className="text-gradient-hero" delay={400} />
-                        <br />
-                        <span className="text-zinc-500 font-medium text-2xl sm:text-3xl lg:text-4xl">
-                          Software Developer
-                        </span>
-                      </h1>
-                    </div>
-
-                    <div className="flex flex-wrap items-center gap-3 pt-2">
-                      <Magnetic strength={0.2}>
-                        <Button
-                          asChild
-                          size="lg"
-                          className="gap-2 px-6 bg-emerald-600 hover:bg-emerald-500 text-white btn-glow"
-                        >
-                          <Link href="/#trabalho">
-                            {t.home.exploreCta}
-                            <ArrowRight className="h-4 w-4" />
-                          </Link>
-                        </Button>
-                      </Magnetic>
-                      <Magnetic strength={0.2}>
-                        <Button
-                          asChild
-                          variant="outline"
-                          size="lg"
-                          className="gap-2 px-5 border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-800/50"
-                        >
-                          <a
-                            href={
-                              lang === "en"
-                                ? "/cv-alan-regis-en.pdf"
-                                : "/cv-alan-regis.pdf"
-                            }
-                            download
-                          >
-                            <Download className="h-4 w-4" />
-                            {t.home.cv}
-                          </a>
-                        </Button>
-                      </Magnetic>
-                    </div>
-                  </div>
-                  <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-emerald-500/70 ring-2 ring-emerald-500/20 shrink-0 hidden sm:block">
-                    <Image
-                      src="/assets/foto-perfil.jpg"
-                      alt="Alan Regis"
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </GlowCard>
-
-              {/* Skills row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <GlowCard className="bento-card bento-backend p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500/60"></div>
-                    <div className="text-[10px] font-mono text-emerald-700/90 dark:text-emerald-400/80 uppercase tracking-widest">
-                      Backend
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {skills.backend.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="outline"
-                        className="font-mono text-[10px] text-emerald-700 dark:text-emerald-400 border-emerald-600/40 dark:border-emerald-500/30 bg-emerald-50 dark:bg-emerald-500/10"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </GlowCard>
-                <GlowCard className="bento-card bento-frontend p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-violet-500/60"></div>
-                    <div className="text-[10px] font-mono text-violet-700/90 dark:text-violet-400/80 uppercase tracking-widest">
-                      Frontend
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {skills.frontend.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="outline"
-                        className="font-mono text-[10px] text-violet-700 dark:text-violet-400 border-violet-600/40 dark:border-violet-500/30 bg-violet-50 dark:bg-violet-500/10"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </GlowCard>
-                <GlowCard className="bento-card bento-devops p-3">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500/60"></div>
-                    <div className="text-[10px] font-mono text-amber-700/90 dark:text-amber-400/80 uppercase tracking-widest">
-                      DevOps
-                    </div>
-                  </div>
-                  <div className="flex flex-wrap gap-1">
-                    {skills.devops.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="outline"
-                        className="font-mono text-[10px] text-amber-700 dark:text-amber-400 border-amber-600/40 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </GlowCard>
+              <div className="flex items-center gap-2">
+                <a
+                  href="https://github.com/Alanlan21"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                  aria-label="GitHub"
+                >
+                  <Github className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://linkedin.com/in/alanregis"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="h-4 w-4" />
+                </a>
+                <a
+                  href="mailto:alanregisps@gmail.com"
+                  className="social-link"
+                  aria-label="Email"
+                >
+                  <Mail className="h-4 w-4" />
+                </a>
               </div>
             </div>
 
-            {/* Right column: Terminal */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
-              <GlowCard className="bento-card bento-terminal p-0 overflow-hidden flex-1">
-                <KittyTerminal />
-              </GlowCard>
-            </div>
+            {/* Terminal */}
+            <GlowCard
+              tilt={false}
+              className="bento-card bento-terminal p-0 overflow-hidden"
+            >
+              <KittyTerminal skills={skills} />
+            </GlowCard>
           </div>
         </div>
 
