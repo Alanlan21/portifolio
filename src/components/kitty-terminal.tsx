@@ -30,7 +30,7 @@ const CMD_NAMES = ["about", "stack", "projects", "contact", "cv", "help"];
 const UI = {
   pt: {
     whoami:
-      "alan · backend dev em fortaleza · trompetista nas horas vagas · disponível pra remoto",
+      "alan · backend dev em Fortaleza-CE · faz frontend mas não admite · trompetista nas horas vagas · remoto ou presencial",
     hint: "Digite um comando ou clique —",
     helpTitle: "comandos disponíveis",
     notFound: (c: string) => `comando não encontrado: ${c}`,
@@ -59,7 +59,7 @@ const UI = {
   },
   en: {
     whoami:
-      "alan · backend dev in fortaleza, brazil · trumpet player off-hours · open to remote",
+      "alan · backend dev in Fortaleza-CE, brazil · does frontend but won't admit it · trumpet player off-hours · remote or on-site",
     hint: "Type a command or click —",
     helpTitle: "available commands",
     notFound: (c: string) => `command not found: ${c}`,
