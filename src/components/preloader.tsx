@@ -51,7 +51,7 @@ export function Preloader() {
   return (
     <div className={cn("preloader-overlay", exiting && "preloader-exit")} aria-hidden="true">
       <div className="preloader-content">
-        <span className="preloader-prompt">$</span>
+        <span className="preloader-prompt">~/</span>
         <span className="preloader-name">{display}</span>
         <span className="preloader-cursor" />
       </div>
