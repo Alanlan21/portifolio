@@ -42,18 +42,18 @@ export const translations = {
       exploreCta: "Explorar projetos",
       cv: "CV",
       aboutTitle: "Sobre",
-      aboutSubtitle: "NestJS · TypeScript · React — 2 anos em produção",
+      aboutSubtitle: "",
       aboutDesc: (
         <>
-          Backend com experiência em{" "}
+          Sou desenvolvedor backend com experiência em{" "}
           <span className="text-zinc-900 dark:text-white font-medium">
             sistemas de missão crítica
           </span>
-          . Dois anos desenvolvendo APIs para controle de segurança em usina
-          termelétrica e instituições públicas, com compliance ISO e LGPD.
-          Stack principal em NestJS, TypeScript e bancos relacionais. Cobre
-          toda a cadeia: modelagem, autenticação, deploy e monitoramento em
-          produção. Com atuação prática em frontend quando necessário.
+          . Nos últimos dois anos, trabalhei em APIs para controle de segurança
+          em usina termelétrica e instituições públicas, com compliance ISO e
+          LGPD. Stack principal em NestJS, TypeScript e bancos relacionais.
+          Cubro toda a cadeia: modelagem, autenticação, deploy e monitoramento
+          em produção. Com atuação prática em frontend quando necessário.
         </>
       ),
       stackMain: "Stack principal",
@@ -411,18 +411,18 @@ export const translations = {
       exploreCta: "Explore projects",
       cv: "Resume",
       aboutTitle: "About",
-      aboutSubtitle: "NestJS · TypeScript · React — 2 years in production",
+      aboutSubtitle: "",
       aboutDesc: (
         <>
-          Backend developer with experience in{" "}
+          I&apos;m a backend developer with experience in{" "}
           <span className="text-zinc-900 dark:text-white font-medium">
             mission-critical systems
           </span>
-          . Two years building security and maintenance APIs for a thermoelectric
-          plant and public institutions, with ISO and LGPD compliance. Main
-          stack: NestJS, TypeScript and relational databases. Covers the full
-          chain: data modeling, auth, deployment and production monitoring. With
-          hands-on frontend experience when needed.
+          . Over the past two years I&apos;ve built security and maintenance
+          APIs for a thermoelectric plant and public institutions, with ISO and
+          LGPD compliance. Main stack: NestJS, TypeScript and relational
+          databases. I cover the full chain: data modeling, auth, deployment and
+          production monitoring. With hands-on frontend experience when needed.
         </>
       ),
       stackMain: "Main stack",
