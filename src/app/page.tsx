@@ -554,7 +554,7 @@ export default function Home() {
         <div className="max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
-              <span className="font-mono text-emerald-500">$</span> alan.dev ©{" "}
+              <span className="font-mono text-emerald-500">~/</span>alan.dev ©{" "}
               {new Date().getFullYear()}
             </p>
             <div className="flex gap-4">

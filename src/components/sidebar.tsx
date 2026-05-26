@@ -138,7 +138,7 @@ export function Sidebar() {
         <div className="flex h-16 shrink-0 items-center">
           <Link href="/" className="flex items-center gap-2">
             <span className="font-mono text-lg font-bold text-primary">
-              <span className="text-emerald-500">$</span> alan.dev
+              <span className="text-emerald-500">~/</span>alan.dev
             </span>
           </Link>
         </div>
