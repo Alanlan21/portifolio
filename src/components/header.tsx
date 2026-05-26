@@ -37,7 +37,7 @@ export function Header() {
         {/* Logo (mobile) */}
         <Link href="/" className="flex items-center gap-2 lg:hidden">
           <span className="font-mono text-lg font-bold text-primary">
-            <span className="text-emerald-500">$</span> alan.dev
+            <span className="text-emerald-500">~/</span>alan.dev
           </span>
         </Link>
 
