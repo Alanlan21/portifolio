@@ -47,5 +47,8 @@ next-env.d.ts
 # claude code workspace
 .claude/
 
+# playwright mcp session logs
+.playwright-mcp/
+
 # package manager (using pnpm)
 package-lock.json
