@@ -214,6 +214,7 @@ export const translations = {
         category: "security",
         categoryColor: "emerald",
         status: "finalizado",
+        image: "/projects/attack-defense-lab.png",
         tech: ["NestJS", "PostgreSQL", "React", "Python"],
         highlights: [
           "Camadas de defesa em profundidade (WAF, rate limiting, honeypot)",
@@ -229,6 +230,7 @@ export const translations = {
         category: "frontend",
         categoryColor: "orange",
         status: "finalizado",
+        image: "/projects/valvecraft.png",
         tech: ["React 19", "TypeScript", "Vite", "VexFlow", "Tone.js"],
         highlights: [
           "Amostras de áudio reais de trompete por nota",
@@ -245,6 +247,7 @@ export const translations = {
         category: "fullstack",
         categoryColor: "violet",
         status: "estavel",
+        image: "/projects/unimenu.png",
         tech: ["NestJS", "React", "React Native", "MySQL", "Stripe"],
         highlights: [
           "App mobile + painel web + API unificada",
@@ -260,6 +263,7 @@ export const translations = {
         category: "frontend",
         categoryColor: "cyan",
         status: "estavel",
+        image: "/projects/fala-pai.png",
         tech: ["React 19", "Vite", "ElevenLabs API", "PWA"],
         highlights: [
           "Síntese de voz indistinguível de humana",
@@ -290,6 +294,7 @@ export const translations = {
         title: "Attack & Defense Lab",
         category: "security",
         slug: "attack-defense-lab",
+        image: "/projects/attack-defense-lab.png",
         description:
           "Plataforma SOC educacional simulando cenários Red Team vs Blue Team. Implementa 7 camadas de defesa em profundidade, incluindo WAF, honeypots, rate limiting distribuído e threat scoring com decay temporal.",
         tags: [
@@ -310,6 +315,7 @@ export const translations = {
         title: "Valvecraft",
         category: "frontend",
         slug: "valvecraft",
+        image: "/projects/valvecraft.png",
         description:
           "Jogo educativo para trompetistas. Treine dedilhado, leitura de partitura e senso de ritmo direto no navegador, com amostras de áudio reais e feedback visual em tempo real.",
         tags: [
@@ -330,6 +336,7 @@ export const translations = {
         title: "UniMenu",
         category: "fullstack",
         slug: "unimenu",
+        image: "/projects/unimenu.png",
         description:
           "Sistema completo de pedidos de comida para cantinas e restaurantes da UNIFOR. Arquitetura full-stack cross-platform com backend robusto, app mobile nativo e painel administrativo web.",
         tags: [
@@ -351,6 +358,7 @@ export const translations = {
         title: "Fala-Pai",
         category: "frontend",
         slug: "fala-pai",
+        image: "/projects/fala-pai.png",
         description:
           "Aplicativo de comunicação assistiva que converte texto em fala de alta qualidade. Desenvolvido para pessoas com dificuldades de comunicação verbal, utilizando síntese de voz avançada da ElevenLabs.",
         tags: [
@@ -583,6 +591,7 @@ export const translations = {
         category: "security",
         categoryColor: "emerald",
         status: "finished",
+        image: "/projects/attack-defense-lab.png",
         tech: ["NestJS", "PostgreSQL", "React", "Python"],
         highlights: [
           "Defense-in-depth layers (WAF, rate limiting, honeypot)",
@@ -598,6 +607,7 @@ export const translations = {
         category: "frontend",
         categoryColor: "orange",
         status: "finished",
+        image: "/projects/valvecraft.png",
         tech: ["React 19", "TypeScript", "Vite", "VexFlow", "Tone.js"],
         highlights: [
           "Real trumpet audio samples per note",
@@ -614,6 +624,7 @@ export const translations = {
         category: "fullstack",
         categoryColor: "violet",
         status: "estavel",
+        image: "/projects/unimenu.png",
         tech: ["NestJS", "React", "React Native", "MySQL", "Stripe"],
         highlights: [
           "Mobile app + web panel + unified API",
@@ -629,6 +640,7 @@ export const translations = {
         category: "frontend",
         categoryColor: "cyan",
         status: "estavel",
+        image: "/projects/fala-pai.png",
         tech: ["React 19", "Vite", "ElevenLabs API", "PWA"],
         highlights: [
           "Human-indistinguishable voice synthesis",
@@ -659,6 +671,7 @@ export const translations = {
         title: "Attack & Defense Lab",
         category: "security",
         slug: "attack-defense-lab",
+        image: "/projects/attack-defense-lab.png",
         description:
           "Educational SOC platform simulating Red Team vs Blue Team scenarios. Implements 7 defense-in-depth layers, including WAF, honeypots, distributed rate limiting and threat scoring with temporal decay.",
         tags: [
@@ -679,6 +692,7 @@ export const translations = {
         title: "Valvecraft",
         category: "frontend",
         slug: "valvecraft",
+        image: "/projects/valvecraft.png",
         description:
           "Educational game for trumpet players. Practice fingering, sheet music reading and rhythm in the browser, with real audio samples and real-time visual feedback.",
         tags: [
@@ -698,6 +712,7 @@ export const translations = {
         title: "UniMenu",
         category: "fullstack",
         slug: "unimenu",
+        image: "/projects/unimenu.png",
         description:
           "Complete food ordering system for UNIFOR canteens and restaurants. Cross-platform full-stack architecture with robust backend, native mobile app and web admin panel.",
         tags: [
@@ -719,6 +734,7 @@ export const translations = {
         title: "Fala-Pai",
         category: "frontend",
         slug: "fala-pai",
+        image: "/projects/fala-pai.png",
         description:
           "Assistive communication app that converts text to high-quality speech. Built for people with verbal communication difficulties, using ElevenLabs advanced voice synthesis.",
         tags: [

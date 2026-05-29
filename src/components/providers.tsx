@@ -9,7 +9,19 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <NextThemesProvider
         attribute="class"
-        defaultTheme="dark"
+        defaultTheme="coffee"
+        themes={[
+          "coffee",
+          "chocolate-espresso",
+          "black-gold",
+          "cyberpunk",
+          "material-dark",
+          "cute-pink",
+          "pink-cat-boo",
+          "dark",
+          "light",
+        ]}
+        enableSystem={false}
         disableTransitionOnChange
       >
         <TooltipProvider delay={0}>{children}</TooltipProvider>

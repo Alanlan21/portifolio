@@ -20,7 +20,7 @@ import {
   GraduationCap,
 } from "lucide-react";
 import { useActiveSection } from "@/hooks/use-active-section";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemePicker } from "@/components/theme-picker";
 import { LanguageToggle } from "@/components/language-toggle";
 import { useLanguage } from "@/lib/i18n";
 
@@ -243,7 +243,7 @@ export function Sidebar() {
             </p>
             <div className="flex items-center gap-1">
               <LanguageToggle />
-              <ThemeToggle />
+              <ThemePicker side="top" />
             </div>
           </div>
         </nav>

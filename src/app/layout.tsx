@@ -1,20 +1,31 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import {
+  Geist,
+  Hanken_Grotesk,
+  Spline_Sans_Mono,
+} from "next/font/google";
 import { Providers } from "@/components/providers";
 import { Sidebar } from "@/components/sidebar";
 import { Header } from "@/components/header";
-import { SpotlightCursor } from "@/components/spotlight-cursor";
 import { ViewTransitions } from "@/components/view-transitions";
 import { Preloader } from "@/components/preloader";
 import "./globals.css";
 
-const inter = Inter({
+// Tipografia — Geist no display: grotesco limpo com identidade dev real.
+// Hanken Grotesk no corpo (humanista legível), Spline Sans Mono no terminal.
+const fontDisplay = Geist({
+  variable: "--font-display",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const fontSans = Hanken_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
   display: "swap",
 });
 
-const jetbrainsMono = JetBrains_Mono({
+const fontMono = Spline_Sans_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
   display: "swap",
@@ -110,14 +121,17 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${inter.variable} ${jetbrainsMono.variable}`}
+      className={`${fontDisplay.variable} ${fontSans.variable} ${fontMono.variable}`}
       suppressHydrationWarning
     >
       <body className="min-h-screen bg-background font-sans antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <div className="scroll-progress" aria-hidden="true" />
         <Providers>
           <Preloader />
-          <SpotlightCursor />
           <ViewTransitions />
           <Sidebar />
           <div className="lg:pl-64">

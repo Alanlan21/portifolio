@@ -2,13 +2,15 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* "dark:" cobre todos os temas escuros (dark + cafés Bearded), só não o light */
+@custom-variant dark (&:is(.dark *, .coffee *, .chocolate-espresso *, .black-gold *, .cyberpunk *, .material-dark *, .pink-cat-boo *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -47,7 +49,91 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+/* ─── Base — tokens partilhados + derivações de marca ──────────────
+   --brand-soft/--brand-glow derivam de --brand por color-mix, então
+   cada tema só precisa definir --brand e tudo se ajusta. */
 :root {
+  --brand-soft: color-mix(in srgb, var(--brand) 14%, transparent);
+  --brand-glow: color-mix(in srgb, var(--brand) 32%, transparent);
+  --card-glow-color: color-mix(in srgb, var(--brand) 18%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   COFFEE (padrão) — Bearded Theme Coffee
+   base #292423 · accent coral #F09177 · fonte teinted #ceb5b0
+   ═══════════════════════════════════════════════════════════════════ */
+:root,
+.coffee {
+  --background: #292423;
+  --foreground: #ceb5b0;
+  /* Emerald → rampa coral (a marca do tema); "verde" semântico vira --accent-green */
+  --color-emerald-50:  #fbe9e4;
+  --color-emerald-100: #f8d3c9;
+  --color-emerald-200: #f3b6a5;
+  --color-emerald-300: #ee9981;
+  --color-emerald-400: #ea8366;
+  --color-emerald-500: #e76d4b;
+  --color-emerald-600: #e35730;
+  --color-emerald-700: #cf421c;
+  --color-emerald-800: #ab3717;
+  --color-emerald-900: #872b12;
+  /* Zinc → taupe quente: harmoniza os cinzas (texto/superfície/borda)
+     herdados de classes zinc-* com o fundo café. */
+  --color-zinc-50:  #f8f5f2;
+  --color-zinc-100: #efeae6;
+  --color-zinc-200: #e0d8d2;
+  --color-zinc-300: #d4cbc4;
+  --color-zinc-400: #b8ada3;
+  --color-zinc-500: #a39487;
+  --color-zinc-600: #917e6e;
+  --color-zinc-700: #6f6052;
+  --color-zinc-800: #463b32;
+  --color-zinc-900: #2e2721;
+  --color-zinc-950: #1e1915;
+  --card: #231f1e;
+  --card-foreground: #ceb5b0;
+  --popover: #231f1e;
+  --popover-foreground: #ceb5b0;
+  --primary: #e8d5d0;
+  --primary-foreground: #292423;
+  --secondary: #322b29;
+  --secondary-foreground: #ceb5b0;
+  --muted: #322b29;
+  --muted-foreground: #9c8a85;
+  --accent: #322b29;
+  --accent-foreground: #f0e0db;
+  --destructive: #f24343;
+  --border: #3a302e;
+  --input: #3a302e;
+  --ring: #f09177;
+  --chart-1: #6eddd6;
+  --chart-2: #9dcc57;
+  --chart-3: #f09177;
+  --chart-4: #9991f1;
+  --chart-5: #f7d979;
+  --radius: 0.625rem;
+  --sidebar: #231f1e;
+  --sidebar-foreground: #ceb5b0;
+  --sidebar-primary: #e8d5d0;
+  --sidebar-primary-foreground: #292423;
+  --sidebar-accent: #322b29;
+  --sidebar-accent-foreground: #f0e0db;
+  --sidebar-border: #3a302e;
+  --sidebar-ring: #f09177;
+  --brand: #f09177;
+  --brand-strong: #f4a78f;
+  --accent-violet: #9991f1;
+  --accent-amber: #f7d979;
+  --accent-green: #9dcc57;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.35);
+  --shadow-md:
+    0 4px 20px -4px rgb(0 0 0 / 0.45),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.8);
+}
+
+/* ═══ LIGHT — Solarized Light ═══ */
+.light {
   /* Solarized Light palette */
   --background: oklch(0.965 0.024 88);      /* base3  — creme quente */
   /* Emerald → Solarized green (#859900 olive): terroso em vez de neon,
@@ -93,6 +179,21 @@
   --sidebar-accent-foreground: oklch(0.26 0.038 218);
   --sidebar-border: oklch(0.845 0.022 86);
   --sidebar-ring: oklch(0.65 0.18 160);
+
+  /* ─── Accent semântico (theme-aware) — vocabulário único de marca ──
+     Substitui literais oklch() espalhados. Light = Solarized blue. */
+  --brand: oklch(0.55 0.155 245);
+  --brand-strong: oklch(0.48 0.16 245);
+  --accent-violet: oklch(0.52 0.16 280);
+  --accent-amber: oklch(0.62 0.15 75);
+  --accent-green: oklch(0.6 0.13 128); /* olive Solarized */
+
+  /* ─── Elevação ─────────────────────────────────────────────── */
+  --shadow-sm: 0 1px 3px oklch(0.26 0.038 218 / 0.08);
+  --shadow-md:
+    0 4px 18px -6px oklch(0.26 0.038 218 / 0.14),
+    0 1px 3px oklch(0.26 0.038 218 / 0.08);
+  --shadow-lg: 0 18px 50px -28px oklch(0.26 0.038 218 / 0.35);
 }
 
 .dark {
@@ -138,19 +239,520 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+
+  /* Accent semântico — dark = emerald vibrante (a marca do terminal) */
+  --brand: oklch(0.65 0.2 160);
+  --brand-strong: oklch(0.74 0.2 160);
+  --accent-violet: oklch(0.62 0.2 290);
+  --accent-amber: oklch(0.74 0.16 80);
+  --accent-green: oklch(0.74 0.16 130);
+
+  --shadow-sm: 0 2px 8px -2px oklch(0 0 0 / 0.3);
+  --shadow-md:
+    0 4px 20px -4px oklch(0 0 0 / 0.4),
+    inset 0 1px 0 oklch(1 0 0 / 0.04);
+  --shadow-lg: 0 18px 50px -28px oklch(0 0 0 / 0.8);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CHOCOLATE ESPRESSO — Bearded Theme HC Chocolate Espresso
+   base #2e2424 · accent salmão #f69c95 · fonte teinted #d3b1b1
+   ═══════════════════════════════════════════════════════════════════ */
+.chocolate-espresso {
+  --background: #2e2424;
+  --foreground: #d3b1b1;
+  --color-emerald-50:  #fce5e3;
+  --color-emerald-100: #f9cbc8;
+  --color-emerald-200: #f5a9a3;
+  --color-emerald-300: #f1877e;
+  --color-emerald-400: #ee6d63;
+  --color-emerald-500: #eb5347;
+  --color-emerald-600: #e8392c;
+  --color-emerald-700: #d32517;
+  --color-emerald-800: #af1e13;
+  --color-emerald-900: #8a180f;
+  /* Zinc → taupe quente avermelhado (combina com o espresso) */
+  --color-zinc-50:  #f8f4f2;
+  --color-zinc-100: #efe9e6;
+  --color-zinc-200: #e0d6d2;
+  --color-zinc-300: #d4c9c4;
+  --color-zinc-400: #b8a9a3;
+  --color-zinc-500: #a39087;
+  --color-zinc-600: #91786e;
+  --color-zinc-700: #6f5b52;
+  --color-zinc-800: #463832;
+  --color-zinc-900: #2e2521;
+  --color-zinc-950: #1e1815;
+  --card: #281f1f;
+  --card-foreground: #d3b1b1;
+  --popover: #281f1f;
+  --popover-foreground: #d3b1b1;
+  --primary: #ecd6d6;
+  --primary-foreground: #2e2424;
+  --secondary: #382b2b;
+  --secondary-foreground: #d3b1b1;
+  --muted: #382b2b;
+  --muted-foreground: #a18a8a;
+  --accent: #382b2b;
+  --accent-foreground: #f2dede;
+  --destructive: #fb7a6c;
+  --border: #3f302f;
+  --input: #3f302f;
+  --ring: #f69c95;
+  --chart-1: #17d7d7;
+  --chart-2: #69d293;
+  --chart-3: #f69c95;
+  --chart-4: #ad92ff;
+  --chart-5: #edbc7f;
+  --radius: 0.625rem;
+  --sidebar: #281f1f;
+  --sidebar-foreground: #d3b1b1;
+  --sidebar-primary: #ecd6d6;
+  --sidebar-primary-foreground: #2e2424;
+  --sidebar-accent: #382b2b;
+  --sidebar-accent-foreground: #f2dede;
+  --sidebar-border: #3f302f;
+  --sidebar-ring: #f69c95;
+  --brand: #f69c95;
+  --brand-strong: #f9b3ad;
+  --accent-violet: #ad92ff;
+  --accent-amber: #edbc7f;
+  --accent-green: #69d293;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --shadow-md:
+    0 4px 20px -4px rgb(0 0 0 / 0.5),
+    inset 0 1px 0 rgb(255 255 255 / 0.05);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.85);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   BLACK & GOLD — Bearded Theme Black & Gold
+   base near-black frio #111418 · accent ouro #e3a52a
+   ═══════════════════════════════════════════════════════════════════ */
+.black-gold {
+  --background: #111418;
+  --foreground: #b1bbc8;
+  /* Emerald → rampa ouro (a marca do tema) */
+  --color-emerald-50:  #fef3d8;
+  --color-emerald-100: #fce6b0;
+  --color-emerald-200: #fbd77f;
+  --color-emerald-300: #f9c84d;
+  --color-emerald-400: #f8bb26;
+  --color-emerald-500: #f7b208;
+  --color-emerald-600: #d99d07;
+  --color-emerald-700: #b28006;
+  --color-emerald-800: #8f6705;
+  --color-emerald-900: #725204;
+  /* Zinc → cinza-frio neutro (mids levantados p/ AA no near-black) */
+  --color-zinc-50:  #f4f5f6;
+  --color-zinc-100: #e9eaec;
+  --color-zinc-200: #d6d8db;
+  --color-zinc-300: #c8cbd0;
+  --color-zinc-400: #a8abb3;
+  --color-zinc-500: #8e929d;
+  --color-zinc-600: #777c88;
+  --color-zinc-700: #5f636d;
+  --color-zinc-800: #3e4047;
+  --color-zinc-900: #282a2e;
+  --color-zinc-950: #1a1b1e;
+  --card: #1b1f25;
+  --card-foreground: #b1bbc8;
+  --popover: #1b1f25;
+  --popover-foreground: #b1bbc8;
+  --primary: #e8eaee;
+  --primary-foreground: #111418;
+  --secondary: #232830;
+  --secondary-foreground: #b1bbc8;
+  --muted: #232830;
+  --muted-foreground: #74849a;
+  --accent: #232830;
+  --accent-foreground: #e8eaee;
+  --destructive: #e35535;
+  --border: #29313a;
+  --input: #29313a;
+  --ring: #e3a52a;
+  --chart-1: #38c7bd;
+  --chart-2: #00a884;
+  --chart-3: #e3a52a;
+  --chart-4: #a85ff1;
+  --chart-5: #11b7d4;
+  --radius: 0.625rem;
+  --sidebar: #14171b;
+  --sidebar-foreground: #b1bbc8;
+  --sidebar-primary: #e8eaee;
+  --sidebar-primary-foreground: #111418;
+  --sidebar-accent: #232830;
+  --sidebar-accent-foreground: #e8eaee;
+  --sidebar-border: #29313a;
+  --sidebar-ring: #e3a52a;
+  --brand: #e3a52a;
+  --brand-strong: #f4bb3f;
+  --accent-violet: #a85ff1;
+  --accent-amber: #f7b208;
+  --accent-green: #00a884;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.45);
+  --shadow-md:
+    0 4px 20px -4px rgb(0 0 0 / 0.55),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.9);
+}
+
+/* Botão dourado pede texto escuro (ouro claro + branco falha contraste) */
+.black-gold .btn-glow {
+  color: #14110a;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   PINK CAT BOO — Catppuccin Mocha com accent pink/mauve
+   base #1e1e2e · brand mauve #cba6f7 · pink accent #f5c2e7
+   ═══════════════════════════════════════════════════════════════════ */
+.pink-cat-boo {
+  --background: #1e1e2e;          /* Mocha Base */
+  --foreground: #cdd6f4;          /* Mocha Text */
+  /* Emerald → rampa mauve/pink Catppuccin */
+  --color-emerald-50:  #fbeef7;
+  --color-emerald-100: #f5c2e7;   /* Pink */
+  --color-emerald-200: #f0a8da;
+  --color-emerald-300: #e88dcb;
+  --color-emerald-400: #d9a4f2;
+  --color-emerald-500: #cba6f7;   /* Mauve — brand */
+  --color-emerald-600: #b88af3;
+  --color-emerald-700: #9c5fe9;
+  --color-emerald-800: #7a3ec9;
+  --color-emerald-900: #58269a;
+  /* Zinc → hierarquia de superfícies Catppuccin (Surface0/1/2 + Subtext) */
+  --color-zinc-50:  #f0f0f8;
+  --color-zinc-100: #dddde8;
+  --color-zinc-200: #c8c8d9;
+  --color-zinc-300: #bac2de;      /* Subtext1 */
+  --color-zinc-400: #a6adc8;      /* Subtext0 */
+  --color-zinc-500: #9399b2;      /* Overlay2 */
+  --color-zinc-600: #7f849c;      /* Overlay1 */
+  --color-zinc-700: #585b70;      /* Surface2 */
+  --color-zinc-800: #45475a;      /* Surface1 */
+  --color-zinc-900: #313244;      /* Surface0 */
+  --color-zinc-950: #181825;      /* Mantle */
+  --card: #181825;                /* Mantle */
+  --card-foreground: #cdd6f4;
+  --popover: #313244;
+  --popover-foreground: #cdd6f4;
+  --primary: #cdd6f4;
+  --primary-foreground: #1e1e2e;
+  --secondary: #313244;
+  --secondary-foreground: #cdd6f4;
+  --muted: #313244;
+  --muted-foreground: #a6adc8;
+  --accent: #313244;
+  --accent-foreground: #f5e0fa;
+  --destructive: #f38ba8;         /* Red */
+  --border: #45475a;              /* Surface1 */
+  --input: #45475a;
+  --ring: #f5c2e7;                /* Pink */
+  --chart-1: #f5c2e7;
+  --chart-2: #cba6f7;
+  --chart-3: #f9e2af;
+  --chart-4: #94e2d5;
+  --chart-5: #fab387;
+  --radius: 0.625rem;
+  --sidebar: #181825;
+  --sidebar-foreground: #cdd6f4;
+  --sidebar-primary: #f5c2e7;
+  --sidebar-primary-foreground: #1e1e2e;
+  --sidebar-accent: #313244;
+  --sidebar-accent-foreground: #f5e0fa;
+  --sidebar-border: #45475a;
+  --sidebar-ring: #f5c2e7;
+  --brand: #f5c2e7;               /* Pink (a "Boo" rosa) */
+  --brand-strong: #cba6f7;        /* Mauve */
+  --accent-violet: #cba6f7;
+  --accent-amber: #f9e2af;
+  --accent-green: #a6e3a1;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --shadow-md:
+    0 4px 20px -4px rgb(0 0 0 / 0.45),
+    0 0 24px -8px color-mix(in srgb, var(--brand) 18%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.85);
+}
+
+/* Botão rosa pede texto escuro (pink claro + branco falha contraste) */
+.pink-cat-boo .btn-glow {
+  color: #1e1e2e;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MATERIAL DARK — Material Design dark baseline
+   bg #121212 · brand lavanda #BB86FC · secondary teal #03DAC6
+   Elevation via superfícies progressivamente mais claras.
+   ═══════════════════════════════════════════════════════════════════ */
+.material-dark {
+  --background: #121212;
+  --foreground: #e0e0e0;
+  /* Emerald → rampa Material Purple 200 */
+  --color-emerald-50:  #f3ecfe;
+  --color-emerald-100: #e7d8fd;
+  --color-emerald-200: #d5bbfb;
+  --color-emerald-300: #bd94f9;
+  --color-emerald-400: #a56ef7;
+  --color-emerald-500: #904cf6;
+  --color-emerald-600: #7b2af4;
+  --color-emerald-700: #600cdf;
+  --color-emerald-800: #4b09ae;
+  --color-emerald-900: #380783;
+  /* Zinc → cinza-neutro Material (hue 220, sat 0.04) */
+  --color-zinc-50:  #f7f7f8;
+  --color-zinc-100: #ecedee;
+  --color-zinc-200: #dddddf;
+  --color-zinc-300: #c5c6c9;
+  --color-zinc-400: #a0a2a7;
+  --color-zinc-500: #808389;
+  --color-zinc-600: #676a6f;
+  --color-zinc-700: #515358;
+  --color-zinc-800: #3b3c40;
+  --color-zinc-900: #2a2b2d;
+  --color-zinc-950: #1d1e20;
+  /* Elevation Material: dp2=card, dp4=popover, dp8=dialog */
+  --card: #1e1e1e;
+  --card-foreground: #e0e0e0;
+  --popover: #272727;
+  --popover-foreground: #e0e0e0;
+  --primary: #bb86fc;
+  --primary-foreground: #121212;
+  --secondary: #03dac6;
+  --secondary-foreground: #121212;
+  --muted: #1e1e1e;
+  --muted-foreground: #9e9e9e;
+  --accent: #272727;
+  --accent-foreground: #e0e0e0;
+  --destructive: #cf6679;
+  --border: #2c2c2c;
+  --input: #2c2c2c;
+  --ring: #bb86fc;
+  --chart-1: #bb86fc;
+  --chart-2: #03dac6;
+  --chart-3: #ffb74d;
+  --chart-4: #80cbc4;
+  --chart-5: #cf6679;
+  --radius: 0.25rem; /* Material usa bordas menos arredondadas */
+  --sidebar: #1a1a1a;
+  --sidebar-foreground: #e0e0e0;
+  --sidebar-primary: #bb86fc;
+  --sidebar-primary-foreground: #121212;
+  --sidebar-accent: #272727;
+  --sidebar-accent-foreground: #e0e0e0;
+  --sidebar-border: #2c2c2c;
+  --sidebar-ring: #bb86fc;
+  --brand: #bb86fc;
+  --brand-strong: #d0a9fd;
+  --accent-violet: #7c4dff;
+  --accent-amber: #ffb74d;
+  --accent-green: #03dac6;
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.4), 0 1px 1px rgb(0 0 0 / 0.3);
+  --shadow-md:
+    0 3px 6px rgb(0 0 0 / 0.4),
+    0 3px 6px rgb(0 0 0 / 0.3),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 10px 20px rgb(0 0 0 / 0.5), 0 6px 6px rgb(0 0 0 / 0.4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CYBERPUNK — night city
+   bg azul-noturno #0b0b1a · brand neon magenta #f700c0
+   ═══════════════════════════════════════════════════════════════════ */
+.cyberpunk {
+  --background: #0b0b1a;
+  --foreground: #bcc8e8;
+  /* Emerald → rampa magenta neon */
+  --color-emerald-50:  #fff0fc;
+  --color-emerald-100: #ffdbf9;
+  --color-emerald-200: #ffb8f3;
+  --color-emerald-300: #ff85eb;
+  --color-emerald-400: #ff47e0;
+  --color-emerald-500: #ff1ad9;
+  --color-emerald-600: #e600bf;
+  --color-emerald-700: #b80099;
+  --color-emerald-800: #8f0077;
+  --color-emerald-900: #660055;
+  /* Zinc → cool violet-purple (luzes da cidade) */
+  --color-zinc-50:  #f4f3f6;
+  --color-zinc-100: #e8e8ee;
+  --color-zinc-200: #d4d3de;
+  --color-zinc-300: #bab9cb;
+  --color-zinc-400: #9290ad;
+  --color-zinc-500: #7f7da5; /* levantado p/ AA no near-black */
+  --color-zinc-600: #5e5b7b;
+  --color-zinc-700: #4a4861;
+  --color-zinc-800: #363446;
+  --color-zinc-900: #262532;
+  --color-zinc-950: #1b1a23;
+  --card: #11112a;
+  --card-foreground: #bcc8e8;
+  --popover: #11112a;
+  --popover-foreground: #bcc8e8;
+  --primary: #e0e8ff;
+  --primary-foreground: #0b0b1a;
+  --secondary: #18183a;
+  --secondary-foreground: #bcc8e8;
+  --muted: #18183a;
+  --muted-foreground: #9290ad;
+  --accent: #18183a;
+  --accent-foreground: #e0e8ff;
+  --destructive: #ff4060;
+  --border: #1e1e44;
+  --input: #1e1e44;
+  --ring: #f700c0;
+  --chart-1: #00e5ff;
+  --chart-2: #00ff90;
+  --chart-3: #f700c0;
+  --chart-4: #f5c400;
+  --chart-5: #ff4060;
+  --radius: 0.625rem;
+  --sidebar: #0d0d22;
+  --sidebar-foreground: #bcc8e8;
+  --sidebar-primary: #e0e8ff;
+  --sidebar-primary-foreground: #0b0b1a;
+  --sidebar-accent: #18183a;
+  --sidebar-accent-foreground: #e0e8ff;
+  --sidebar-border: #1e1e44;
+  --sidebar-ring: #f700c0;
+  --brand: #f700c0;
+  --brand-strong: #ff4dd6;
+  --accent-violet: #8b5cf6;
+  --accent-amber: #f5c400;
+  --accent-green: #00e5a0;
+  --shadow-sm:
+    0 2px 8px -2px rgb(0 0 0 / 0.5),
+    0 0 12px -4px color-mix(in srgb, var(--brand) 12%, transparent);
+  --shadow-md:
+    0 4px 20px -4px rgb(0 0 0 / 0.6),
+    0 0 24px -6px color-mix(in srgb, var(--brand) 10%, transparent),
+    inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg:
+    0 18px 50px -28px rgb(0 0 0 / 0.9),
+    0 0 60px -12px color-mix(in srgb, var(--brand) 8%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CUTE PINK — tema CLARO rosa (base Bearded Milkshake, ajustado fofo)
+   blush #fbeef4 · texto plum #5a2740 · brand rosa-profundo #c81e6a
+   ═══════════════════════════════════════════════════════════════════ */
+.cute-pink {
+  --background: #fbeef4;
+  --foreground: #5a2740;
+  /* Emerald → rampa rosa (a marca) */
+  --color-emerald-50:  #fdf1f6;
+  --color-emerald-100: #fbdfeb;
+  --color-emerald-200: #f8bfd7;
+  --color-emerald-300: #f395bd;
+  --color-emerald-400: #ef6ca3;
+  --color-emerald-500: #e8337e;
+  --color-emerald-600: #da1869;
+  --color-emerald-700: #b81458;
+  --color-emerald-800: #971149;
+  --color-emerald-900: #770d39;
+  /* Zinc → mauve (texto/superfície com toque rosado) */
+  --color-zinc-50:  #f8f6f7;
+  --color-zinc-100: #f2edf0;
+  --color-zinc-200: #e5dce0;
+  --color-zinc-300: #d4c4cc;
+  --color-zinc-400: #a88a99;
+  --color-zinc-500: #846273;
+  --color-zinc-600: #6f5261;
+  --color-zinc-700: #5b434f;
+  --color-zinc-800: #46343d;
+  --color-zinc-900: #32252b;
+  --color-zinc-950: #231a1f;
+  --card: #fff7fb;
+  --card-foreground: #5a2740;
+  --popover: #fff7fb;
+  --popover-foreground: #5a2740;
+  --primary: #5a2740;
+  --primary-foreground: #fff7fb;
+  --secondary: #f7dfeb;
+  --secondary-foreground: #5a2740;
+  --muted: #f7dfeb;
+  --muted-foreground: #985074;
+  --accent: #f7dfeb;
+  --accent-foreground: #5a2740;
+  --destructive: #d12525;
+  --border: #f3cfe0;
+  --input: #f3cfe0;
+  --ring: #c81e6a;
+  --chart-1: #e8337e;
+  --chart-2: #9b4dca;
+  --chart-3: #c81e6a;
+  --chart-4: #008f8f;
+  --chart-5: #b96000;
+  --radius: 0.625rem;
+  --sidebar: #fdf1f6;
+  --sidebar-foreground: #5a2740;
+  --sidebar-primary: #c81e6a;
+  --sidebar-primary-foreground: #fff7fb;
+  --sidebar-accent: #f7dfeb;
+  --sidebar-accent-foreground: #5a2740;
+  --sidebar-border: #f3cfe0;
+  --sidebar-ring: #c81e6a;
+  --brand: #c81e6a;
+  --brand-strong: #e8337e;
+  --accent-violet: #9b4dca;
+  --accent-amber: #b96000;
+  --accent-green: #008b17;
+  --shadow-sm: 0 1px 3px rgb(90 39 64 / 0.08);
+  --shadow-md:
+    0 4px 18px -6px rgb(90 39 64 / 0.16),
+    0 1px 3px rgb(90 39 64 / 0.08);
+  --shadow-lg: 0 18px 50px -28px rgb(90 39 64 / 0.3);
 }
 
 @layer base {
+  :root {
+    /* ─── Escala tipográfica fluida (Major Third ≈ 1.25) ───────── */
+    --step--1: clamp(0.78rem, 0.76rem + 0.10vw, 0.84rem);
+    --step-0: clamp(0.94rem, 0.90rem + 0.18vw, 1.05rem);
+    --step-1: clamp(1.18rem, 1.10rem + 0.38vw, 1.45rem);
+    --step-2: clamp(1.47rem, 1.32rem + 0.74vw, 2.0rem);
+    --step-3: clamp(1.84rem, 1.58rem + 1.30vw, 2.75rem);
+    --step-4: clamp(2.30rem, 1.86rem + 2.18vw, 3.80rem);
+    --step-5: clamp(2.88rem, 2.16rem + 3.55vw, 5.25rem);
+
+    /* Tracking ótico — display aperta, mono/labels respiram */
+    --tracking-display: -0.035em;
+    --tracking-tight: -0.02em;
+    --tracking-wide: 0.04em;
+    --tracking-widest: 0.18em;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
   }
   html {
     @apply font-sans;
     scroll-behavior: smooth;
     scroll-padding-top: 3.5rem;
+  }
+
+  /* Títulos herdam a display grotesque com tracking ótico.
+     A identidade de terminal continua viva no mono; aqui ela ganha
+     uma voz editorial que tira o portfólio do território "starter". */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: var(--tracking-display);
+    line-height: 1.04;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  h4 {
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.15;
   }
 }
 
@@ -176,12 +778,15 @@
     background: linear-gradient(
       135deg,
       oklch(0.98 0 0) 0%,
-      oklch(0.75 0.15 160) 50%,
+      var(--brand) 50%,
       oklch(0.98 0 0) 100%
     );
     background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
+    /* !important: o Lightning CSS gera um override `background` em
+       @supports(lab()) que reseta o clip; important garante o recorte
+       em todos os temas. */
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
     -webkit-text-fill-color: transparent;
     animation: gradient-shift 8s ease-in-out infinite;
   }
@@ -200,11 +805,11 @@
   .hero-center-glow {
     background: radial-gradient(
       ellipse at center,
-      oklch(0.6 0.15 160 / 0.08) 0%,
+      color-mix(in srgb, var(--brand) 9%, transparent) 0%,
       transparent 50%
     );
   }
-  html:not(.dark) .hero-center-glow {
+  html.light .hero-center-glow {
     background: radial-gradient(
       ellipse at center,
       oklch(0.60 0.155 245 / 0.08) 0%,
@@ -217,7 +822,7 @@
     background:
       radial-gradient(
         ellipse 80% 50% at 50% -20%,
-        oklch(0.6 0.18 160 / 0.15) 0%,
+        color-mix(in srgb, var(--brand) 16%, transparent) 0%,
         transparent 50%
       ),
       radial-gradient(
@@ -248,9 +853,9 @@
   /* Glow difuso - luz ambiente premium */
   .glow-emerald {
     box-shadow:
-      0 0 0 1px oklch(0.6 0.2 160 / 0.1),
-      0 4px 20px -4px oklch(0.6 0.2 160 / 0.15),
-      0 20px 60px -10px oklch(0.6 0.2 160 / 0.12),
+      0 0 0 1px color-mix(in srgb, var(--brand) 10%, transparent),
+      0 4px 20px -4px color-mix(in srgb, var(--brand) 15%, transparent),
+      0 20px 60px -10px color-mix(in srgb, var(--brand) 12%, transparent),
       0 40px 100px -20px oklch(0.1 0 0 / 0.5);
   }
 
@@ -274,8 +879,8 @@
 
   .social-link:hover {
     @apply text-emerald-400 bg-emerald-500/10;
-    border-color: oklch(0.6 0.2 160 / 0.3);
-    box-shadow: 0 0 16px -4px oklch(0.6 0.2 160 / 0.3);
+    border-color: var(--brand-glow);
+    box-shadow: 0 0 16px -4px var(--brand-glow);
     transform: translateY(-1px);
   }
 
@@ -296,8 +901,8 @@
   .btn-glow:hover {
     transform: scale(1.03) translateY(-1px);
     box-shadow:
-      0 4px 20px -2px oklch(0.6 0.2 160 / 0.5),
-      0 10px 30px -5px oklch(0.6 0.2 160 / 0.3),
+      0 4px 20px -2px color-mix(in srgb, var(--brand) 50%, transparent),
+      0 10px 30px -5px var(--brand-glow),
       inset 0 1px 0 oklch(1 0 0 / 0.1);
   }
 
@@ -327,7 +932,7 @@
   /* Terminal prompt destaque */
   .terminal-prompt {
     @apply text-emerald-400 font-bold;
-    text-shadow: 0 0 10px oklch(0.6 0.2 160 / 0.4);
+    text-shadow: 0 0 10px color-mix(in srgb, var(--brand) 40%, transparent);
   }
 
   /* Floating code decoration */
@@ -347,7 +952,7 @@
 
   /* Stats number glow */
   .stat-number {
-    text-shadow: 0 0 30px oklch(0.6 0.2 160 / 0.2);
+    text-shadow: 0 0 30px color-mix(in srgb, var(--brand) 20%, transparent);
   }
 
   /* Grid lines background - blueprint style */
@@ -378,13 +983,13 @@
   }
 
   .bento-card:hover {
-    border-color: oklch(0.5 0.1 160 / 0.25);
-    box-shadow: 0 0 24px -8px oklch(0.5 0.1 160 / 0.12);
+    border-color: color-mix(in srgb, var(--brand) 22%, transparent);
+    box-shadow: 0 0 24px -8px color-mix(in srgb, var(--brand) 12%, transparent);
   }
 
   /* Bento highlight variant - softened for balance */
   .bento-highlight {
-    border-color: oklch(0.5 0.1 160 / 0.15);
+    border-color: color-mix(in srgb, var(--brand) 15%, transparent);
     background: linear-gradient(
       135deg,
       oklch(0.14 0.015 160 / 0.3) 0%,
@@ -437,15 +1042,20 @@
     border-color: oklch(0.5 0.12 60 / 0.12);
   }
 
-  /* Projects list with progressive disclosure */
-  .project-item {
-    @apply relative;
+  /* Projects cards */
+  .home-project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.25rem;
   }
 
-  .project-item-inner {
-    @apply relative rounded-xl;
-    @apply transition-all duration-300 ease-out;
-    @apply px-6 py-5;
+  .home-project-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0.5rem;
     border: 1px solid oklch(1 0 0 / 0.06);
     background: linear-gradient(
       135deg,
@@ -455,104 +1065,275 @@
     box-shadow:
       0 2px 8px -2px oklch(0 0 0 / 0.3),
       inset 0 1px 0 oklch(1 0 0 / 0.04);
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
   }
 
-  .project-item-inner::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      oklch(1 0 0 / 0.03) 0%,
-      transparent 40%
-    );
-    pointer-events: none;
-  }
-
-  .project-item:hover .project-item-inner {
-    border-color: oklch(0.55 0.12 160 / 0.3);
-    background: linear-gradient(
-      135deg,
-      oklch(0.15 0.01 160 / 0.5) 0%,
-      oklch(0.12 0 0 / 0.8) 100%
-    );
+  .home-project-card:hover {
+    border-color: var(--brand-glow);
     box-shadow:
-      0 0 0 1px oklch(0.55 0.12 160 / 0.1),
-      0 8px 32px -8px oklch(0.5 0.15 160 / 0.2),
+      0 0 0 1px color-mix(in srgb, var(--brand) 10%, transparent),
+      0 8px 32px -8px color-mix(in srgb, var(--brand) 20%, transparent),
       0 4px 16px -4px oklch(0 0 0 / 0.3),
       inset 0 1px 0 oklch(1 0 0 / 0.06);
     transform: translateY(-2px);
   }
 
-  .project-main {
-    @apply flex items-center gap-4;
-  }
-
-  /* Progressive disclosure - expanded content */
-  .project-detail {
+  /* Preview condicional: compacto por padrão, o print revela no hover.
+     grid-template-rows 0fr→1fr anima a altura real sem JS. */
+  .home-project-media {
     display: grid;
-    grid-template-rows: 0fr;
-    opacity: 0;
-    transition:
-      grid-template-rows 0.3s ease-out,
-      opacity 0.2s ease-out 0.05s;
+    grid-template-rows: 1fr;
   }
 
-  .project-detail > div {
+  .home-project-media-inner {
+    min-height: 0;
     overflow: hidden;
   }
 
-  .project-item:hover .project-detail {
-    grid-template-rows: 1fr;
-    opacity: 1;
+  .home-project-media-pad {
+    padding: 0.75rem 0.75rem 0;
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .project-item:hover .project-item-inner {
+  @media (hover: hover) {
+    .home-project-media {
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home-project-media-pad {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition:
+        opacity 0.35s ease,
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .home-project-card:hover .home-project-media,
+    .home-project-card:focus-within .home-project-media {
+      grid-template-rows: 1fr;
+    }
+
+    .home-project-card:hover .home-project-media-pad,
+    .home-project-card:focus-within .home-project-media-pad {
+      opacity: 1;
       transform: none;
     }
   }
 
-  @media (max-width: 1023px) {
-    .project-detail {
-      grid-template-rows: 1fr;
-      opacity: 1;
+  .home-project-card .project-screenshot-card {
+    --shot-aspect: 16 / 10;
+  }
+
+  .home-project-placeholder {
+    display: flex;
+    height: clamp(12.25rem, 22vw, 17.25rem);
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: 1px dashed oklch(1 0 0 / 0.12);
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        color-mix(in srgb, var(--brand) 13%, transparent),
+        transparent 45%
+      ),
+      linear-gradient(180deg, oklch(0.135 0 0), oklch(0.09 0 0));
+  }
+
+  .home-project-placeholder span {
+    font-family: var(--font-mono);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 700;
+    color: oklch(1 0 0 / 0.12);
+    letter-spacing: 0;
+    text-transform: uppercase;
+  }
+
+  .home-project-card-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1rem;
+  }
+
+  .home-project-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.25;
+    transition: color 0.2s ease;
+  }
+
+  .home-project-card:hover .home-project-title {
+    color: var(--brand);
+  }
+
+  .home-project-tagline {
+    overflow: hidden;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    font-size: 0.875rem;
+    line-height: 1.5;
+  }
+
+  .home-project-description {
+    overflow: hidden;
+    color: var(--muted-foreground);
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: 0.875rem;
+    line-height: 1.55;
+  }
+
+  .home-project-tech {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+  }
+
+  .home-project-tech span {
+    border-radius: 0.25rem;
+    background: color-mix(in srgb, var(--foreground) 10%, transparent);
+    padding: 0.125rem 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    color: var(--muted-foreground);
+  }
+
+  .home-project-footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid oklch(1 0 0 / 0.07);
+    padding-top: 0.75rem;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .home-project-card:hover .home-project-footer {
+    color: var(--brand);
+  }
+
+  .project-screenshot {
+    --shot-aspect: 16 / 10;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    border: 1px solid oklch(1 0 0 / 0.08);
+    background: linear-gradient(180deg, oklch(0.19 0 0), oklch(0.1 0 0));
+    box-shadow:
+      0 18px 50px -28px oklch(0 0 0 / 0.8),
+      inset 0 1px 0 oklch(1 0 0 / 0.08);
+  }
+
+  .project-screenshot-card {
+    --shot-aspect: 16 / 10;
+  }
+
+  .project-screenshot-chrome {
+    display: flex;
+    height: 1.75rem;
+    align-items: center;
+    gap: 0.375rem;
+    border-bottom: 1px solid oklch(1 0 0 / 0.08);
+    background: oklch(0.16 0 0);
+    padding-inline: 0.75rem;
+  }
+
+  .project-screenshot-winctl {
+    margin-left: auto;
+  }
+  .project-screenshot-winctl .win-ctl {
+    width: 0.95rem;
+    height: 0.95rem;
+    font-size: 0.56rem;
+  }
+
+  .project-screenshot-url {
+    height: 0.45rem;
+    width: min(11rem, 42%);
+    border-radius: 999px;
+    background: oklch(1 0 0 / 0.08);
+  }
+
+  .project-screenshot-tab {
+    overflow: hidden;
+    max-width: 60%;
+    border-radius: 999px;
+    background: oklch(1 0 0 / 0.06);
+    padding: 0.1rem 0.6rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 1.1;
+    color: var(--muted-foreground);
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .project-screenshot-viewport {
+    position: relative;
+    aspect-ratio: var(--shot-aspect, 16 / 10);
+    overflow: hidden;
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        color-mix(in srgb, var(--brand) 14%, transparent),
+        transparent 45%
+      ),
+      linear-gradient(180deg, oklch(0.135 0 0), oklch(0.09 0 0));
+  }
+
+  .project-screenshot-viewport::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(180deg, oklch(1 0 0 / 0.08), transparent 28%),
+      linear-gradient(90deg, oklch(0 0 0 / 0.18), transparent 18%, transparent 82%, oklch(0 0 0 / 0.18));
+  }
+
+  .project-screenshot-image {
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .group:hover .project-screenshot-image,
+  .home-project-card:hover .project-screenshot-image {
+    transform: scale(1.045);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .home-project-card:hover {
+      transform: none;
+    }
+
+    .project-screenshot-image,
+    .home-project-media,
+    .home-project-media-pad {
+      transition: none;
     }
   }
 
-  /* Staggered entrance for list items */
-  .project-item:nth-child(1) {
-    --delay: 0ms;
-  }
-  .project-item:nth-child(2) {
-    --delay: 80ms;
-  }
-  .project-item:nth-child(3) {
-    --delay: 160ms;
-  }
-  .project-item:nth-child(4) {
-    --delay: 240ms;
-  }
-  .project-item:nth-child(5) {
-    --delay: 320ms;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .project-item {
-      animation: project-fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-      animation-delay: var(--delay, 0ms);
+  @media (max-width: 767px) {
+    .project-screenshot-card {
+      --shot-aspect: 16 / 11;
     }
   }
 
-  @keyframes project-fade-in {
-    from {
-      opacity: 0;
-      transform: translateY(12px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
+  @media (min-width: 768px) {
+    .home-project-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
 
@@ -561,7 +1342,7 @@
   /* ── Solarized Light overrides ─────────────────────────────── */
 
   /* Hero name: Solarized base03 → blue accent → base03 */
-  html:not(.dark) .text-gradient-hero {
+  html.light .text-gradient-hero {
     background: linear-gradient(
       135deg,
       oklch(0.22 0.04 218) 0%,
@@ -574,26 +1355,26 @@
   }
 
   /* Hero top overlay: warm cream instead of near-black */
-  html:not(.dark) .hero-gradient-overlay {
+  html.light .hero-gradient-overlay {
     --tw-gradient-from: oklch(0.945 0.024 88);
     --tw-gradient-via: var(--background);
     --tw-gradient-to: var(--background);
   }
 
   /* Fade-bottom: to warm cream */
-  html:not(.dark) .fade-bottom {
+  html.light .fade-bottom {
     background: linear-gradient(to bottom, transparent 0%, oklch(0.965 0.024 88) 100%);
   }
 
   /* Grid lines: warm tan strokes */
-  html:not(.dark) .bg-grid-lines {
+  html.light .bg-grid-lines {
     background-image:
       linear-gradient(to right, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px);
   }
 
   /* Section dividers: warm tan */
-  html:not(.dark) .section-divider::before {
+  html.light .section-divider::before {
     background: linear-gradient(
       to right,
       transparent 0%,
@@ -605,7 +1386,7 @@
   }
 
   /* Section glow Sobre: olive green sutil (combina com o accent da seção) */
-  html:not(.dark) .section-glow-emerald::before {
+  html.light .section-glow-emerald::before {
     background: radial-gradient(
       ellipse at top center,
       oklch(0.62 0.13 128 / 0.10) 0%,
@@ -614,7 +1395,7 @@
     );
   }
 
-  html:not(.dark) .section-glow-violet::before {
+  html.light .section-glow-violet::before {
     background: radial-gradient(
       ellipse at top center,
       oklch(0.52 0.16 280 / 0.09) 0%,
@@ -624,7 +1405,7 @@
   }
 
   /* Aurora: tons quentes do Solarized + leve toque de blue */
-  html:not(.dark) .aurora {
+  html.light .aurora {
     background:
       radial-gradient(
         ellipse 80% 50% at 50% -20%,
@@ -644,18 +1425,18 @@
   }
 
   /* Social links: Solarized surface */
-  html:not(.dark) .social-link {
+  html.light .social-link {
     background: oklch(0.875 0.022 86);
     color: oklch(0.50 0.046 207);
     border-color: oklch(0.82 0.022 86);
   }
 
-  html:not(.dark) .social-link:hover {
+  html.light .social-link:hover {
     border-color: oklch(0.55 0.155 245 / 0.40);
     box-shadow: 0 0 16px -4px oklch(0.55 0.155 245 / 0.30);
   }
 
-  html:not(.dark) .btn-glow:hover {
+  html.light .btn-glow:hover {
     box-shadow:
       0 4px 20px -2px oklch(0.55 0.155 245 / 0.40),
       0 10px 30px -5px oklch(0.55 0.155 245 / 0.22),
@@ -663,7 +1444,7 @@
   }
 
   /* Bento cards: warm cream surface */
-  html:not(.dark) .bento-card {
+  html.light .bento-card {
     background: oklch(0.915 0.022 85);
     border-color: oklch(0.845 0.022 86);
     backdrop-filter: none;
@@ -672,7 +1453,7 @@
       inset 0 1px 0 oklch(1 0 0 / 0.45);
   }
 
-  html:not(.dark) .bento-card:hover {
+  html.light .bento-card:hover {
     border-color: oklch(0.55 0.155 245 / 0.32);
     box-shadow:
       0 0 28px -8px oklch(0.55 0.155 245 / 0.14),
@@ -680,7 +1461,7 @@
       inset 0 1px 0 oklch(1 0 0 / 0.45);
   }
 
-  html:not(.dark) .bento-highlight {
+  html.light .bento-highlight {
     border-color: oklch(0.845 0.022 86);
     background: linear-gradient(
       135deg,
@@ -693,7 +1474,7 @@
     backdrop-filter: none;
   }
 
-  html:not(.dark) .bento-backend {
+  html.light .bento-backend {
     background: linear-gradient(
       135deg,
       oklch(0.92 0.038 128) 0%,
@@ -703,7 +1484,7 @@
     backdrop-filter: none;
   }
 
-  html:not(.dark) .bento-frontend {
+  html.light .bento-frontend {
     background: linear-gradient(
       135deg,
       oklch(0.90 0.022 270) 0%,
@@ -713,7 +1494,7 @@
     backdrop-filter: none;
   }
 
-  html:not(.dark) .bento-devops {
+  html.light .bento-devops {
     background: linear-gradient(
       135deg,
       oklch(0.90 0.025 80) 0%,
@@ -724,7 +1505,7 @@
   }
 
   /* Terminal bento: borda e shadow neutros — o KittyTerminal traz sua própria palette */
-  html:not(.dark) .bento-terminal {
+  html.light .bento-terminal {
     border-color: oklch(0.82 0.025 88);
     background: transparent;
     box-shadow:
@@ -733,15 +1514,14 @@
     backdrop-filter: none;
   }
 
-  html:not(.dark) .bento-terminal:hover {
+  html.light .bento-terminal:hover {
     border-color: oklch(0.55 0.155 245 / 0.4);
     box-shadow:
       0 8px 32px -8px oklch(0.55 0.155 245 / 0.18),
       0 2px 8px oklch(0.26 0.038 218 / 0.08);
   }
 
-  /* Project items: warm cream surface */
-  html:not(.dark) .project-item-inner {
+  html.light .home-project-card {
     border-color: oklch(0.845 0.022 86);
     background: linear-gradient(
       135deg,
@@ -753,18 +1533,80 @@
       inset 0 1px 0 oklch(1 0 0 / 0.4);
   }
 
-  html:not(.dark) .project-item:hover .project-item-inner {
+  html.light .home-project-card:hover {
     border-color: oklch(0.55 0.155 245 / 0.30);
-    background: linear-gradient(
-      135deg,
-      oklch(0.925 0.030 88) 0%,
-      oklch(0.915 0.022 85) 100%
-    );
     box-shadow:
       0 0 0 1px oklch(0.55 0.155 245 / 0.10),
       0 8px 32px -8px oklch(0.55 0.155 245 / 0.14),
       0 2px 8px oklch(0.26 0.038 218 / 0.06);
-    transform: translateY(-2px);
+  }
+
+  html.light .home-project-card:hover .home-project-title,
+  html.light .home-project-card:hover .home-project-footer {
+    color: oklch(0.55 0.155 245);
+  }
+
+  html.light .home-project-tagline,
+  html.light .home-project-description {
+    color: oklch(0.5 0.046 207);
+  }
+
+  html.light .home-project-tech span {
+    background: oklch(0.875 0.022 86);
+    color: oklch(0.46 0.04 207);
+  }
+
+  html.light .home-project-footer {
+    border-top-color: oklch(0.845 0.022 86);
+    color: oklch(0.46 0.04 207);
+  }
+
+  html.light .home-project-placeholder {
+    border-color: oklch(0.78 0.028 86);
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        oklch(0.62 0.14 128 / 0.13),
+        transparent 45%
+      ),
+      linear-gradient(180deg, oklch(0.95 0.02 88), oklch(0.86 0.022 86));
+  }
+
+  html.light .home-project-placeholder span {
+    color: oklch(0.26 0.038 218 / 0.16);
+  }
+
+  html.light .project-screenshot {
+    border-color: oklch(0.78 0.028 86);
+    background: linear-gradient(180deg, oklch(0.91 0.022 86), oklch(0.84 0.026 86));
+    box-shadow:
+      0 16px 44px -30px oklch(0.26 0.038 218 / 0.35),
+      inset 0 1px 0 oklch(1 0 0 / 0.65);
+  }
+
+  html.light .project-screenshot-chrome {
+    border-bottom-color: oklch(0.78 0.028 86);
+    background: oklch(0.88 0.024 86);
+  }
+
+  html.light .project-screenshot-url {
+    background: oklch(0.74 0.028 86 / 0.55);
+  }
+
+  html.light .project-screenshot-viewport {
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        oklch(0.62 0.14 128 / 0.13),
+        transparent 45%
+      ),
+      linear-gradient(180deg, oklch(0.95 0.02 88), oklch(0.86 0.022 86));
+  }
+
+  html.light .project-screenshot-viewport::after {
+    background:
+      linear-gradient(180deg, oklch(1 0 0 / 0.32), transparent 28%),
+      linear-gradient(90deg, oklch(0.26 0.038 218 / 0.1), transparent 16%, transparent 84%, oklch(0.26 0.038 218 / 0.1));
   }
 
   /* ─── Scroll reveal ─────────────────────────────────────────── */
@@ -808,8 +1650,8 @@
     height: 3px;
     background: radial-gradient(
       ellipse at center,
-      oklch(0.65 0.2 160 / 0.9) 0%,
-      oklch(0.65 0.2 160 / 0.35) 40%,
+      color-mix(in srgb, var(--brand) 90%, transparent) 0%,
+      color-mix(in srgb, var(--brand) 35%, transparent) 40%,
       transparent 100%
     );
     filter: blur(3px);
@@ -826,8 +1668,8 @@
     height: 500px;
     background: radial-gradient(
       ellipse at top center,
-      oklch(0.6 0.18 160 / 0.12) 0%,
-      oklch(0.6 0.18 160 / 0.04) 50%,
+      color-mix(in srgb, var(--brand) 12%, transparent) 0%,
+      color-mix(in srgb, var(--brand) 4%, transparent) 50%,
       transparent 75%
     );
     pointer-events: none;
@@ -850,24 +1692,6 @@
     pointer-events: none;
   }
 
-  /* ─── Spotlight cursor ─────────────────────────────────────── */
-  :root {
-    --spotlight-color: oklch(0.55 0.155 245 / 0.07);
-    --card-glow-color: oklch(0.55 0.155 245 / 0.18);
-  }
-  .dark {
-    --spotlight-color: oklch(0.6 0.18 160 / 0.07);
-    --card-glow-color: oklch(0.6 0.2 160 / 0.18);
-  }
-
-  .spotlight-overlay {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    will-change: background;
-  }
-
   /* ─── Card internal glow ────────────────────────────────────── */
   .glow-card-inner {
     position: absolute;
@@ -888,7 +1712,7 @@
     height: 2px;
     background: linear-gradient(
       90deg,
-      oklch(0.65 0.22 160),
+      var(--brand),
       oklch(0.6 0.18 200)
     );
     transform-origin: 0 0;
@@ -905,7 +1729,7 @@
   }
 
   /* Scroll progress bar: Solarized blue → cyan no light mode */
-  html:not(.dark) .scroll-progress {
+  html.light .scroll-progress {
     background: linear-gradient(
       90deg,
       oklch(0.55 0.155 245),
@@ -979,7 +1803,7 @@
     --kitty-violet:    oklch(0.70 0.16 290);
   }
 
-  html:not(.dark) .kitty-terminal {
+  html.light .kitty-terminal {
     /* Solarized Light — modo claro autêntico */
     --kitty-bg:        oklch(0.965 0.024 88);
     --kitty-bg-bar:    oklch(0.905 0.025 88);
@@ -998,6 +1822,31 @@
     --kitty-violet:    oklch(0.50 0.16 290);
   }
 
+  /* Bearded Coffee — terminal café com sintaxe autêntica */
+  /* Terminal = "tela" clara estilo Solarized Light nas páginas escuras
+     (coffee / chocolate / black&gold). Creme quente (não estourado) →
+     contrasta em VALOR (tela-papel acesa) e harmoniza com as paletas
+     quentes/douradas. Matizes Solarized calibrados p/ contraste real. */
+  .coffee .kitty-terminal,
+  .chocolate-espresso .kitty-terminal,
+  .black-gold .kitty-terminal {
+    --kitty-bg:        #e6dcc3;
+    --kitty-bg-bar:    #dbd0b4;
+    --kitty-bg-tab:    #d0c4a4;
+    --kitty-border:    #c5b994;
+    --kitty-fg:        #36474a;
+    --kitty-fg-dim:    #54635f;
+    --kitty-fg-dimmer: #6b776e;
+    --kitty-blue:      #176488;
+    --kitty-cyan:      #15705f;
+    --kitty-green:     #536700;
+    --kitty-yellow:    #7a5b00;
+    --kitty-orange:    #b03c0d;
+    --kitty-red:       #bd2426;
+    --kitty-magenta:   #a72a67;
+    --kitty-violet:    #50539c;
+  }
+
   /* Title bar com tabs estilo kitty */
   .kitty-titlebar {
     display: flex;
@@ -1010,26 +1859,54 @@
     position: relative;
   }
 
-  .kitty-traffic {
+  /* Controles de janela estilo Linux (GNOME/KDE): à direita, simbólicos.
+     Compartilhado entre terminal, screenshot e demais "janelas". */
+  .win-controls {
     display: flex;
-    gap: 0.375rem;
-    padding-bottom: 0.5rem;
+    align-items: center;
+    gap: 0.3rem;
   }
 
-  .kitty-light {
-    width: 0.625rem;
-    height: 0.625rem;
-    border-radius: 50%;
-    opacity: 0.9;
+  .win-ctl {
+    display: grid;
+    place-items: center;
+    width: 1.05rem;
+    height: 1.05rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: oklch(0.6 0 0);
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    line-height: 1;
+    transition:
+      background 0.15s ease,
+      color 0.15s ease;
   }
-  .kitty-light--red    { background: oklch(0.65 0.20 25); }
-  .kitty-light--yellow { background: oklch(0.78 0.15 75); }
-  .kitty-light--green  { background: oklch(0.65 0.16 130); }
+  button.win-ctl {
+    cursor: pointer;
+  }
+  .win-ctl:hover {
+    background: oklch(0.5 0 0 / 0.2);
+    color: oklch(0.86 0 0);
+  }
+  .win-ctl--close:hover {
+    background: oklch(0.62 0.21 25);
+    color: oklch(0.98 0 0);
+  }
+
+  .kitty-winbtns {
+    margin-left: auto;
+    align-self: center;
+    padding-bottom: 0.4rem;
+  }
 
   .kitty-tabs {
     display: flex;
     gap: 0.125rem;
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
     align-self: flex-end;
   }
 
@@ -1396,7 +2273,7 @@
     display: inline-block;
     width: 0.45em;
     height: 1.1em;
-    background: oklch(0.65 0.22 160);
+    background: var(--brand);
     vertical-align: text-bottom;
     animation: preloader-blink 1.1s step-end infinite;
     opacity: 0.7;
@@ -1441,8 +2318,8 @@
   .preloader-prompt {
     font-size: clamp(1.4rem, 4vw, 2.5rem);
     font-weight: 700;
-    color: oklch(0.65 0.22 160);
-    text-shadow: 0 0 20px oklch(0.65 0.22 160 / 0.5);
+    color: var(--brand);
+    text-shadow: 0 0 20px color-mix(in srgb, var(--brand) 50%, transparent);
   }
 
   .preloader-name {
@@ -1456,7 +2333,7 @@
     color: oklch(0.92 0 0);
   }
 
-  html:not(.dark) .preloader-name {
+  html.light .preloader-name {
     color: oklch(0.26 0.038 218);
   }
 
@@ -1464,8 +2341,8 @@
     display: inline-block;
     width: 2px;
     height: clamp(1.4rem, 4vw, 2.5rem);
-    background: oklch(0.65 0.22 160);
-    box-shadow: 0 0 12px oklch(0.65 0.22 160 / 0.6);
+    background: var(--brand);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--brand) 60%, transparent);
     animation: preloader-blink 0.9s step-end infinite;
     vertical-align: middle;
     margin-left: 2px;
@@ -1491,7 +2368,7 @@
     inset-block: 0;
     left: 0;
     width: 40%;
-    background: linear-gradient(90deg, transparent, oklch(0.65 0.22 160), transparent);
+    background: linear-gradient(90deg, transparent, var(--brand), transparent);
     animation: preloader-scan 1.2s ease-in-out infinite;
   }
 
@@ -1515,4 +2392,380 @@
     );
     pointer-events: none;
   }
+}
+
+/* ─── Assinaturas autorais (fora de @layer p/ não sofrerem tree-shake
+   do Tailwind v4 no layer utilities) ───────────────────────────────── */
+
+/* Título de seção — caret de terminal.
+   Liga a tipografia editorial de volta à alma de terminal: cada título
+   de seção "pisca" um cursor de bloco, como um prompt. A cor do caret
+   acompanha o accent de cada seção via --caret-accent. */
+.section-title {
+  display: inline-flex;
+  align-items: baseline;
+}
+.section-title::after {
+  content: "";
+  display: inline-block;
+  width: 0.42em;
+  height: 0.92em;
+  margin-left: 0.18em;
+  transform: translateY(0.06em);
+  background: var(--caret-accent, var(--brand));
+  border-radius: 1.5px;
+  box-shadow: 0 0 12px -2px var(--caret-accent, var(--brand));
+  animation: section-caret-blink 1.2s steps(1) infinite;
+}
+@keyframes section-caret-blink {
+  0%, 55%  { opacity: 1; }
+  56%, 100% { opacity: 0; }
+}
+
+/* Link com sublinhado que "desenha" da esquerda — micro-interação
+   coesa para links de texto (rodapé, "ver todos"). CSS puro, sem
+   layout shift: usa background-size animado. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1.5px;
+  transition: background-size 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  padding-bottom: 1px;
+}
+.link-underline:hover,
+.group:hover .link-underline {
+  background-size: 100% 1.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-title::after { animation: none; }
+  .link-underline { transition: none; }
+}
+
+/* ─── Hero — o nome como manchete editorial ──────────────────────
+   Peso 800 + tracking apertado fazem o display grotesco virar
+   showpiece. O cargo vira uma "linha de status" mono, amarrando o
+   topo da página à identidade de terminal. */
+.hero-name {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 1.9rem + 3.4vw, 4.75rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.hero-role {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5ch;
+  margin-top: 0.9rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.92rem, 0.82rem + 0.45vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.hero-role::before {
+  content: "›";
+  color: var(--brand);
+  font-weight: 700;
+  transform: translateY(-0.02em);
+}
+
+/* Projetos em telas largas: a grade abre para 4 colunas e preenche a
+   largura unificada das seções (1600px), eliminando o vazio lateral dos
+   cards 2×2 num container amplo. Fora de @layer p/ sobrepor a regra
+   do layer (e escapar do tree-shake do Tailwind v4). */
+@media (min-width: 1280px) {
+  .home-project-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+/* ─── Coesão dos temas café: superfícies neutras → marrom quente ──────
+   Os cards de projeto e os "screenshots" usam oklch neutro (cinza-frio).
+   Nos temas Bearded, derivamos a partir de --card para casar com o fundo. */
+.coffee .home-project-card,
+.chocolate-espresso .home-project-card {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--card) 90%, #000),
+    color-mix(in srgb, var(--card) 68%, #000)
+  );
+}
+.coffee .project-screenshot-viewport,
+.coffee .home-project-placeholder,
+.chocolate-espresso .project-screenshot-viewport,
+.chocolate-espresso .home-project-placeholder {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--brand) 14%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 95%, #000),
+      color-mix(in srgb, var(--card) 55%, #000)
+    );
+}
+.coffee .project-screenshot,
+.chocolate-espresso .project-screenshot {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--card) 110%, #fff),
+    color-mix(in srgb, var(--card) 60%, #000)
+  );
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   MATERIAL DARK — overrides visuais (top-level)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Aurora: glow suave — Material não tem neon; só luz ambiente lavanda+teal */
+html.material-dark .aurora {
+  background:
+    radial-gradient(ellipse 70% 40% at 50% -15%,
+      color-mix(in srgb, #bb86fc 12%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 30% at 80% 0%,
+      color-mix(in srgb, #03dac6 8%, transparent) 0%, transparent 42%);
+}
+
+/* Terminal Material: lavanda Material Indigo 50 (#E8EAF6) — 16:1 vs bg.
+   Sintaxe escura com matizes Material. Fundo levemente lilás sugere a marca. */
+.material-dark .kitty-terminal {
+  --kitty-bg:        #e8eaf6;
+  --kitty-bg-bar:    #d9dcf0;
+  --kitty-bg-tab:    #c9ccec;
+  --kitty-border:    #b0b4e0;
+  --kitty-fg:        #1a1a2e;
+  --kitty-fg-dim:    #2e2e52;
+  --kitty-fg-dimmer: #424270;
+  --kitty-blue:      #1565c0;
+  --kitty-cyan:      #00695c;
+  --kitty-green:     #2e7d32;
+  --kitty-yellow:    #e65100;
+  --kitty-orange:    #bf360c;
+  --kitty-red:       #b71c1c;
+  --kitty-magenta:   #4a148c;
+  --kitty-violet:    #311b92;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CYBERPUNK — overrides visuais (top-level)
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Aurora tri-neon: magenta topo + cyan direita + violet esquerda.
+   html.cyberpunk para igualar especificidade de html.light. */
+html.cyberpunk .aurora {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, #f700c0 18%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 85% 0%,
+      color-mix(in srgb, #00e5ff 12%, transparent) 0%, transparent 42%),
+    radial-gradient(ellipse 50% 30% at 15% 10%,
+      color-mix(in srgb, #8b5cf6 12%, transparent) 0%, transparent 42%);
+}
+.cyberpunk .hero-center-glow {
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, #f700c0 9%, transparent) 0%, transparent 55%);
+}
+/* Glow neon no nome: assinatura visual do tema */
+html.cyberpunk .hero-name {
+  text-shadow:
+    0 0 40px color-mix(in srgb, #f700c0 55%, transparent),
+    0 0 80px color-mix(in srgb, #f700c0 25%, transparent);
+}
+/* Cards de projeto com borda neon sutil no hover */
+html.cyberpunk .home-project-card:hover {
+  border-color: color-mix(in srgb, #f700c0 35%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, #f700c0 12%, transparent),
+    0 0 24px -4px color-mix(in srgb, #f700c0 20%, transparent),
+    0 8px 32px -8px rgb(0 0 0 / 0.4);
+}
+/* Scroll bar: magenta → cyan */
+html.cyberpunk .scroll-progress {
+  background: linear-gradient(90deg, #f700c0, #00e5ff);
+}
+
+/* Terminal = "tela" holográfica azul-fria: página noturna → tela clara.
+   Cor dos prompts: neons escuros que passam AA no claro e evocam glitch/holo. */
+.cyberpunk .kitty-terminal {
+  --kitty-bg:        #cce4f4;
+  --kitty-bg-bar:    #bcd8ec;
+  --kitty-bg-tab:    #aacce4;
+  --kitty-border:    #90b8d4;
+  --kitty-fg:        #0a1835;
+  --kitty-fg-dim:    #1e3860;
+  --kitty-fg-dimmer: #2c4878;
+  --kitty-blue:      #0044cc;
+  --kitty-cyan:      #006699;
+  --kitty-green:     #005c2e;
+  --kitty-yellow:    #6a5000;
+  --kitty-orange:    #8a3000;
+  --kitty-red:       #cc0033;
+  --kitty-magenta:   #88009a;
+  --kitty-violet:    #5500cc;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   CUTE PINK — tratamento de tema CLARO (top-level p/ vencer os defaults
+   escuros das utilities). Tudo dirigido por token → rosa por construção.
+   ═══════════════════════════════════════════════════════════════════ */
+.cute-pink .aurora {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, var(--brand) 16%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 0%,
+      color-mix(in srgb, var(--accent-violet) 11%, transparent) 0%, transparent 42%),
+    radial-gradient(ellipse 50% 30% at 20% 10%,
+      color-mix(in srgb, var(--brand) 9%, transparent) 0%, transparent 42%);
+}
+.cute-pink .hero-center-glow {
+  background: radial-gradient(ellipse at center,
+    color-mix(in srgb, var(--brand) 9%, transparent) 0%, transparent 55%);
+}
+/* Sem fade escuro no topo do hero: rosa suave → blush (era from-zinc-950) */
+.cute-pink .hero-gradient-overlay {
+  --tw-gradient-from: #f9e2ee;
+  --tw-gradient-via: var(--background);
+  --tw-gradient-to: var(--background);
+}
+.cute-pink .bg-grid-lines {
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
+}
+.cute-pink .fade-bottom {
+  background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+}
+.cute-pink .text-gradient-hero {
+  background: linear-gradient(135deg, #a31450 0%, #e8337e 50%, #a31450 100%);
+  background-size: 200% auto;
+}
+.cute-pink .section-divider::before {
+  background: linear-gradient(to right, transparent 0%,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 15%,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 50%,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 85%, transparent 100%);
+}
+.cute-pink .section-glow-emerald::before,
+.cute-pink .section-glow-violet::before,
+.cute-pink .section-glow-neutral::before {
+  background: radial-gradient(ellipse at top center,
+    color-mix(in srgb, var(--brand) 10%, transparent) 0%,
+    color-mix(in srgb, var(--brand) 3%, transparent) 50%, transparent 75%);
+}
+.cute-pink .social-link {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.cute-pink .social-link:hover {
+  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand) 40%, transparent);
+  box-shadow: 0 0 16px -4px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+.cute-pink .bento-card,
+.cute-pink .bento-highlight,
+.cute-pink .bento-terminal,
+.cute-pink .home-project-card {
+  background: var(--card);
+  border-color: var(--border);
+  backdrop-filter: none;
+  box-shadow: var(--shadow-md);
+}
+.cute-pink .bento-card:hover,
+.cute-pink .home-project-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 32%, transparent);
+  box-shadow:
+    0 0 28px -8px color-mix(in srgb, var(--brand) 16%, transparent),
+    var(--shadow-md);
+}
+.cute-pink .home-project-placeholder {
+  border-color: var(--border);
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 45%),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.cute-pink .project-screenshot {
+  border-color: var(--border);
+  background: linear-gradient(180deg, #ffffff, var(--secondary));
+  box-shadow: var(--shadow-md);
+}
+.cute-pink .project-screenshot-chrome {
+  border-bottom-color: var(--border);
+  background: var(--secondary);
+}
+.cute-pink .project-screenshot-viewport {
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 45%),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.cute-pink .project-screenshot-viewport::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.4), transparent 28%),
+    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 8%, transparent), transparent 16%, transparent 84%, color-mix(in srgb, var(--foreground) 8%, transparent));
+}
+.cute-pink .scroll-progress {
+  background: linear-gradient(90deg, var(--brand), var(--accent-violet));
+}
+.cute-pink .preloader-name {
+  color: var(--foreground);
+}
+
+/* Terminal escuro "berry" — contrasta (valor) com a página rosa clara,
+   harmoniza no matiz (plum/rosa). Tela escura num quarto rosa. */
+.cute-pink .kitty-terminal {
+  --kitty-bg:        #1f1320;
+  --kitty-bg-bar:    #281a2b;
+  --kitty-bg-tab:    #170e18;
+  --kitty-border:    #3a2740;
+  --kitty-fg:        #ecd6e4;
+  --kitty-fg-dim:    #b794ab;
+  --kitty-fg-dimmer: #8a6a82;
+  --kitty-blue:      #8ab4ff;
+  --kitty-cyan:      #5ed1c4;
+  --kitty-green:     #9ad67f;
+  --kitty-yellow:    #e8c06a;
+  --kitty-orange:    #ff9d6b;
+  --kitty-red:       #ff7a8f;
+  --kitty-magenta:   #f48fd0;
+  --kitty-violet:    #c79bff;
+}
+
+/* ── Pink Cat Boo aurora — Catppuccin Mocha: pink + mauve gradients ── */
+html.pink-cat-boo .aurora {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, #f5c2e7 16%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 40% at 80% 0%,
+      color-mix(in srgb, #cba6f7 12%, transparent) 0%, transparent 42%),
+    radial-gradient(ellipse 50% 30% at 20% 5%,
+      color-mix(in srgb, #b4befe 10%, transparent) 0%, transparent 42%);
+}
+
+/* ── Pink Cat Boo terminal — Catppuccin Latte (light) contra a página
+   escura Mocha: alto contraste de valor, harmonia de paleta. ── */
+.pink-cat-boo .kitty-terminal {
+  --kitty-bg:        #eff1f5;
+  --kitty-bg-bar:    #e6e9ef;
+  --kitty-bg-tab:    #dce0e8;
+  --kitty-border:    #ccd0da;
+  --kitty-fg:        #4c4f69;
+  --kitty-fg-dim:    #6c6f85;
+  --kitty-fg-dimmer: #8c8fa1;
+  --kitty-blue:      #1e66f5;
+  --kitty-cyan:      #179299;
+  --kitty-green:     #40a02b;
+  --kitty-yellow:    #df8e1d;
+  --kitty-orange:    #fe640b;
+  --kitty-red:       #d20f39;
+  --kitty-magenta:   #ea76cb;
+  --kitty-violet:    #7287fd;
 }

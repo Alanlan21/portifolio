@@ -12,7 +12,21 @@ import { ContributionGraph } from "@/components/contribution-graph";
 import { TextScramble } from "@/components/text-scramble";
 import { Magnetic } from "@/components/magnetic";
 import { GlowCard } from "@/components/glow-card";
+import { ProjectScreenshot } from "@/components/project-screenshot";
+import { useTheme } from "next-themes";
 import { useLanguage } from "@/lib/i18n";
+
+const ALL_THEMES = [
+  "coffee",
+  "chocolate-espresso",
+  "black-gold",
+  "cyberpunk",
+  "material-dark",
+  "cute-pink",
+  "pink-cat-boo",
+  "dark",
+  "light",
+];
 
 const skills = {
   backend: [
@@ -28,9 +42,39 @@ const skills = {
   devops: ["Docker", "Git", "GitHub Actions", "AWS"],
 };
 
+const projectCategoryClasses = {
+  emerald: "text-emerald-400/80 border-emerald-500/30",
+  violet: "text-violet-400/80 border-violet-500/30",
+  amber: "text-amber-400/80 border-amber-500/30",
+  orange: "text-orange-400/80 border-orange-500/30",
+  cyan: "text-cyan-400/80 border-cyan-500/30",
+} as const;
+
+// Cada screenshot tem um ponto de interesse diferente: dashboards/telas
+// full-bleed favorecem o topo; UIs centralizadas favorecem o centro.
+const projectShotFocus: Record<string, string> = {
+  "attack-defense-lab": "center top",
+  unimenu: "center top",
+  valvecraft: "center",
+  "fala-pai": "center",
+};
+
+function getProjectCategoryClass(color: string) {
+  return (
+    projectCategoryClasses[color as keyof typeof projectCategoryClasses] ??
+    projectCategoryClasses.cyan
+  );
+}
+
 export default function Home() {
   const { lang, t } = useLanguage();
-  const projects = t.projectsData;
+  const { theme, setTheme } = useTheme();
+  const projects = t.projectsData.filter((project) => project.image);
+
+  function handleAvatarClick() {
+    const others = ALL_THEMES.filter((th) => th !== theme);
+    setTheme(others[Math.floor(Math.random() * others.length)]);
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -51,11 +95,19 @@ export default function Home() {
         </div>
 
         {/* Hero — identity + terminal */}
-        <div className="relative w-full max-w-7xl mx-auto px-6 lg:px-12 py-12 sm:py-16 lg:py-20">
-          <div className="grid grid-cols-1 xl:grid-cols-[1fr_1.75fr] gap-10 xl:gap-12 items-center">
+        <div className="relative w-full max-w-350 2xl:max-w-[90rem] mx-auto px-6 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20">
+          <div className="grid grid-cols-1 xl:grid-cols-[1fr_1.6fr] gap-10 xl:gap-16 items-center">
             {/* Identity */}
             <div className="flex flex-col gap-7 lg:gap-8">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden">
+              <div
+                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden cursor-pointer"
+                style={{
+                  boxShadow:
+                    "0 0 0 3px var(--brand), 0 0 0 7px color-mix(in srgb, var(--brand) 20%, transparent)",
+                }}
+                onClick={handleAvatarClick}
+                title="change theme"
+              >
                 <Image
                   src="/assets/foto-perfil.jpg"
                   alt="Alan Regis"
@@ -67,16 +119,14 @@ export default function Home() {
               </div>
 
               <div>
-                <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+                <h1 className="hero-name">
                   <TextScramble
                     text="Alan Regis"
                     className="text-gradient-hero"
                     delay={400}
                   />
                 </h1>
-                <p className="mt-2 text-2xl font-medium text-zinc-500 sm:text-3xl">
-                  Software Developer
-                </p>
+                <p className="hero-role">Software Developer</p>
               </div>
 
               <div className="flex flex-wrap items-center gap-3">
@@ -163,10 +213,13 @@ export default function Home() {
       {/* Sobre Section */}
       <section id="sobre" className="relative section-glow-emerald">
         <div className="absolute inset-0 bg-grid-lines opacity-50" />
-        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-[90rem] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           <ScrollReveal className="mb-10 lg:mb-14">
             <div className="w-8 h-0.5 bg-emerald-500/70 mb-3 rounded-full" />
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
+            <h2
+              className="section-title text-2xl lg:text-3xl font-bold tracking-tight mb-2"
+              style={{ "--caret-accent": "var(--color-emerald-500)" } as React.CSSProperties}
+            >
               {t.home.aboutTitle}
             </h2>
           </ScrollReveal>
@@ -230,7 +283,7 @@ export default function Home() {
                 <div className="absolute left-4.75 top-2 bottom-2 w-px bg-zinc-200 dark:bg-zinc-800" />
 
                 <div className="space-y-0">
-                  {t.timeline.map((item, i) => (
+                  {t.timeline.map((item) => (
                     <div
                       key={item.slug}
                       className="relative flex gap-4 pl-10 pb-6 last:pb-0"
@@ -334,12 +387,15 @@ export default function Home() {
         <div className="absolute inset-0 bg-linear-to-b from-transparent dark:via-zinc-950/50 to-transparent pointer-events-none" />
         <div className="absolute inset-0 bg-grid-lines opacity-50" />
 
-        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-[90rem] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           {/* Section header */}
           <ScrollReveal className="flex items-end justify-between mb-10 lg:mb-14">
             <div className="space-y-2">
               <div className="w-8 h-0.5 bg-violet-500/70 mb-3 rounded-full" />
-              <h2 className="text-2xl lg:text-3xl font-bold tracking-tight">
+              <h2
+                className="section-title text-2xl lg:text-3xl font-bold tracking-tight"
+                style={{ "--caret-accent": "var(--accent-violet)" } as React.CSSProperties}
+              >
                 {t.home.projectsTitle}
               </h2>
               <p className="text-zinc-500 text-sm lg:text-base max-w-md">
@@ -355,77 +411,66 @@ export default function Home() {
             </Link>
           </ScrollReveal>
 
-          {/* Projects list */}
-          <ScrollReveal delay={100} className="space-y-3">
+          {/* Projects grid */}
+          <ScrollReveal delay={100} className="home-project-grid">
             {projects.map((project) => (
               <Link
                 key={project.slug}
                 href={`/projetos/${project.slug}`}
-                className="group project-item block"
+                className="group home-project-card"
               >
-                <div className="project-item-inner">
-                  {/* Main row - always visible */}
-                  <div className="project-main">
-                    <div className="flex items-center gap-4 flex-1 min-w-0">
-                      {/* Project info */}
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-1">
-                          <h3 className="font-semibold text-lg group-hover:text-emerald-400 transition-colors">
-                            {project.name}
-                          </h3>
-                          <Badge
-                            variant="outline"
-                            className={`text-[10px] uppercase tracking-wider ${
-                              project.categoryColor === "emerald"
-                                ? "text-emerald-400/80 border-emerald-500/30"
-                                : project.categoryColor === "violet"
-                                  ? "text-violet-400/80 border-violet-500/30"
-                                  : project.categoryColor === "amber"
-                                    ? "text-amber-400/80 border-amber-500/30"
-                                    : "text-cyan-400/80 border-cyan-500/30"
-                            }`}
-                          >
-                            {project.category}
-                          </Badge>
-                        </div>
-                        <p className="text-zinc-600 dark:text-zinc-400 text-sm truncate">
-                          {project.tagline}
-                        </p>
-                      </div>
+                <div className="home-project-media">
+                  <div className="home-project-media-inner">
+                    <div className="home-project-media-pad">
+                      <ProjectScreenshot
+                        src={project.image!}
+                        alt={`Screenshot do projeto ${project.name}`}
+                        variant="card"
+                        label={project.name}
+                        objectPosition={
+                          projectShotFocus[project.slug] ?? "center top"
+                        }
+                        sizes="(min-width: 1280px) 360px, (min-width: 768px) 46vw, calc(100vw - 48px)"
+                      />
                     </div>
+                  </div>
+                </div>
 
-                    {/* Tech stack - visible on lg */}
-                    <div className="hidden lg:flex items-center gap-2 shrink-0">
-                      {project.tech.slice(0, 3).map((tech) => (
-                        <span
-                          key={tech}
-                          className="text-[11px] font-mono text-zinc-600 dark:text-zinc-500 bg-zinc-200/80 dark:bg-zinc-800/50 px-2 py-0.5 rounded"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                      {project.tech.length > 3 && (
-                        <span className="text-[11px] font-mono text-zinc-600">
-                          +{project.tech.length - 3}
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Arrow */}
-                    <ArrowRight className="h-5 w-5 text-zinc-600 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all shrink-0 ml-4" />
+                <div className="home-project-card-body">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="home-project-title">{project.name}</h3>
+                    <Badge
+                      variant="outline"
+                      className={`shrink-0 text-[10px] uppercase tracking-wider ${getProjectCategoryClass(
+                        project.categoryColor,
+                      )}`}
+                    >
+                      {project.category}
+                    </Badge>
                   </div>
 
-                  {/* Expanded content - visible on hover */}
-                  <div className="project-detail">
-                    <div className="pt-3 pb-1">
-                      <p className="text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed">
-                        {project.highlights[0]}
-                        <span className="text-zinc-400 dark:text-zinc-600 mx-2">
-                          ·
-                        </span>
-                        {project.decision}
-                      </p>
-                    </div>
+                  <p className="home-project-tagline">{project.tagline}</p>
+
+                  <p className="home-project-description">
+                    {project.highlights[0]}
+                    <span className="text-zinc-400 dark:text-zinc-600 mx-2">
+                      ·
+                    </span>
+                    {project.decision}
+                  </p>
+
+                  <div className="home-project-tech">
+                    {project.tech.slice(0, 4).map((tech) => (
+                      <span key={tech}>{tech}</span>
+                    ))}
+                    {project.tech.length > 4 && (
+                      <span>+{project.tech.length - 4}</span>
+                    )}
+                  </div>
+
+                  <div className="home-project-footer">
+                    <span>{t.projectDetail.viewDetails}</span>
+                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </div>
                 </div>
               </Link>
@@ -461,10 +506,13 @@ export default function Home() {
       {/* Contato Section */}
       <section id="contato" className="relative section-glow-neutral">
         <div className="absolute inset-0 bg-grid-lines opacity-35" />
-        <div className="relative max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
+        <div className="relative max-w-350 2xl:max-w-[90rem] mx-auto px-6 lg:px-12 xl:px-16 py-16 lg:py-24">
           <ScrollReveal className="mb-10">
             <div className="w-8 h-0.5 bg-zinc-500/70 mb-3 rounded-full" />
-            <h2 className="text-2xl lg:text-3xl font-bold tracking-tight mb-2">
+            <h2
+              className="section-title text-2xl lg:text-3xl font-bold tracking-tight mb-2"
+              style={{ "--caret-accent": "var(--muted-foreground)" } as React.CSSProperties}
+            >
               {t.home.contactTitle}
             </h2>
             <p className="text-zinc-500 text-sm lg:text-base max-w-md">
@@ -551,7 +599,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="border-t border-border">
-        <div className="max-w-350 2xl:max-w-400 mx-auto px-6 lg:px-12 xl:px-16 py-8">
+        <div className="max-w-350 2xl:max-w-[90rem] mx-auto px-6 lg:px-12 xl:px-16 py-8">
           <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
             <p className="text-sm text-muted-foreground">
               <span className="font-mono text-emerald-500">~/</span>alan.dev ©{" "}
@@ -562,7 +610,7 @@ export default function Home() {
                 href="https://github.com/Alanlan21"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="link-underline text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 GitHub
               </a>
@@ -570,13 +618,13 @@ export default function Home() {
                 href="https://linkedin.com/in/alanregis"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="link-underline text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 LinkedIn
               </a>
               <Link
                 href="/#contato"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                className="link-underline text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 {t.home.footerContact}
               </Link>

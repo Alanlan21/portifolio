@@ -4,6 +4,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ProjectScreenshot } from "@/components/project-screenshot";
 import { ArrowRight, ExternalLink, Github } from "lucide-react";
 import { useLanguage } from "@/lib/i18n";
 
@@ -16,6 +17,7 @@ export interface ProjectCardProps {
   highlight?: string;
   github?: string;
   demo?: string;
+  image?: string;
   className?: string;
 }
 
@@ -28,6 +30,7 @@ export function ProjectCard({
   highlight,
   github,
   demo,
+  image,
   className,
 }: ProjectCardProps) {
   const { t } = useLanguage();
@@ -46,6 +49,17 @@ export function ProjectCard({
         className,
       )}
     >
+      {image && (
+        <div className="px-4 pt-0">
+          <ProjectScreenshot
+            src={image}
+            alt={`Screenshot do projeto ${title}`}
+            variant="card"
+            sizes="(max-width: 768px) calc(100vw - 48px), 420px"
+          />
+        </div>
+      )}
+
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <CardTitle className="text-lg font-semibold group-hover:text-emerald-500 transition-colors">
