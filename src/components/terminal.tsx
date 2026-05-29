@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { WindowControls } from "@/components/window-controls";
 
 interface TerminalProps {
   children?: React.ReactNode;
@@ -23,15 +24,11 @@ export function Terminal({
       )}
     >
       {/* Title bar */}
-      <div className="flex items-center gap-2 px-4 py-3 bg-zinc-900/80 border-b border-zinc-800/60">
-        <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-red-500/80 shadow-[0_0_8px_rgba(239,68,68,0.3)]" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80 shadow-[0_0_8px_rgba(234,179,8,0.3)]" />
-          <div className="w-3 h-3 rounded-full bg-green-500/80 shadow-[0_0_8px_rgba(34,197,94,0.3)]" />
-        </div>
-        <span className="ml-2 text-xs text-zinc-500 font-mono tracking-wide">
+      <div className="flex items-center gap-2 px-4 py-2.5 bg-zinc-900/80 border-b border-zinc-800/60">
+        <span className="text-xs text-zinc-500 font-mono tracking-wide">
           {title}
         </span>
+        <WindowControls className="ml-auto" />
       </div>
       {/* Content */}
       <div className="p-5 font-mono text-sm text-zinc-100 relative">

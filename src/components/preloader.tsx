@@ -11,8 +11,10 @@ const EXIT_AT = 1700;
 const REMOVE_AT = 2250;
 
 export function Preloader() {
+  // Estado inicial determinístico: server e client renderizam o mesmo texto,
+  // evitando hydration mismatch. O scramble aleatório começa no useEffect.
   const [display, setDisplay] = useState(() =>
-    TEXT.split("").map(() => CHARS[Math.floor(Math.random() * CHARS.length)]).join("")
+    TEXT.split("").map((_, i) => CHARS[(i * 7) % CHARS.length]).join("")
   );
   const [exiting, setExiting] = useState(false);
   const [visible, setVisible] = useState(true);

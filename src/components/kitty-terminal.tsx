@@ -5,6 +5,7 @@ import { useReducedMotion } from "motion/react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { useLanguage, type Locale } from "@/lib/i18n";
+import { WindowControls } from "@/components/window-controls";
 
 interface Skills {
   backend: string[];
@@ -394,13 +395,44 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
       return;
     }
 
-    if (cmd === "theme dark" || cmd === "theme light") {
-      const target = cmd === "theme dark" ? "dark" : "light";
-      setTheme(target);
-      push(
-        echoLine(trimmed),
-        <div className="kitty-out kitty-out-dim">{ui.themeChanged(target)}</div>
-      );
+    if (cmd.startsWith("theme")) {
+      const arg = cmd.slice(5).trim();
+      const aliases: Record<string, string> = {
+        coffee: "coffee",
+        chocolate: "chocolate-espresso",
+        espresso: "chocolate-espresso",
+        "chocolate-espresso": "chocolate-espresso",
+        gold: "black-gold",
+        "black-gold": "black-gold",
+        cyberpunk: "cyberpunk",
+        cyber: "cyberpunk",
+        material: "material-dark",
+        "material-dark": "material-dark",
+        pink: "cute-pink",
+        "cute-pink": "cute-pink",
+        dark: "dark",
+        light: "light",
+      };
+      const target = aliases[arg];
+      if (target) {
+        setTheme(target);
+        push(
+          echoLine(trimmed),
+          <div className="kitty-out kitty-out-dim">
+            {ui.themeChanged(target)}
+          </div>
+        );
+      } else {
+        push(
+          echoLine(trimmed),
+          <div className="kitty-out">
+            <div className="kitty-out-dim">
+              {lang === "en" ? "available themes:" : "temas disponíveis:"}{" "}
+              coffee · chocolate-espresso · black-gold · cyberpunk · material-dark · cute-pink · dark · light
+            </div>
+          </div>
+        );
+      }
       inputRef.current?.focus();
       return;
     }
@@ -490,11 +522,6 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
     <div className={cn("kitty-terminal", className)}>
       {/* Title bar */}
       <div className="kitty-titlebar">
-        <div className="kitty-traffic">
-          <span className="kitty-light kitty-light--red" />
-          <span className="kitty-light kitty-light--yellow" />
-          <span className="kitty-light kitty-light--green" />
-        </div>
         <div className="kitty-tabs">
           <div className="kitty-tab kitty-tab--active">
             <span className="kitty-tab-icon">λ</span>
@@ -502,6 +529,11 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
           </div>
         </div>
         <span className="kitty-title-text">alan@portifolio</span>
+        <WindowControls
+          className="kitty-winbtns"
+          onClose={() => setClosed(true)}
+          closeLabel={lang === "en" ? "close terminal" : "fechar terminal"}
+        />
       </div>
 
       {/* Body — closed state */}

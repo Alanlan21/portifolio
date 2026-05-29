@@ -24,6 +24,13 @@ export function ViewTransitions() {
         target.getAttribute("target") === "_blank"
       ) return;
 
+      // Navegação de âncora dentro da mesma página (ex.: "/#sobre" estando em "/")
+      // deve usar o comportamento nativo do navegador. Interceptar com router.push
+      // dentro de um view transition quebra o scroll por hash e a restauração de
+      // histórico, fazendo o botão "voltar" cair sempre no topo (início).
+      const url = new URL(href, window.location.href);
+      if (url.pathname === window.location.pathname && url.hash) return;
+
       if (!document.startViewTransition) return;
 
       e.preventDefault();

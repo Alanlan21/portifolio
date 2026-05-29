@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { Menu, X, Github, Linkedin } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { ThemePicker } from "@/components/theme-picker";
 import { LanguageToggle } from "@/components/language-toggle";
 import { Button } from "@/components/ui/button";
 import { useActiveSection } from "@/hooks/use-active-section";
@@ -88,7 +88,7 @@ export function Header() {
               <span className="sr-only">LinkedIn</span>
             </a>
           </Button>
-          <ThemeToggle />
+          <ThemePicker side="bottom" />
           <LanguageToggle />
 
           {/* Mobile menu button */}
