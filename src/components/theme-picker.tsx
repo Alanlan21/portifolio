@@ -17,18 +17,31 @@ type ThemeOption = {
 
 // Ordem do menu = ordem de afinidade (cafés primeiro).
 const THEMES: ThemeOption[] = [
-  { id: "coffee", label: "Coffee", bg: "#292423", accent: "#f09177" },
   {
     id: "chocolate-espresso",
     label: "Chocolate Espresso",
-    bg: "#2e2424",
-    accent: "#f69c95",
+    bg: "#1a1111",
+    accent: "#cf5340",
   },
+  { id: "coffee", label: "Coffee", bg: "#292423", accent: "#f09177" },
   { id: "black-gold", label: "Black & Gold", bg: "#111418", accent: "#e3a52a" },
   { id: "cyberpunk", label: "Cyberpunk", bg: "#0b0b1a", accent: "#f700c0" },
-  { id: "material-dark", label: "Material Dark", bg: "#121212", accent: "#bb86fc" },
+  {
+    id: "material-dark",
+    label: "Material Dark",
+    bg: "#121212",
+    accent: "#bb86fc",
+  },
   { id: "cute-pink", label: "Cute Pink", bg: "#fbeef4", accent: "#e8337e" },
+  {
+    id: "pink-cat-boo",
+    label: "Pink Cat Boo",
+    bg: "#1a1025",
+    accent: "#ff79c6",
+  },
+  { id: "doki-mai", label: "Doki: Mai", bg: "#f8f0f5", accent: "#c95fa0" },
   { id: "dark", label: "Dark", bg: "#171717", accent: "#34d399" },
+  { id: "fluffy", label: "Fluffy", bg: "#ece9f8", accent: "#d86fa8" },
   { id: "light", label: "Solarized Light", bg: "#fdf6e3", accent: "#268bd2" },
 ];
 

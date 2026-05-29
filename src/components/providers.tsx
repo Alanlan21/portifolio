@@ -18,8 +18,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
           "material-dark",
           "cute-pink",
           "pink-cat-boo",
+          "doki-mai",
           "dark",
           "light",
+          "fluffy",
         ]}
         enableSystem={false}
       >

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Github, Linkedin, Mail, Download } from "lucide-react";
@@ -14,6 +15,20 @@ import { Magnetic } from "@/components/magnetic";
 import { GlowCard } from "@/components/glow-card";
 import { ProjectScreenshot } from "@/components/project-screenshot";
 import { useLanguage } from "@/lib/i18n";
+import { useTheme } from "next-themes";
+
+const ALL_THEMES = [
+  "coffee",
+  "chocolate-espresso",
+  "black-gold",
+  "cyberpunk",
+  "material-dark",
+  "cute-pink",
+  "pink-cat-boo",
+  "doki-mai",
+  "dark",
+  "light",
+];
 
 const skills = {
   backend: [
@@ -55,8 +70,17 @@ function getProjectCategoryClass(color: string) {
 
 export default function Home() {
   const { lang, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
+  const [avatarFlash, setAvatarFlash] = useState(false);
   // Home destaca apenas projetos com preview visual (remove ex.: calote-bot).
   const projects = t.projectsData.filter((project) => project.image);
+
+  function handleAvatarClick() {
+    const others = ALL_THEMES.filter((th) => th !== theme);
+    setTheme(others[Math.floor(Math.random() * others.length)]);
+    setAvatarFlash(true);
+    setTimeout(() => setAvatarFlash(false), 400);
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -82,11 +106,12 @@ export default function Home() {
             {/* Identity */}
             <div className="flex flex-col gap-7 lg:gap-8">
               <div
-                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden"
+                className={`w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden cursor-pointer${avatarFlash ? " avatar-pop" : ""}`}
                 style={{
-                  boxShadow:
-                    "0 0 0 3px var(--brand), 0 0 0 7px color-mix(in srgb, var(--brand) 20%, transparent)",
+                  boxShadow: "0 0 0 3px var(--brand), 0 0 0 7px color-mix(in srgb, var(--brand) 20%, transparent)",
                 }}
+                onClick={handleAvatarClick}
+                title="change theme"
               >
                 <Image
                   src="/assets/foto-perfil.jpg"

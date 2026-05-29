@@ -3,10 +3,41 @@
 @import "shadcn/tailwind.css";
 
 /* Transição suave na troca de temas — só cores para não interferir em animações */
-*, *::before, *::after {
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+*,
+*::before,
+*::after {
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 150ms ease !important;
 }
-[data-motion], [style*="animation"], canvas { transition: none !important; }
+[data-motion],
+[style*="animation"],
+canvas,
+.animate-in,
+.animate-out {
+  transition: none !important;
+}
+
+@keyframes avatar-pop {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.93);
+  }
+  65% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.avatar-pop {
+  animation: avatar-pop 320ms cubic-bezier(0.34, 1.56, 0.64, 1) !important;
+}
 
 /* "dark:" cobre todos os temas escuros (dark + cafés Bearded), só não o light */
 @custom-variant dark (&:is(.dark *, .coffee *, .chocolate-espresso *, .black-gold *, .cyberpunk *, .material-dark *, .pink-cat-boo *));
@@ -73,7 +104,7 @@
   --background: #292423;
   --foreground: #ceb5b0;
   /* Emerald → rampa coral (a marca do tema); "verde" semântico vira --accent-green */
-  --color-emerald-50:  #fbe9e4;
+  --color-emerald-50: #fbe9e4;
   --color-emerald-100: #f8d3c9;
   --color-emerald-200: #f3b6a5;
   --color-emerald-300: #ee9981;
@@ -85,7 +116,7 @@
   --color-emerald-900: #872b12;
   /* Zinc → taupe quente: harmoniza os cinzas (texto/superfície/borda)
      herdados de classes zinc-* com o fundo café. */
-  --color-zinc-50:  #f8f5f2;
+  --color-zinc-50: #f8f5f2;
   --color-zinc-100: #efeae6;
   --color-zinc-200: #e0d8d2;
   --color-zinc-300: #d4cbc4;
@@ -133,29 +164,279 @@
   --accent-green: #9dcc57;
   --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.35);
   --shadow-md:
-    0 4px 20px -4px rgb(0 0 0 / 0.45),
-    inset 0 1px 0 rgb(255 255 255 / 0.04);
+    0 4px 20px -4px rgb(0 0 0 / 0.45), inset 0 1px 0 rgb(255 255 255 / 0.04);
   --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.8);
+}
+
+/* ═══ DOKI — BunnySenpai: Mai ═══
+   fundo rosado · sidebar lavanda · accent azul-roxo · brand pink */
+.doki-mai {
+  --background: #f8f0f5;
+  --foreground: #3d2d3e;
+  --color-emerald-50: #f0eef8;
+  --color-emerald-100: #ddd9f0;
+  --color-emerald-200: #c4bee4;
+  --color-emerald-300: #a9a2d6;
+  --color-emerald-400: #9088c8;
+  --color-emerald-500: #7b6fb0;
+  --color-emerald-600: #6659a0;
+  --color-emerald-700: #544888;
+  --color-emerald-800: #3e3468;
+  --color-emerald-900: #2c2449;
+  --color-zinc-50: #fdf8fc;
+  --color-zinc-100: #f5edf3;
+  --color-zinc-200: #e8d8e4;
+  --color-zinc-300: #d4bece;
+  --color-zinc-400: #b89ab0;
+  --color-zinc-500: #9b7d93;
+  --color-zinc-600: #7e6278;
+  --color-zinc-700: #624d5e;
+  --color-zinc-800: #483847;
+  --color-zinc-900: #2e2430;
+  --color-zinc-950: #1e1720;
+  --card: #ede0ea;
+  --card-foreground: #3d2d3e;
+  --popover: #ede0ea;
+  --popover-foreground: #3d2d3e;
+  --primary: #3d2d3e;
+  --primary-foreground: #f8f0f5;
+  --secondary: #e4d3df;
+  --secondary-foreground: #3d2d3e;
+  --muted: #e4d3df;
+  --muted-foreground: #7e6278;
+  --accent: #e4d3df;
+  --accent-foreground: #3d2d3e;
+  --destructive: #d93e5a;
+  --border: #d8c4d2;
+  --input: #d8c4d2;
+  --ring: #c95fa0;
+  --chart-1: #c95fa0;
+  --chart-2: #7b6fb0;
+  --chart-3: #5b9bd5;
+  --chart-4: #e8874a;
+  --chart-5: #6dbfa0;
+  --radius: 0.625rem;
+  --sidebar: #ede0ea;
+  --sidebar-foreground: #3d2d3e;
+  --sidebar-primary: #3d2d3e;
+  --sidebar-primary-foreground: #f8f0f5;
+  --sidebar-accent: #e4d3df;
+  --sidebar-accent-foreground: #3d2d3e;
+  --sidebar-border: #d8c4d2;
+  --sidebar-ring: #c95fa0;
+  --brand: #c95fa0;
+  --brand-strong: #b54d8e;
+  --accent-violet: #7b6fb0;
+  --accent-amber: #e8874a;
+  --accent-green: #6dbfa0;
+  --shadow-sm: 0 1px 3px rgb(61 45 62 / 0.08);
+  --shadow-md:
+    0 4px 18px -6px rgb(61 45 62 / 0.14), 0 1px 3px rgb(61 45 62 / 0.08);
+  --shadow-lg: 0 18px 50px -28px rgb(61 45 62 / 0.28);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   DOKI: MAI — tratamento de tema CLARO (top-level p/ vencer os defaults
+   escuros das utilities). Token-driven: tudo rosa/lavanda por construção.
+   ═══════════════════════════════════════════════════════════════════ */
+.doki-mai .aurora {
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, var(--brand) 14%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 0%,
+      color-mix(in srgb, var(--accent-violet) 10%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 20% 10%,
+      color-mix(in srgb, var(--brand) 8%, transparent) 0%,
+      transparent 42%
+    );
+}
+.doki-mai .hero-center-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--brand) 8%, transparent) 0%,
+    transparent 55%
+  );
+}
+/* Sem fade escuro no hero: rosado suave → background */
+.doki-mai .hero-gradient-overlay {
+  --tw-gradient-from: #f2e4ef;
+  --tw-gradient-via: var(--background);
+  --tw-gradient-to: var(--background);
+}
+.doki-mai .bg-grid-lines {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 1px,
+      transparent 1px
+    );
+}
+.doki-mai .fade-bottom {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--background) 100%
+  );
+}
+.doki-mai .text-gradient-hero {
+  background: linear-gradient(135deg, #8a3d76 0%, #c95fa0 50%, #7b6fb0 100%);
+  background-size: 200% auto;
+}
+.doki-mai .section-divider::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 15%,
+    color-mix(in srgb, var(--foreground) 14%, transparent) 50%,
+    color-mix(in srgb, var(--foreground) 8%, transparent) 85%,
+    transparent 100%
+  );
+}
+.doki-mai .section-glow-emerald::before,
+.doki-mai .section-glow-violet::before,
+.doki-mai .section-glow-neutral::before {
+  background: radial-gradient(
+    ellipse at top center,
+    color-mix(in srgb, var(--brand) 10%, transparent) 0%,
+    color-mix(in srgb, var(--brand) 3%, transparent) 50%,
+    transparent 75%
+  );
+}
+.doki-mai .social-link {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.doki-mai .social-link:hover {
+  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand) 40%, transparent);
+  box-shadow: 0 0 16px -4px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+.doki-mai .bento-card,
+.doki-mai .bento-highlight,
+.doki-mai .bento-terminal,
+.doki-mai .home-project-card {
+  background: var(--card);
+  border-color: var(--border);
+  backdrop-filter: none;
+  box-shadow: var(--shadow-md);
+}
+.doki-mai .bento-card:hover,
+.doki-mai .home-project-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 32%, transparent);
+  box-shadow:
+    0 0 28px -8px color-mix(in srgb, var(--brand) 16%, transparent),
+    var(--shadow-md);
+}
+.doki-mai .home-project-tagline,
+.doki-mai .home-project-description {
+  color: var(--muted-foreground);
+}
+.doki-mai .home-project-tech span {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.doki-mai .home-project-footer {
+  border-top-color: var(--border);
+  color: var(--muted-foreground);
+}
+.doki-mai .home-project-placeholder {
+  border-color: var(--border);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--brand) 12%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.doki-mai .project-screenshot {
+  border-color: var(--border);
+  background: linear-gradient(180deg, #ffffff, var(--secondary));
+  box-shadow: var(--shadow-md);
+}
+.doki-mai .project-screenshot-chrome {
+  border-bottom-color: var(--border);
+  background: var(--secondary);
+}
+.doki-mai .project-screenshot-viewport {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--brand) 12%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.doki-mai .project-screenshot-viewport::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.4), transparent 28%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 8%, transparent),
+      transparent 16%,
+      transparent 84%,
+      color-mix(in srgb, var(--foreground) 8%, transparent)
+    );
+}
+.doki-mai .scroll-progress {
+  background: linear-gradient(90deg, var(--brand), var(--accent-violet));
+}
+.doki-mai .preloader-name {
+  color: var(--foreground);
+}
+
+/* Terminal escuro "midnight lavender" — tela escura no quarto rosado.
+   Matiz violeta/plum harmoniza com o tema sem competir com o brand pink. */
+.doki-mai .kitty-terminal {
+  --kitty-bg: #1a1025;
+  --kitty-bg-bar: #231530;
+  --kitty-bg-tab: #120c1a;
+  --kitty-border: #3a2754;
+  --kitty-fg: #e8d5f0;
+  --kitty-fg-dim: #b09dc0;
+  --kitty-fg-dimmer: #7a6888;
+  --kitty-blue: #82b4ff;
+  --kitty-cyan: #5ecfca;
+  --kitty-green: #96d67a;
+  --kitty-yellow: #e8c46a;
+  --kitty-orange: #ff9d6b;
+  --kitty-red: #ff7a8f;
+  --kitty-magenta: #ff79c6;
+  --kitty-violet: #c897ff;
 }
 
 /* ═══ LIGHT — Solarized Light ═══ */
 .light {
   /* Solarized Light palette */
-  --background: oklch(0.965 0.024 88);      /* base3  — creme quente */
+  --background: oklch(0.965 0.024 88); /* base3  — creme quente */
   /* Emerald → Solarized green (#859900 olive): terroso em vez de neon,
      respeita a base creme e mantém a semântica de "verde = disponível/backend" */
-  --color-emerald-50:  oklch(0.962 0.018 128);
+  --color-emerald-50: oklch(0.962 0.018 128);
   --color-emerald-100: oklch(0.928 0.038 128);
   --color-emerald-200: oklch(0.875 0.072 128);
   --color-emerald-300: oklch(0.795 0.105 128);
   --color-emerald-400: oklch(0.715 0.128 128);
   --color-emerald-500: oklch(0.625 0.135 128);
-  --color-emerald-600: oklch(0.540 0.123 128);
+  --color-emerald-600: oklch(0.54 0.123 128);
   --color-emerald-700: oklch(0.455 0.108 128);
   --color-emerald-800: oklch(0.375 0.088 128);
-  --color-emerald-900: oklch(0.290 0.068 128);
-  --foreground: oklch(0.26 0.038 218);      /* base03 — azul-acinzentado escuro */
-  --card: oklch(0.915 0.022 85);            /* base2  — superfície de card */
+  --color-emerald-900: oklch(0.29 0.068 128);
+  --foreground: oklch(0.26 0.038 218); /* base03 — azul-acinzentado escuro */
+  --card: oklch(0.915 0.022 85); /* base2  — superfície de card */
   --card-foreground: oklch(0.26 0.038 218);
   --popover: oklch(0.915 0.022 85);
   --popover-foreground: oklch(0.26 0.038 218);
@@ -164,11 +445,13 @@
   --secondary: oklch(0.875 0.022 86);
   --secondary-foreground: oklch(0.26 0.038 218);
   --muted: oklch(0.875 0.022 86);
-  --muted-foreground: oklch(0.50 0.046 207); /* base0  — cinza-azul para texto secundário */
+  --muted-foreground: oklch(
+    0.5 0.046 207
+  ); /* base0  — cinza-azul para texto secundário */
   --accent: oklch(0.875 0.022 86);
   --accent-foreground: oklch(0.26 0.038 218);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.845 0.022 86);           /* base1  — borda creme mais escura */
+  --border: oklch(0.845 0.022 86); /* base1  — borda creme mais escura */
   --input: oklch(0.845 0.022 86);
   --ring: oklch(0.65 0.18 160);
   --chart-1: oklch(0.809 0.105 251.813);
@@ -204,16 +487,16 @@
 
 .dark {
   /* Restaura emerald original (verde vibrante funciona bem no dark) */
-  --color-emerald-50:  lab(97.8462% -6.94963 1.85487);
+  --color-emerald-50: lab(97.8462% -6.94963 1.85487);
   --color-emerald-100: lab(93.1865% -22.2551 6.73538);
   --color-emerald-200: lab(87.5908% -39.9617 12.5016);
   --color-emerald-300: lab(83.9203% -48.7124 13.8849);
   --color-emerald-400: lab(75.0771% -60.7313 19.4146);
-  --color-emerald-500: lab(66.9756% -58.27  19.5419);
+  --color-emerald-500: lab(66.9756% -58.27 19.5419);
   --color-emerald-600: lab(55.0481% -49.9246 15.93);
   --color-emerald-700: lab(44.4871% -41.0396 11.0361);
-  --color-emerald-800: lab(34.5083% -31.7808  7.55765);
-  --color-emerald-900: lab(26.6408% -24.1296  4.85315);
+  --color-emerald-800: lab(34.5083% -31.7808 7.55765);
+  --color-emerald-900: lab(26.6408% -24.1296 4.85315);
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -255,80 +538,79 @@
 
   --shadow-sm: 0 2px 8px -2px oklch(0 0 0 / 0.3);
   --shadow-md:
-    0 4px 20px -4px oklch(0 0 0 / 0.4),
-    inset 0 1px 0 oklch(1 0 0 / 0.04);
+    0 4px 20px -4px oklch(0 0 0 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.04);
   --shadow-lg: 0 18px 50px -28px oklch(0 0 0 / 0.8);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CHOCOLATE ESPRESSO — Bearded Theme HC Chocolate Espresso
-   base #2e2424 · accent salmão #f69c95 · fonte teinted #d3b1b1
+   CHOCOLATE ESPRESSO — borra de café, quase preto-vinho
+   base vinho-escuro #1a1111 · accent brasa/terracota #cf5340 · fonte rosada #d0a898
    ═══════════════════════════════════════════════════════════════════ */
 .chocolate-espresso {
-  --background: #2e2424;
-  --foreground: #d3b1b1;
-  --color-emerald-50:  #fce5e3;
-  --color-emerald-100: #f9cbc8;
-  --color-emerald-200: #f5a9a3;
-  --color-emerald-300: #f1877e;
-  --color-emerald-400: #ee6d63;
-  --color-emerald-500: #eb5347;
-  --color-emerald-600: #e8392c;
-  --color-emerald-700: #d32517;
-  --color-emerald-800: #af1e13;
-  --color-emerald-900: #8a180f;
-  /* Zinc → taupe quente avermelhado (combina com o espresso) */
-  --color-zinc-50:  #f8f4f2;
-  --color-zinc-100: #efe9e6;
-  --color-zinc-200: #e0d6d2;
-  --color-zinc-300: #d4c9c4;
-  --color-zinc-400: #b8a9a3;
-  --color-zinc-500: #a39087;
-  --color-zinc-600: #91786e;
-  --color-zinc-700: #6f5b52;
-  --color-zinc-800: #463832;
-  --color-zinc-900: #2e2521;
-  --color-zinc-950: #1e1815;
-  --card: #281f1f;
-  --card-foreground: #d3b1b1;
-  --popover: #281f1f;
-  --popover-foreground: #d3b1b1;
-  --primary: #ecd6d6;
-  --primary-foreground: #2e2424;
-  --secondary: #382b2b;
-  --secondary-foreground: #d3b1b1;
-  --muted: #382b2b;
-  --muted-foreground: #a18a8a;
-  --accent: #382b2b;
-  --accent-foreground: #f2dede;
-  --destructive: #fb7a6c;
-  --border: #3f302f;
-  --input: #3f302f;
-  --ring: #f69c95;
-  --chart-1: #17d7d7;
-  --chart-2: #69d293;
-  --chart-3: #f69c95;
-  --chart-4: #ad92ff;
-  --chart-5: #edbc7f;
+  --background: #1a1111;
+  --foreground: #d0a898;
+  /* Emerald → rampa sienna/terracota (brasa do espresso) */
+  --color-emerald-50: #fce8e3;
+  --color-emerald-100: #f8d0c8;
+  --color-emerald-200: #f2b0a0;
+  --color-emerald-300: #e88e78;
+  --color-emerald-400: #de6e55;
+  --color-emerald-500: #cf5340;
+  --color-emerald-600: #b8402e;
+  --color-emerald-700: #9e3223;
+  --color-emerald-800: #7f281c;
+  --color-emerald-900: #621f16;
+  /* Zinc → vinho-cinza escuro (mais frio e profundo que o Coffee) */
+  --color-zinc-50: #f6f0ef;
+  --color-zinc-100: #ede4e2;
+  --color-zinc-200: #ddd0cd;
+  --color-zinc-300: #cfc0bc;
+  --color-zinc-400: #b3a09b;
+  --color-zinc-500: #9e8a84;
+  --color-zinc-600: #8c7470;
+  --color-zinc-700: #6e5754;
+  --color-zinc-800: #442f2d;
+  --color-zinc-900: #2c1e1c;
+  --color-zinc-950: #1c1211;
+  --card: #140d0d;
+  --card-foreground: #d0a898;
+  --popover: #140d0d;
+  --popover-foreground: #d0a898;
+  --primary: #e8c8c4;
+  --primary-foreground: #1a1111;
+  --secondary: #2b1a19;
+  --secondary-foreground: #d0a898;
+  --muted: #2b1a19;
+  --muted-foreground: #9a7570;
+  --accent: #2b1a19;
+  --accent-foreground: #e8c8c4;
+  --destructive: #e85640;
+  --border: #382220;
+  --input: #382220;
+  --ring: #cf5340;
+  --chart-1: #4db3c2;
+  --chart-2: #7ec98a;
+  --chart-3: #cf5340;
+  --chart-4: #b88eff;
+  --chart-5: #e8aa5a;
   --radius: 0.625rem;
-  --sidebar: #281f1f;
-  --sidebar-foreground: #d3b1b1;
-  --sidebar-primary: #ecd6d6;
-  --sidebar-primary-foreground: #2e2424;
-  --sidebar-accent: #382b2b;
-  --sidebar-accent-foreground: #f2dede;
-  --sidebar-border: #3f302f;
-  --sidebar-ring: #f69c95;
-  --brand: #f69c95;
-  --brand-strong: #f9b3ad;
-  --accent-violet: #ad92ff;
-  --accent-amber: #edbc7f;
-  --accent-green: #69d293;
-  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.4);
+  --sidebar: #140d0d;
+  --sidebar-foreground: #d0a898;
+  --sidebar-primary: #e8c8c4;
+  --sidebar-primary-foreground: #1a1111;
+  --sidebar-accent: #2b1a19;
+  --sidebar-accent-foreground: #e8c8c4;
+  --sidebar-border: #382220;
+  --sidebar-ring: #cf5340;
+  --brand: #cf5340;
+  --brand-strong: #e0644f;
+  --accent-violet: #b88eff;
+  --accent-amber: #e8aa5a;
+  --accent-green: #7ec98a;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.55);
   --shadow-md:
-    0 4px 20px -4px rgb(0 0 0 / 0.5),
-    inset 0 1px 0 rgb(255 255 255 / 0.05);
-  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.85);
+    0 4px 20px -4px rgb(0 0 0 / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.9);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -339,7 +621,7 @@
   --background: #111418;
   --foreground: #b1bbc8;
   /* Emerald → rampa ouro (a marca do tema) */
-  --color-emerald-50:  #fef3d8;
+  --color-emerald-50: #fef3d8;
   --color-emerald-100: #fce6b0;
   --color-emerald-200: #fbd77f;
   --color-emerald-300: #f9c84d;
@@ -350,7 +632,7 @@
   --color-emerald-800: #8f6705;
   --color-emerald-900: #725204;
   /* Zinc → cinza-frio neutro (mids levantados p/ AA no near-black) */
-  --color-zinc-50:  #f4f5f6;
+  --color-zinc-50: #f4f5f6;
   --color-zinc-100: #e9eaec;
   --color-zinc-200: #d6d8db;
   --color-zinc-300: #c8cbd0;
@@ -398,8 +680,7 @@
   --accent-green: #00a884;
   --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.45);
   --shadow-md:
-    0 4px 20px -4px rgb(0 0 0 / 0.55),
-    inset 0 1px 0 rgb(255 255 255 / 0.04);
+    0 4px 20px -4px rgb(0 0 0 / 0.55), inset 0 1px 0 rgb(255 255 255 / 0.04);
   --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.9);
 }
 
@@ -413,32 +694,32 @@
    base #1e1e2e · brand mauve #cba6f7 · pink accent #f5c2e7
    ═══════════════════════════════════════════════════════════════════ */
 .pink-cat-boo {
-  --background: #1e1e2e;          /* Mocha Base */
-  --foreground: #cdd6f4;          /* Mocha Text */
+  --background: #1e1e2e; /* Mocha Base */
+  --foreground: #cdd6f4; /* Mocha Text */
   /* Emerald → rampa mauve/pink Catppuccin */
-  --color-emerald-50:  #fbeef7;
-  --color-emerald-100: #f5c2e7;   /* Pink */
+  --color-emerald-50: #fbeef7;
+  --color-emerald-100: #f5c2e7; /* Pink */
   --color-emerald-200: #f0a8da;
   --color-emerald-300: #e88dcb;
   --color-emerald-400: #d9a4f2;
-  --color-emerald-500: #cba6f7;   /* Mauve — brand */
+  --color-emerald-500: #cba6f7; /* Mauve — brand */
   --color-emerald-600: #b88af3;
   --color-emerald-700: #9c5fe9;
   --color-emerald-800: #7a3ec9;
   --color-emerald-900: #58269a;
   /* Zinc → hierarquia de superfícies Catppuccin (Surface0/1/2 + Subtext) */
-  --color-zinc-50:  #f0f0f8;
+  --color-zinc-50: #f0f0f8;
   --color-zinc-100: #dddde8;
   --color-zinc-200: #c8c8d9;
-  --color-zinc-300: #bac2de;      /* Subtext1 */
-  --color-zinc-400: #a6adc8;      /* Subtext0 */
-  --color-zinc-500: #9399b2;      /* Overlay2 */
-  --color-zinc-600: #7f849c;      /* Overlay1 */
-  --color-zinc-700: #585b70;      /* Surface2 */
-  --color-zinc-800: #45475a;      /* Surface1 */
-  --color-zinc-900: #313244;      /* Surface0 */
-  --color-zinc-950: #181825;      /* Mantle */
-  --card: #181825;                /* Mantle */
+  --color-zinc-300: #bac2de; /* Subtext1 */
+  --color-zinc-400: #a6adc8; /* Subtext0 */
+  --color-zinc-500: #9399b2; /* Overlay2 */
+  --color-zinc-600: #7f849c; /* Overlay1 */
+  --color-zinc-700: #585b70; /* Surface2 */
+  --color-zinc-800: #45475a; /* Surface1 */
+  --color-zinc-900: #313244; /* Surface0 */
+  --color-zinc-950: #181825; /* Mantle */
+  --card: #181825; /* Mantle */
   --card-foreground: #cdd6f4;
   --popover: #313244;
   --popover-foreground: #cdd6f4;
@@ -450,10 +731,10 @@
   --muted-foreground: #a6adc8;
   --accent: #313244;
   --accent-foreground: #f5e0fa;
-  --destructive: #f38ba8;         /* Red */
-  --border: #45475a;              /* Surface1 */
+  --destructive: #f38ba8; /* Red */
+  --border: #45475a; /* Surface1 */
   --input: #45475a;
-  --ring: #f5c2e7;                /* Pink */
+  --ring: #f5c2e7; /* Pink */
   --chart-1: #f5c2e7;
   --chart-2: #cba6f7;
   --chart-3: #f9e2af;
@@ -468,8 +749,8 @@
   --sidebar-accent-foreground: #f5e0fa;
   --sidebar-border: #45475a;
   --sidebar-ring: #f5c2e7;
-  --brand: #f5c2e7;               /* Pink (a "Boo" rosa) */
-  --brand-strong: #cba6f7;        /* Mauve */
+  --brand: #f5c2e7; /* Pink (a "Boo" rosa) */
+  --brand-strong: #cba6f7; /* Mauve */
   --accent-violet: #cba6f7;
   --accent-amber: #f9e2af;
   --accent-green: #a6e3a1;
@@ -495,7 +776,7 @@
   --background: #121212;
   --foreground: #e0e0e0;
   /* Emerald → rampa Material Purple 200 */
-  --color-emerald-50:  #f3ecfe;
+  --color-emerald-50: #f3ecfe;
   --color-emerald-100: #e7d8fd;
   --color-emerald-200: #d5bbfb;
   --color-emerald-300: #bd94f9;
@@ -506,7 +787,7 @@
   --color-emerald-800: #4b09ae;
   --color-emerald-900: #380783;
   /* Zinc → cinza-neutro Material (hue 220, sat 0.04) */
-  --color-zinc-50:  #f7f7f8;
+  --color-zinc-50: #f7f7f8;
   --color-zinc-100: #ecedee;
   --color-zinc-200: #dddddf;
   --color-zinc-300: #c5c6c9;
@@ -555,8 +836,7 @@
   --accent-green: #03dac6;
   --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.4), 0 1px 1px rgb(0 0 0 / 0.3);
   --shadow-md:
-    0 3px 6px rgb(0 0 0 / 0.4),
-    0 3px 6px rgb(0 0 0 / 0.3),
+    0 3px 6px rgb(0 0 0 / 0.4), 0 3px 6px rgb(0 0 0 / 0.3),
     inset 0 1px 0 rgb(255 255 255 / 0.04);
   --shadow-lg: 0 10px 20px rgb(0 0 0 / 0.5), 0 6px 6px rgb(0 0 0 / 0.4);
 }
@@ -569,7 +849,7 @@
   --background: #0b0b1a;
   --foreground: #bcc8e8;
   /* Emerald → rampa magenta neon */
-  --color-emerald-50:  #fff0fc;
+  --color-emerald-50: #fff0fc;
   --color-emerald-100: #ffdbf9;
   --color-emerald-200: #ffb8f3;
   --color-emerald-300: #ff85eb;
@@ -580,7 +860,7 @@
   --color-emerald-800: #8f0077;
   --color-emerald-900: #660055;
   /* Zinc → cool violet-purple (luzes da cidade) */
-  --color-zinc-50:  #f4f3f6;
+  --color-zinc-50: #f4f3f6;
   --color-zinc-100: #e8e8ee;
   --color-zinc-200: #d4d3de;
   --color-zinc-300: #bab9cb;
@@ -646,7 +926,7 @@
   --background: #fbeef4;
   --foreground: #5a2740;
   /* Emerald → rampa rosa (a marca) */
-  --color-emerald-50:  #fdf1f6;
+  --color-emerald-50: #fdf1f6;
   --color-emerald-100: #fbdfeb;
   --color-emerald-200: #f8bfd7;
   --color-emerald-300: #f395bd;
@@ -657,7 +937,7 @@
   --color-emerald-800: #971149;
   --color-emerald-900: #770d39;
   /* Zinc → mauve (texto/superfície com toque rosado) */
-  --color-zinc-50:  #f8f6f7;
+  --color-zinc-50: #f8f6f7;
   --color-zinc-100: #f2edf0;
   --color-zinc-200: #e5dce0;
   --color-zinc-300: #d4c4cc;
@@ -705,20 +985,19 @@
   --accent-green: #008b17;
   --shadow-sm: 0 1px 3px rgb(90 39 64 / 0.08);
   --shadow-md:
-    0 4px 18px -6px rgb(90 39 64 / 0.16),
-    0 1px 3px rgb(90 39 64 / 0.08);
+    0 4px 18px -6px rgb(90 39 64 / 0.16), 0 1px 3px rgb(90 39 64 / 0.08);
   --shadow-lg: 0 18px 50px -28px rgb(90 39 64 / 0.3);
 }
 
 @layer base {
   :root {
     /* ─── Escala tipográfica fluida (Major Third ≈ 1.25) ───────── */
-    --step--1: clamp(0.78rem, 0.76rem + 0.10vw, 0.84rem);
-    --step-0: clamp(0.94rem, 0.90rem + 0.18vw, 1.05rem);
-    --step-1: clamp(1.18rem, 1.10rem + 0.38vw, 1.45rem);
-    --step-2: clamp(1.47rem, 1.32rem + 0.74vw, 2.0rem);
-    --step-3: clamp(1.84rem, 1.58rem + 1.30vw, 2.75rem);
-    --step-4: clamp(2.30rem, 1.86rem + 2.18vw, 3.80rem);
+    --step--1: clamp(0.78rem, 0.76rem + 0.1vw, 0.84rem);
+    --step-0: clamp(0.94rem, 0.9rem + 0.18vw, 1.05rem);
+    --step-1: clamp(1.18rem, 1.1rem + 0.38vw, 1.45rem);
+    --step-2: clamp(1.47rem, 1.32rem + 0.74vw, 2rem);
+    --step-3: clamp(1.84rem, 1.58rem + 1.3vw, 2.75rem);
+    --step-4: clamp(2.3rem, 1.86rem + 2.18vw, 3.8rem);
     --step-5: clamp(2.88rem, 2.16rem + 3.55vw, 5.25rem);
 
     /* Tracking ótico — display aperta, mono/labels respiram */
@@ -818,7 +1097,7 @@
   html.light .hero-center-glow {
     background: radial-gradient(
       ellipse at center,
-      oklch(0.60 0.155 245 / 0.08) 0%,
+      oklch(0.6 0.155 245 / 0.08) 0%,
       transparent 55%
     );
   }
@@ -972,7 +1251,10 @@
   /* Bento card style */
   .bento-card {
     @apply relative rounded-xl border border-zinc-800/60 bg-zinc-900/40 backdrop-blur-sm;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      opacity 0.3s ease;
   }
 
   .bento-card::before {
@@ -1305,7 +1587,13 @@
     pointer-events: none;
     background:
       linear-gradient(180deg, oklch(1 0 0 / 0.08), transparent 28%),
-      linear-gradient(90deg, oklch(0 0 0 / 0.18), transparent 18%, transparent 82%, oklch(0 0 0 / 0.18));
+      linear-gradient(
+        90deg,
+        oklch(0 0 0 / 0.18),
+        transparent 18%,
+        transparent 82%,
+        oklch(0 0 0 / 0.18)
+      );
   }
 
   .project-screenshot-image {
@@ -1369,14 +1657,26 @@
 
   /* Fade-bottom: to warm cream */
   html.light .fade-bottom {
-    background: linear-gradient(to bottom, transparent 0%, oklch(0.965 0.024 88) 100%);
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      oklch(0.965 0.024 88) 100%
+    );
   }
 
   /* Grid lines: warm tan strokes */
   html.light .bg-grid-lines {
     background-image:
-      linear-gradient(to right, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, oklch(0.26 0.038 218 / 0.05) 1px, transparent 1px);
+      linear-gradient(
+        to right,
+        oklch(0.26 0.038 218 / 0.05) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        oklch(0.26 0.038 218 / 0.05) 1px,
+        transparent 1px
+      );
   }
 
   /* Section dividers: warm tan */
@@ -1395,7 +1695,7 @@
   html.light .section-glow-emerald::before {
     background: radial-gradient(
       ellipse at top center,
-      oklch(0.62 0.13 128 / 0.10) 0%,
+      oklch(0.62 0.13 128 / 0.1) 0%,
       oklch(0.62 0.13 128 / 0.03) 50%,
       transparent 75%
     );
@@ -1415,12 +1715,12 @@
     background:
       radial-gradient(
         ellipse 80% 50% at 50% -20%,
-        oklch(0.60 0.155 245 / 0.10) 0%,
+        oklch(0.6 0.155 245 / 0.1) 0%,
         transparent 60%
       ),
       radial-gradient(
         ellipse 60% 40% at 80% 0%,
-        oklch(0.75 0.10 80 / 0.11) 0%,
+        oklch(0.75 0.1 80 / 0.11) 0%,
         transparent 40%
       ),
       radial-gradient(
@@ -1433,18 +1733,18 @@
   /* Social links: Solarized surface */
   html.light .social-link {
     background: oklch(0.875 0.022 86);
-    color: oklch(0.50 0.046 207);
+    color: oklch(0.5 0.046 207);
     border-color: oklch(0.82 0.022 86);
   }
 
   html.light .social-link:hover {
-    border-color: oklch(0.55 0.155 245 / 0.40);
-    box-shadow: 0 0 16px -4px oklch(0.55 0.155 245 / 0.30);
+    border-color: oklch(0.55 0.155 245 / 0.4);
+    box-shadow: 0 0 16px -4px oklch(0.55 0.155 245 / 0.3);
   }
 
   html.light .btn-glow:hover {
     box-shadow:
-      0 4px 20px -2px oklch(0.55 0.155 245 / 0.40),
+      0 4px 20px -2px oklch(0.55 0.155 245 / 0.4),
       0 10px 30px -5px oklch(0.55 0.155 245 / 0.22),
       inset 0 1px 0 oklch(1 0 0 / 0.18);
   }
@@ -1471,7 +1771,7 @@
     border-color: oklch(0.845 0.022 86);
     background: linear-gradient(
       135deg,
-      oklch(0.935 0.030 88) 0%,
+      oklch(0.935 0.03 88) 0%,
       oklch(0.915 0.022 85) 100%
     );
     box-shadow:
@@ -1493,7 +1793,7 @@
   html.light .bento-frontend {
     background: linear-gradient(
       135deg,
-      oklch(0.90 0.022 270) 0%,
+      oklch(0.9 0.022 270) 0%,
       oklch(0.915 0.022 85) 100%
     );
     border-color: oklch(0.52 0.14 280 / 0.2);
@@ -1503,7 +1803,7 @@
   html.light .bento-devops {
     background: linear-gradient(
       135deg,
-      oklch(0.90 0.025 80) 0%,
+      oklch(0.9 0.025 80) 0%,
       oklch(0.915 0.022 85) 100%
     );
     border-color: oklch(0.55 0.12 75 / 0.22);
@@ -1540,9 +1840,9 @@
   }
 
   html.light .home-project-card:hover {
-    border-color: oklch(0.55 0.155 245 / 0.30);
+    border-color: oklch(0.55 0.155 245 / 0.3);
     box-shadow:
-      0 0 0 1px oklch(0.55 0.155 245 / 0.10),
+      0 0 0 1px oklch(0.55 0.155 245 / 0.1),
       0 8px 32px -8px oklch(0.55 0.155 245 / 0.14),
       0 2px 8px oklch(0.26 0.038 218 / 0.06);
   }
@@ -1584,7 +1884,11 @@
 
   html.light .project-screenshot {
     border-color: oklch(0.78 0.028 86);
-    background: linear-gradient(180deg, oklch(0.91 0.022 86), oklch(0.84 0.026 86));
+    background: linear-gradient(
+      180deg,
+      oklch(0.91 0.022 86),
+      oklch(0.84 0.026 86)
+    );
     box-shadow:
       0 16px 44px -30px oklch(0.26 0.038 218 / 0.35),
       inset 0 1px 0 oklch(1 0 0 / 0.65);
@@ -1612,7 +1916,13 @@
   html.light .project-screenshot-viewport::after {
     background:
       linear-gradient(180deg, oklch(1 0 0 / 0.32), transparent 28%),
-      linear-gradient(90deg, oklch(0.26 0.038 218 / 0.1), transparent 16%, transparent 84%, oklch(0.26 0.038 218 / 0.1));
+      linear-gradient(
+        90deg,
+        oklch(0.26 0.038 218 / 0.1),
+        transparent 16%,
+        transparent 84%,
+        oklch(0.26 0.038 218 / 0.1)
+      );
   }
 
   /* ─── Scroll reveal ─────────────────────────────────────────── */
@@ -1716,11 +2026,7 @@
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(
-      90deg,
-      var(--brand),
-      oklch(0.6 0.18 200)
-    );
+    background: linear-gradient(90deg, var(--brand), oklch(0.6 0.18 200));
     transform-origin: 0 0;
     transform: scaleX(0);
     z-index: 9999;
@@ -1730,8 +2036,12 @@
   }
 
   @keyframes scroll-grow {
-    from { transform: scaleX(0); }
-    to   { transform: scaleX(1); }
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 
   /* Scroll progress bar: Solarized blue → cyan no light mode */
@@ -1745,17 +2055,31 @@
 
   /* Fallback for browsers without scroll-driven animations */
   @supports not (animation-timeline: scroll()) {
-    .scroll-progress { display: none; }
+    .scroll-progress {
+      display: none;
+    }
   }
 
   /* ─── View Transitions ──────────────────────────────────────── */
   @keyframes vt-fade-in {
-    from { opacity: 0; transform: translateY(6px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   @keyframes vt-fade-out {
-    from { opacity: 1; transform: translateY(0); }
-    to   { opacity: 0; transform: translateY(-6px); }
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
   }
 
   ::view-transition-old(root) {
@@ -1792,40 +2116,40 @@
     background: var(--kitty-bg);
 
     /* Solarized Dark — modo escuro */
-    --kitty-bg:        oklch(0.18 0.018 220);
-    --kitty-bg-bar:    oklch(0.21 0.015 220);
-    --kitty-bg-tab:    oklch(0.16 0.015 220);
-    --kitty-border:    oklch(0.30 0.020 220);
-    --kitty-fg:        oklch(0.80 0.025 205);
-    --kitty-fg-dim:    oklch(0.55 0.028 210);
+    --kitty-bg: oklch(0.18 0.018 220);
+    --kitty-bg-bar: oklch(0.21 0.015 220);
+    --kitty-bg-tab: oklch(0.16 0.015 220);
+    --kitty-border: oklch(0.3 0.02 220);
+    --kitty-fg: oklch(0.8 0.025 205);
+    --kitty-fg-dim: oklch(0.55 0.028 210);
     --kitty-fg-dimmer: oklch(0.42 0.022 215);
-    --kitty-blue:      oklch(0.70 0.16 245);
-    --kitty-cyan:      oklch(0.74 0.13 185);
-    --kitty-green:     oklch(0.74 0.16 130);
-    --kitty-yellow:    oklch(0.80 0.14 80);
-    --kitty-orange:    oklch(0.74 0.16 45);
-    --kitty-red:       oklch(0.70 0.18 25);
-    --kitty-magenta:   oklch(0.68 0.17 340);
-    --kitty-violet:    oklch(0.70 0.16 290);
+    --kitty-blue: oklch(0.7 0.16 245);
+    --kitty-cyan: oklch(0.74 0.13 185);
+    --kitty-green: oklch(0.74 0.16 130);
+    --kitty-yellow: oklch(0.8 0.14 80);
+    --kitty-orange: oklch(0.74 0.16 45);
+    --kitty-red: oklch(0.7 0.18 25);
+    --kitty-magenta: oklch(0.68 0.17 340);
+    --kitty-violet: oklch(0.7 0.16 290);
   }
 
   html.light .kitty-terminal {
     /* Solarized Light — modo claro autêntico */
-    --kitty-bg:        oklch(0.965 0.024 88);
-    --kitty-bg-bar:    oklch(0.905 0.025 88);
-    --kitty-bg-tab:    oklch(0.875 0.025 88);
-    --kitty-border:    oklch(0.81 0.025 88);
-    --kitty-fg:        oklch(0.40 0.038 215);
-    --kitty-fg-dim:    oklch(0.55 0.040 207);
+    --kitty-bg: oklch(0.965 0.024 88);
+    --kitty-bg-bar: oklch(0.905 0.025 88);
+    --kitty-bg-tab: oklch(0.875 0.025 88);
+    --kitty-border: oklch(0.81 0.025 88);
+    --kitty-fg: oklch(0.4 0.038 215);
+    --kitty-fg-dim: oklch(0.55 0.04 207);
     --kitty-fg-dimmer: oklch(0.66 0.035 207);
-    --kitty-blue:      oklch(0.50 0.15 240);
-    --kitty-cyan:      oklch(0.52 0.13 178);
-    --kitty-green:     oklch(0.55 0.14 125);
-    --kitty-yellow:    oklch(0.62 0.15 75);
-    --kitty-orange:    oklch(0.58 0.18 45);
-    --kitty-red:       oklch(0.55 0.20 25);
-    --kitty-magenta:   oklch(0.55 0.17 330);
-    --kitty-violet:    oklch(0.50 0.16 290);
+    --kitty-blue: oklch(0.5 0.15 240);
+    --kitty-cyan: oklch(0.52 0.13 178);
+    --kitty-green: oklch(0.55 0.14 125);
+    --kitty-yellow: oklch(0.62 0.15 75);
+    --kitty-orange: oklch(0.58 0.18 45);
+    --kitty-red: oklch(0.55 0.2 25);
+    --kitty-magenta: oklch(0.55 0.17 330);
+    --kitty-violet: oklch(0.5 0.16 290);
   }
 
   /* Bearded Coffee — terminal café com sintaxe autêntica */
@@ -1834,23 +2158,41 @@
      contrasta em VALOR (tela-papel acesa) e harmoniza com as paletas
      quentes/douradas. Matizes Solarized calibrados p/ contraste real. */
   .coffee .kitty-terminal,
-  .chocolate-espresso .kitty-terminal,
   .black-gold .kitty-terminal {
-    --kitty-bg:        #e6dcc3;
-    --kitty-bg-bar:    #dbd0b4;
-    --kitty-bg-tab:    #d0c4a4;
-    --kitty-border:    #c5b994;
-    --kitty-fg:        #36474a;
-    --kitty-fg-dim:    #54635f;
+    --kitty-bg: #e6dcc3;
+    --kitty-bg-bar: #dbd0b4;
+    --kitty-bg-tab: #d0c4a4;
+    --kitty-border: #c5b994;
+    --kitty-fg: #36474a;
+    --kitty-fg-dim: #54635f;
     --kitty-fg-dimmer: #6b776e;
-    --kitty-blue:      #176488;
-    --kitty-cyan:      #15705f;
-    --kitty-green:     #536700;
-    --kitty-yellow:    #7a5b00;
-    --kitty-orange:    #b03c0d;
-    --kitty-red:       #bd2426;
-    --kitty-magenta:   #a72a67;
-    --kitty-violet:    #50539c;
+    --kitty-blue: #176488;
+    --kitty-cyan: #15705f;
+    --kitty-green: #536700;
+    --kitty-yellow: #7a5b00;
+    --kitty-orange: #b03c0d;
+    --kitty-red: #bd2426;
+    --kitty-magenta: #a72a67;
+    --kitty-violet: #50539c;
+  }
+
+  /* Chocolate Espresso — terminal âmbar-queimado, tinta vinho-escuro */
+  .chocolate-espresso .kitty-terminal {
+    --kitty-bg: #f4e6c8;
+    --kitty-bg-bar: #e8d8b4;
+    --kitty-bg-tab: #dbca9f;
+    --kitty-border: #cebd8a;
+    --kitty-fg: #311a10;
+    --kitty-fg-dim: #5c3325;
+    --kitty-fg-dimmer: #74463a;
+    --kitty-blue: #1a5e88;
+    --kitty-cyan: #1a6b54;
+    --kitty-green: #4d6300;
+    --kitty-yellow: #7a4e00;
+    --kitty-orange: #ad3810;
+    --kitty-red: #b52020;
+    --kitty-magenta: #a02260;
+    --kitty-violet: #4e4d98;
   }
 
   /* Title bar com tabs estilo kitty */
@@ -1958,7 +2300,9 @@
   }
 
   @media (max-width: 640px) {
-    .kitty-title-text { display: none; }
+    .kitty-title-text {
+      display: none;
+    }
   }
 
   /* Body — scrollable terminal viewport */
@@ -1971,7 +2315,9 @@
     scrollbar-width: thin;
     scrollbar-color: var(--kitty-border) transparent;
   }
-  .kitty-body::-webkit-scrollbar { width: 8px; }
+  .kitty-body::-webkit-scrollbar {
+    width: 8px;
+  }
   .kitty-body::-webkit-scrollbar-thumb {
     background: var(--kitty-border);
     border-radius: 4px;
@@ -1984,19 +2330,37 @@
     flex-wrap: wrap;
     gap: 0.4rem;
   }
-  .kitty-cmd-user  { color: var(--kitty-green);  font-weight: 600; }
-  .kitty-cmd-host  { color: var(--kitty-yellow); font-weight: 600; margin-left: -0.4rem; }
-  .kitty-cmd-cwd   { color: var(--kitty-blue);   font-weight: 500; }
-  .kitty-cmd-arrow { color: var(--kitty-cyan);   font-weight: 700; }
-  .kitty-cmd-text  {
+  .kitty-cmd-user {
+    color: var(--kitty-green);
+    font-weight: 600;
+  }
+  .kitty-cmd-host {
+    color: var(--kitty-yellow);
+    font-weight: 600;
+    margin-left: -0.4rem;
+  }
+  .kitty-cmd-cwd {
+    color: var(--kitty-blue);
+    font-weight: 500;
+  }
+  .kitty-cmd-arrow {
+    color: var(--kitty-cyan);
+    font-weight: 700;
+  }
+  .kitty-cmd-text {
     color: var(--kitty-fg);
     white-space: pre-wrap;
     word-break: break-word;
   }
 
   /* Active input line */
-  .kitty-cmd--input { position: relative; }
-  .kitty-input-line { display: inline-flex; align-items: baseline; }
+  .kitty-cmd--input {
+    position: relative;
+  }
+  .kitty-input-line {
+    display: inline-flex;
+    align-items: baseline;
+  }
   .kitty-input-native {
     position: absolute;
     inset: 0;
@@ -2018,8 +2382,14 @@
     animation: kitty-blink 1.05s step-end infinite;
   }
   @keyframes kitty-blink {
-    0%, 50%   { opacity: 1; }
-    51%, 100% { opacity: 0; }
+    0%,
+    50% {
+      opacity: 1;
+    }
+    51%,
+    100% {
+      opacity: 0;
+    }
   }
 
   /* Output blocks */
@@ -2027,11 +2397,21 @@
     margin: 0.3rem 0 0.9rem;
     color: var(--kitty-fg);
   }
-  .kitty-out--text { max-width: 58ch; }
-  .kitty-out--text p { margin: 0; }
-  .kitty-out--text p + p { margin-top: 0.5rem; }
-  .kitty-out-dim { color: var(--kitty-fg-dim); }
-  .kitty-err { color: var(--kitty-red); }
+  .kitty-out--text {
+    max-width: 58ch;
+  }
+  .kitty-out--text p {
+    margin: 0;
+  }
+  .kitty-out--text p + p {
+    margin-top: 0.5rem;
+  }
+  .kitty-out-dim {
+    color: var(--kitty-fg-dim);
+  }
+  .kitty-err {
+    color: var(--kitty-red);
+  }
 
   /* whoami header */
   .kitty-who-name {
@@ -2061,8 +2441,15 @@
     animation: kitty-pulse 1.8s ease-in-out infinite;
   }
   @keyframes kitty-pulse {
-    0%, 100% { opacity: 1;   transform: scale(1); }
-    50%      { opacity: 0.5; transform: scale(0.8); }
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.8);
+    }
   }
 
   /* key → value rows */
@@ -2076,10 +2463,19 @@
     width: 6.5rem;
     font-weight: 600;
   }
-  .kitty-key--green  { color: var(--kitty-green); }
-  .kitty-key--blue   { color: var(--kitty-blue); }
-  .kitty-key--yellow { color: var(--kitty-yellow); }
-  .kitty-val { color: var(--kitty-fg); min-width: 0; }
+  .kitty-key--green {
+    color: var(--kitty-green);
+  }
+  .kitty-key--blue {
+    color: var(--kitty-blue);
+  }
+  .kitty-key--yellow {
+    color: var(--kitty-yellow);
+  }
+  .kitty-val {
+    color: var(--kitty-fg);
+    min-width: 0;
+  }
   .kitty-proj {
     flex-shrink: 0;
     width: 11.5rem;
@@ -2095,7 +2491,9 @@
       color-mix(in oklch, var(--kitty-blue), transparent 55%);
     transition: color 0.15s ease;
   }
-  .kitty-link:hover { color: var(--kitty-cyan); }
+  .kitty-link:hover {
+    color: var(--kitty-cyan);
+  }
   .kitty-out-link {
     display: inline-block;
     margin-top: 0.55rem;
@@ -2103,7 +2501,9 @@
     text-decoration: none;
     transition: color 0.15s ease;
   }
-  .kitty-out-link:hover { color: var(--kitty-cyan); }
+  .kitty-out-link:hover {
+    color: var(--kitty-cyan);
+  }
 
   /* clickable command tokens */
   .kitty-cmd-link {
@@ -2140,7 +2540,9 @@
     flex-wrap: wrap;
     gap: 0.4rem 0.95rem;
   }
-  .kitty-hint .kitty-cmd-link { width: auto; }
+  .kitty-hint .kitty-cmd-link {
+    width: auto;
+  }
 
   /* whoami one-liner */
   .kitty-who-tag {
@@ -2167,7 +2569,9 @@
     opacity: 0.55;
     transition: opacity 0.2s ease;
   }
-  .kitty-body--closed:hover { opacity: 0.8; }
+  .kitty-body--closed:hover {
+    opacity: 0.8;
+  }
   .kitty-reopen {
     background: none;
     border: 1px dashed var(--kitty-border);
@@ -2177,7 +2581,9 @@
     padding: 0.2rem 0.8rem;
     border-radius: 3px;
     cursor: pointer;
-    transition: color 0.15s ease, border-color 0.15s ease;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
   }
   .kitty-reopen:hover {
     color: var(--kitty-fg);
@@ -2185,15 +2591,22 @@
   }
 
   @media (max-width: 480px) {
-    .kitty-row { flex-direction: column; gap: 0.1rem; }
+    .kitty-row {
+      flex-direction: column;
+      gap: 0.1rem;
+    }
     .kitty-key,
     .kitty-cmd-link,
-    .kitty-proj { width: auto; }
+    .kitty-proj {
+      width: auto;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .kitty-cursor,
-    .kitty-dot { animation: none; }
+    .kitty-dot {
+      animation: none;
+    }
   }
 
   /* ─── Code card (syntax highlighted snippet) ───────────────── */
@@ -2201,7 +2614,7 @@
     display: flex;
     flex-direction: column;
     height: 100%;
-    background: oklch(0.10 0.008 222);
+    background: oklch(0.1 0.008 222);
     border-radius: inherit;
     overflow: hidden;
   }
@@ -2245,7 +2658,7 @@
     font-size: 0.72rem;
     line-height: 1.65;
     padding: 0.6rem 0;
-    background: oklch(0.10 0.008 222);
+    background: oklch(0.1 0.008 222);
   }
 
   .code-line {
@@ -2286,13 +2699,28 @@
   }
 
   /* Syntax token colors — dark background (both themes, card is always dark) */
-  .code-kw   { color: oklch(0.72 0.16 295); }   /* violet — keywords */
-  .code-dec  { color: oklch(0.73 0.17 48);  }   /* amber  — decorators */
-  .code-cls  { color: oklch(0.74 0.14 215); }   /* cyan-blue — class names */
-  .code-str  { color: oklch(0.66 0.16 160); }   /* emerald — strings */
-  .code-prop { color: oklch(0.80 0.08 215); }   /* light blue — properties */
-  .code-punc { color: oklch(0.58 0.02 220); }   /* muted — punctuation */
-  .code-cmt  { color: oklch(0.42 0.02 220); font-style: italic; }
+  .code-kw {
+    color: oklch(0.72 0.16 295);
+  } /* violet — keywords */
+  .code-dec {
+    color: oklch(0.73 0.17 48);
+  } /* amber  — decorators */
+  .code-cls {
+    color: oklch(0.74 0.14 215);
+  } /* cyan-blue — class names */
+  .code-str {
+    color: oklch(0.66 0.16 160);
+  } /* emerald — strings */
+  .code-prop {
+    color: oklch(0.8 0.08 215);
+  } /* light blue — properties */
+  .code-punc {
+    color: oklch(0.58 0.02 220);
+  } /* muted — punctuation */
+  .code-cmt {
+    color: oklch(0.42 0.02 220);
+    font-style: italic;
+  }
 
   /* ─── Preloader / splash screen ────────────────────────────── */
   .preloader-overlay {
@@ -2305,7 +2733,9 @@
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
-    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    transition:
+      opacity 0.45s ease,
+      transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .preloader-exit {
@@ -2355,8 +2785,13 @@
   }
 
   @keyframes preloader-blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
   }
 
   .preloader-bar {
@@ -2379,8 +2814,12 @@
   }
 
   @keyframes preloader-scan {
-    from { left: -40%; }
-    to   { left: 140%; }
+    from {
+      left: -40%;
+    }
+    to {
+      left: 140%;
+    }
   }
 
   .section-glow-neutral::before {
@@ -2424,8 +2863,14 @@
   animation: section-caret-blink 1.2s steps(1) infinite;
 }
 @keyframes section-caret-blink {
-  0%, 55%  { opacity: 1; }
-  56%, 100% { opacity: 0; }
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Link com sublinhado que "desenha" da esquerda — micro-interação
@@ -2445,8 +2890,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .section-title::after { animation: none; }
-  .link-underline { transition: none; }
+  .section-title::after {
+    animation: none;
+  }
+  .link-underline {
+    transition: none;
+  }
 }
 
 /* ─── Hero — o nome como manchete editorial ──────────────────────
@@ -2535,30 +2984,36 @@
 /* Aurora: glow suave — Material não tem neon; só luz ambiente lavanda+teal */
 html.material-dark .aurora {
   background:
-    radial-gradient(ellipse 70% 40% at 50% -15%,
-      color-mix(in srgb, #bb86fc 12%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse 50% 30% at 80% 0%,
-      color-mix(in srgb, #03dac6 8%, transparent) 0%, transparent 42%);
+    radial-gradient(
+      ellipse 70% 40% at 50% -15%,
+      color-mix(in srgb, #bb86fc 12%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 80% 0%,
+      color-mix(in srgb, #03dac6 8%, transparent) 0%,
+      transparent 42%
+    );
 }
 
 /* Terminal Material: lavanda Material Indigo 50 (#E8EAF6) — 16:1 vs bg.
    Sintaxe escura com matizes Material. Fundo levemente lilás sugere a marca. */
 .material-dark .kitty-terminal {
-  --kitty-bg:        #e8eaf6;
-  --kitty-bg-bar:    #d9dcf0;
-  --kitty-bg-tab:    #c9ccec;
-  --kitty-border:    #b0b4e0;
-  --kitty-fg:        #1a1a2e;
-  --kitty-fg-dim:    #2e2e52;
+  --kitty-bg: #e8eaf6;
+  --kitty-bg-bar: #d9dcf0;
+  --kitty-bg-tab: #c9ccec;
+  --kitty-border: #b0b4e0;
+  --kitty-fg: #1a1a2e;
+  --kitty-fg-dim: #2e2e52;
   --kitty-fg-dimmer: #424270;
-  --kitty-blue:      #1565c0;
-  --kitty-cyan:      #00695c;
-  --kitty-green:     #2e7d32;
-  --kitty-yellow:    #e65100;
-  --kitty-orange:    #bf360c;
-  --kitty-red:       #b71c1c;
-  --kitty-magenta:   #4a148c;
-  --kitty-violet:    #311b92;
+  --kitty-blue: #1565c0;
+  --kitty-cyan: #00695c;
+  --kitty-green: #2e7d32;
+  --kitty-yellow: #e65100;
+  --kitty-orange: #bf360c;
+  --kitty-red: #b71c1c;
+  --kitty-magenta: #4a148c;
+  --kitty-violet: #311b92;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -2569,16 +3024,28 @@ html.material-dark .aurora {
    html.cyberpunk para igualar especificidade de html.light. */
 html.cyberpunk .aurora {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%,
-      color-mix(in srgb, #f700c0 18%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 85% 0%,
-      color-mix(in srgb, #00e5ff 12%, transparent) 0%, transparent 42%),
-    radial-gradient(ellipse 50% 30% at 15% 10%,
-      color-mix(in srgb, #8b5cf6 12%, transparent) 0%, transparent 42%);
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, #f700c0 18%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 85% 0%,
+      color-mix(in srgb, #00e5ff 12%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 15% 10%,
+      color-mix(in srgb, #8b5cf6 12%, transparent) 0%,
+      transparent 42%
+    );
 }
 .cyberpunk .hero-center-glow {
-  background: radial-gradient(ellipse at center,
-    color-mix(in srgb, #f700c0 9%, transparent) 0%, transparent 55%);
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, #f700c0 9%, transparent) 0%,
+    transparent 55%
+  );
 }
 /* Glow neon no nome: assinatura visual do tema */
 html.cyberpunk .hero-name {
@@ -2602,21 +3069,21 @@ html.cyberpunk .scroll-progress {
 /* Terminal = "tela" holográfica azul-fria: página noturna → tela clara.
    Cor dos prompts: neons escuros que passam AA no claro e evocam glitch/holo. */
 .cyberpunk .kitty-terminal {
-  --kitty-bg:        #cce4f4;
-  --kitty-bg-bar:    #bcd8ec;
-  --kitty-bg-tab:    #aacce4;
-  --kitty-border:    #90b8d4;
-  --kitty-fg:        #0a1835;
-  --kitty-fg-dim:    #1e3860;
+  --kitty-bg: #cce4f4;
+  --kitty-bg-bar: #bcd8ec;
+  --kitty-bg-tab: #aacce4;
+  --kitty-border: #90b8d4;
+  --kitty-fg: #0a1835;
+  --kitty-fg-dim: #1e3860;
   --kitty-fg-dimmer: #2c4878;
-  --kitty-blue:      #0044cc;
-  --kitty-cyan:      #006699;
-  --kitty-green:     #005c2e;
-  --kitty-yellow:    #6a5000;
-  --kitty-orange:    #8a3000;
-  --kitty-red:       #cc0033;
-  --kitty-magenta:   #88009a;
-  --kitty-violet:    #5500cc;
+  --kitty-blue: #0044cc;
+  --kitty-cyan: #006699;
+  --kitty-green: #005c2e;
+  --kitty-yellow: #6a5000;
+  --kitty-orange: #8a3000;
+  --kitty-red: #cc0033;
+  --kitty-magenta: #88009a;
+  --kitty-violet: #5500cc;
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -2625,16 +3092,28 @@ html.cyberpunk .scroll-progress {
    ═══════════════════════════════════════════════════════════════════ */
 .cute-pink .aurora {
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%,
-      color-mix(in srgb, var(--brand) 16%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 0%,
-      color-mix(in srgb, var(--accent-violet) 11%, transparent) 0%, transparent 42%),
-    radial-gradient(ellipse 50% 30% at 20% 10%,
-      color-mix(in srgb, var(--brand) 9%, transparent) 0%, transparent 42%);
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, var(--brand) 16%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 0%,
+      color-mix(in srgb, var(--accent-violet) 11%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 20% 10%,
+      color-mix(in srgb, var(--brand) 9%, transparent) 0%,
+      transparent 42%
+    );
 }
 .cute-pink .hero-center-glow {
-  background: radial-gradient(ellipse at center,
-    color-mix(in srgb, var(--brand) 9%, transparent) 0%, transparent 55%);
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--brand) 9%, transparent) 0%,
+    transparent 55%
+  );
 }
 /* Sem fade escuro no topo do hero: rosa suave → blush (era from-zinc-950) */
 .cute-pink .hero-gradient-overlay {
@@ -2644,28 +3123,47 @@ html.cyberpunk .scroll-progress {
 }
 .cute-pink .bg-grid-lines {
   background-image:
-    linear-gradient(to right, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px),
-    linear-gradient(to bottom, color-mix(in srgb, var(--foreground) 6%, transparent) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 6%, transparent) 1px,
+      transparent 1px
+    );
 }
 .cute-pink .fade-bottom {
-  background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--background) 100%
+  );
 }
 .cute-pink .text-gradient-hero {
   background: linear-gradient(135deg, #a31450 0%, #e8337e 50%, #a31450 100%);
   background-size: 200% auto;
 }
 .cute-pink .section-divider::before {
-  background: linear-gradient(to right, transparent 0%,
+  background: linear-gradient(
+    to right,
+    transparent 0%,
     color-mix(in srgb, var(--foreground) 8%, transparent) 15%,
     color-mix(in srgb, var(--foreground) 14%, transparent) 50%,
-    color-mix(in srgb, var(--foreground) 8%, transparent) 85%, transparent 100%);
+    color-mix(in srgb, var(--foreground) 8%, transparent) 85%,
+    transparent 100%
+  );
 }
 .cute-pink .section-glow-emerald::before,
 .cute-pink .section-glow-violet::before,
 .cute-pink .section-glow-neutral::before {
-  background: radial-gradient(ellipse at top center,
+  background: radial-gradient(
+    ellipse at top center,
     color-mix(in srgb, var(--brand) 10%, transparent) 0%,
-    color-mix(in srgb, var(--brand) 3%, transparent) 50%, transparent 75%);
+    color-mix(in srgb, var(--brand) 3%, transparent) 50%,
+    transparent 75%
+  );
 }
 .cute-pink .social-link {
   background: var(--secondary);
@@ -2696,7 +3194,11 @@ html.cyberpunk .scroll-progress {
 .cute-pink .home-project-placeholder {
   border-color: var(--border);
   background:
-    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 45%),
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--brand) 12%, transparent),
+      transparent 45%
+    ),
     linear-gradient(180deg, var(--card), var(--secondary));
 }
 .cute-pink .project-screenshot {
@@ -2710,13 +3212,23 @@ html.cyberpunk .scroll-progress {
 }
 .cute-pink .project-screenshot-viewport {
   background:
-    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--brand) 12%, transparent), transparent 45%),
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--brand) 12%, transparent),
+      transparent 45%
+    ),
     linear-gradient(180deg, var(--card), var(--secondary));
 }
 .cute-pink .project-screenshot-viewport::after {
   background:
     linear-gradient(180deg, rgb(255 255 255 / 0.4), transparent 28%),
-    linear-gradient(90deg, color-mix(in srgb, var(--foreground) 8%, transparent), transparent 16%, transparent 84%, color-mix(in srgb, var(--foreground) 8%, transparent));
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 8%, transparent),
+      transparent 16%,
+      transparent 84%,
+      color-mix(in srgb, var(--foreground) 8%, transparent)
+    );
 }
 .cute-pink .scroll-progress {
   background: linear-gradient(90deg, var(--brand), var(--accent-violet));
@@ -2728,19 +3240,272 @@ html.cyberpunk .scroll-progress {
 /* Terminal escuro "berry" — contrasta (valor) com a página rosa clara,
    harmoniza no matiz (plum/rosa). Tela escura num quarto rosa. */
 .cute-pink .kitty-terminal {
-  --kitty-bg:        #1f1320;
-  --kitty-bg-bar:    #281a2b;
-  --kitty-bg-tab:    #170e18;
-  --kitty-border:    #3a2740;
-  --kitty-fg:        #ecd6e4;
-  --kitty-fg-dim:    #b794ab;
+  --kitty-bg: #1f1320;
+  --kitty-bg-bar: #281a2b;
+  --kitty-bg-tab: #170e18;
+  --kitty-border: #3a2740;
+  --kitty-fg: #ecd6e4;
+  --kitty-fg-dim: #b794ab;
   --kitty-fg-dimmer: #8a6a82;
-  --kitty-blue:      #8ab4ff;
-  --kitty-cyan:      #5ed1c4;
-  --kitty-green:     #9ad67f;
-  --kitty-yellow:    #e8c06a;
-  --kitty-orange:    #ff9d6b;
-  --kitty-red:       #ff7a8f;
-  --kitty-magenta:   #f48fd0;
-  --kitty-violet:    #c79bff;
+  --kitty-blue: #8ab4ff;
+  --kitty-cyan: #5ed1c4;
+  --kitty-green: #9ad67f;
+  --kitty-yellow: #e8c06a;
+  --kitty-orange: #ff9d6b;
+  --kitty-red: #ff7a8f;
+  --kitty-magenta: #f48fd0;
+  --kitty-violet: #c79bff;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   FLUFFY — tema claro lavanda/rosa pastel suave. Lavanda pálida como
+   background dominante; rosa quente como brand; periwinkle como accent.
+   ══════════════════════════════════════════════════════════════════════ */
+.fluffy {
+  --background: #ece9f8;
+  --foreground: #28204a;
+  --color-emerald-50: #f0eeff;
+  --color-emerald-100: #e0dcfa;
+  --color-emerald-200: #c9c2f2;
+  --color-emerald-300: #b0a6e8;
+  --color-emerald-400: #9a8fdc;
+  --color-emerald-500: #8478ce;
+  --color-emerald-600: #6f62bc;
+  --color-emerald-700: #5b4fa6;
+  --color-emerald-800: #463d88;
+  --color-emerald-900: #2f286a;
+  --color-zinc-50: #f7f5ff;
+  --color-zinc-100: #edeaf8;
+  --color-zinc-200: #ddd9f0;
+  --color-zinc-300: #c6c0e4;
+  --color-zinc-400: #a89ecf;
+  --color-zinc-500: #8c82b8;
+  --color-zinc-600: #6e659c;
+  --color-zinc-700: #544e7e;
+  --color-zinc-800: #3c3762;
+  --color-zinc-900: #28244a;
+  --color-zinc-950: #1a1735;
+  --card: #e4e0f5;
+  --card-foreground: #28204a;
+  --popover: #e4e0f5;
+  --popover-foreground: #28204a;
+  --primary: #28204a;
+  --primary-foreground: #ece9f8;
+  --secondary: #d8d3ef;
+  --secondary-foreground: #28204a;
+  --muted: #d8d3ef;
+  --muted-foreground: #6a629a;
+  --accent: #d8d3ef;
+  --accent-foreground: #28204a;
+  --destructive: #d43f5a;
+  --border: #cac3e4;
+  --input: #cac3e4;
+  --ring: #d86fa8;
+  --chart-1: #d86fa8;
+  --chart-2: #7b70bf;
+  --chart-3: #5b9ce0;
+  --chart-4: #e8934a;
+  --chart-5: #62c4a0;
+  --radius: 0.625rem;
+  --sidebar: #e4e0f5;
+  --sidebar-foreground: #28204a;
+  --sidebar-primary: #28204a;
+  --sidebar-primary-foreground: #ece9f8;
+  --sidebar-accent: #d8d3ef;
+  --sidebar-accent-foreground: #28204a;
+  --sidebar-border: #cac3e4;
+  --sidebar-ring: #d86fa8;
+  --brand: #d86fa8;
+  --brand-strong: #c25e96;
+  --brand-glow: color-mix(in srgb, #d86fa8 28%, transparent);
+  --accent-violet: #7b70bf;
+  --accent-amber: #e8934a;
+  --accent-green: #62c4a0;
+  --shadow-sm: 0 1px 3px rgb(40 32 74 / 0.07);
+  --shadow-md:
+    0 4px 18px -6px rgb(40 32 74 / 0.12), 0 1px 3px rgb(40 32 74 / 0.07);
+  --shadow-lg: 0 18px 50px -28px rgb(40 32 74 / 0.22);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   FLUFFY — tratamento visual CLARO (top-level p/ vencer defaults escuros).
+   Paleta: lavanda suave + rosa quente + periwinkle frio.
+   ═══════════════════════════════════════════════════════════════════ */
+.fluffy .aurora {
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      color-mix(in srgb, var(--accent-violet) 16%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 0%,
+      color-mix(in srgb, var(--brand) 10%, transparent) 0%,
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 20% 10%,
+      color-mix(in srgb, var(--accent-violet) 8%, transparent) 0%,
+      transparent 42%
+    );
+}
+.fluffy .hero-center-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--accent-violet) 10%, transparent) 0%,
+    transparent 55%
+  );
+}
+.fluffy .hero-gradient-overlay {
+  --tw-gradient-from: #ddd8f4;
+  --tw-gradient-via: var(--background);
+  --tw-gradient-to: var(--background);
+}
+.fluffy .bg-grid-lines {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    );
+}
+.fluffy .fade-bottom {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--background) 100%
+  );
+}
+.fluffy .text-gradient-hero {
+  background: linear-gradient(135deg, #7b70bf 0%, #d86fa8 50%, #a882d4 100%);
+  background-size: 200% auto;
+}
+.fluffy .section-divider::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground) 6%, transparent) 15%,
+    color-mix(in srgb, var(--foreground) 12%, transparent) 50%,
+    color-mix(in srgb, var(--foreground) 6%, transparent) 85%,
+    transparent 100%
+  );
+}
+.fluffy .section-glow-emerald::before,
+.fluffy .section-glow-violet::before,
+.fluffy .section-glow-neutral::before {
+  background: radial-gradient(
+    ellipse at top center,
+    color-mix(in srgb, var(--accent-violet) 12%, transparent) 0%,
+    color-mix(in srgb, var(--accent-violet) 4%, transparent) 50%,
+    transparent 75%
+  );
+}
+.fluffy .social-link {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.fluffy .social-link:hover {
+  color: var(--brand);
+  border-color: color-mix(in srgb, var(--brand) 40%, transparent);
+  box-shadow: 0 0 16px -4px color-mix(in srgb, var(--brand) 28%, transparent);
+}
+.fluffy .bento-card,
+.fluffy .bento-highlight,
+.fluffy .bento-terminal,
+.fluffy .home-project-card {
+  background: var(--card);
+  border-color: var(--border);
+  backdrop-filter: none;
+  box-shadow: var(--shadow-md);
+}
+.fluffy .bento-card:hover,
+.fluffy .home-project-card:hover {
+  border-color: color-mix(in srgb, var(--brand) 30%, transparent);
+  box-shadow:
+    0 0 28px -8px color-mix(in srgb, var(--brand) 14%, transparent),
+    var(--shadow-md);
+}
+.fluffy .home-project-tagline,
+.fluffy .home-project-description {
+  color: var(--muted-foreground);
+}
+.fluffy .home-project-tech span {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.fluffy .home-project-footer {
+  border-top-color: var(--border);
+  color: var(--muted-foreground);
+}
+.fluffy .home-project-placeholder {
+  border-color: var(--border);
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--accent-violet) 14%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.fluffy .project-screenshot {
+  border-color: var(--border);
+  background: linear-gradient(180deg, #f5f3ff, var(--secondary));
+  box-shadow: var(--shadow-md);
+}
+.fluffy .project-screenshot-chrome {
+  border-bottom-color: var(--border);
+  background: var(--secondary);
+}
+.fluffy .project-screenshot-viewport {
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      color-mix(in srgb, var(--accent-violet) 14%, transparent),
+      transparent 45%
+    ),
+    linear-gradient(180deg, var(--card), var(--secondary));
+}
+.fluffy .project-screenshot-viewport::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.5), transparent 28%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 6%, transparent),
+      transparent 16%,
+      transparent 84%,
+      color-mix(in srgb, var(--foreground) 6%, transparent)
+    );
+}
+.fluffy .scroll-progress {
+  background: linear-gradient(90deg, var(--accent-violet), var(--brand));
+}
+.fluffy .preloader-name {
+  color: var(--foreground);
+}
+
+/* Terminal "deep violet night" — viola profundo contrasta com lavanda clara,
+   harmoniza no matiz. Tela de madrugada num quarto de nuvens. */
+.fluffy .kitty-terminal {
+  --kitty-bg: #16122e;
+  --kitty-bg-bar: #1e1a3a;
+  --kitty-bg-tab: #100e24;
+  --kitty-border: #302868;
+  --kitty-fg: #ddd8f8;
+  --kitty-fg-dim: #a09cca;
+  --kitty-fg-dimmer: #6e6a96;
+  --kitty-blue: #7eb8ff;
+  --kitty-cyan: #5ecfd4;
+  --kitty-green: #90d870;
+  --kitty-yellow: #e8c86a;
+  --kitty-orange: #ffaa6b;
+  --kitty-red: #ff7a8f;
+  --kitty-magenta: #f07ec8;
+  --kitty-violet: #b898f8;
 }
