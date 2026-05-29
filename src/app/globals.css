@@ -2,6 +2,12 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Transição suave na troca de temas — só cores para não interferir em animações */
+*, *::before, *::after {
+  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+[data-motion], [style*="animation"], canvas { transition: none !important; }
+
 /* "dark:" cobre todos os temas escuros (dark + cafés Bearded), só não o light */
 @custom-variant dark (&:is(.dark *, .coffee *, .chocolate-espresso *, .black-gold *, .cyberpunk *, .material-dark *, .pink-cat-boo *));
 
@@ -2737,35 +2743,4 @@ html.cyberpunk .scroll-progress {
   --kitty-red:       #ff7a8f;
   --kitty-magenta:   #f48fd0;
   --kitty-violet:    #c79bff;
-}
-
-/* ── Pink Cat Boo aurora — Catppuccin Mocha: pink + mauve gradients ── */
-html.pink-cat-boo .aurora {
-  background:
-    radial-gradient(ellipse 80% 50% at 50% -20%,
-      color-mix(in srgb, #f5c2e7 16%, transparent) 0%, transparent 55%),
-    radial-gradient(ellipse 60% 40% at 80% 0%,
-      color-mix(in srgb, #cba6f7 12%, transparent) 0%, transparent 42%),
-    radial-gradient(ellipse 50% 30% at 20% 5%,
-      color-mix(in srgb, #b4befe 10%, transparent) 0%, transparent 42%);
-}
-
-/* ── Pink Cat Boo terminal — Catppuccin Latte (light) contra a página
-   escura Mocha: alto contraste de valor, harmonia de paleta. ── */
-.pink-cat-boo .kitty-terminal {
-  --kitty-bg:        #eff1f5;
-  --kitty-bg-bar:    #e6e9ef;
-  --kitty-bg-tab:    #dce0e8;
-  --kitty-border:    #ccd0da;
-  --kitty-fg:        #4c4f69;
-  --kitty-fg-dim:    #6c6f85;
-  --kitty-fg-dimmer: #8c8fa1;
-  --kitty-blue:      #1e66f5;
-  --kitty-cyan:      #179299;
-  --kitty-green:     #40a02b;
-  --kitty-yellow:    #df8e1d;
-  --kitty-orange:    #fe640b;
-  --kitty-red:       #d20f39;
-  --kitty-magenta:   #ea76cb;
-  --kitty-violet:    #7287fd;
 }

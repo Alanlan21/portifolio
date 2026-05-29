@@ -22,7 +22,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
           "light",
         ]}
         enableSystem={false}
-        disableTransitionOnChange
       >
         <TooltipProvider delay={0}>{children}</TooltipProvider>
       </NextThemesProvider>

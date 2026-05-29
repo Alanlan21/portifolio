@@ -13,20 +13,7 @@ import { TextScramble } from "@/components/text-scramble";
 import { Magnetic } from "@/components/magnetic";
 import { GlowCard } from "@/components/glow-card";
 import { ProjectScreenshot } from "@/components/project-screenshot";
-import { useTheme } from "next-themes";
 import { useLanguage } from "@/lib/i18n";
-
-const ALL_THEMES = [
-  "coffee",
-  "chocolate-espresso",
-  "black-gold",
-  "cyberpunk",
-  "material-dark",
-  "cute-pink",
-  "pink-cat-boo",
-  "dark",
-  "light",
-];
 
 const skills = {
   backend: [
@@ -68,13 +55,8 @@ function getProjectCategoryClass(color: string) {
 
 export default function Home() {
   const { lang, t } = useLanguage();
-  const { theme, setTheme } = useTheme();
+  // Home destaca apenas projetos com preview visual (remove ex.: calote-bot).
   const projects = t.projectsData.filter((project) => project.image);
-
-  function handleAvatarClick() {
-    const others = ALL_THEMES.filter((th) => th !== theme);
-    setTheme(others[Math.floor(Math.random() * others.length)]);
-  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -100,13 +82,11 @@ export default function Home() {
             {/* Identity */}
             <div className="flex flex-col gap-7 lg:gap-8">
               <div
-                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden cursor-pointer"
+                className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden"
                 style={{
                   boxShadow:
                     "0 0 0 3px var(--brand), 0 0 0 7px color-mix(in srgb, var(--brand) 20%, transparent)",
                 }}
-                onClick={handleAvatarClick}
-                title="change theme"
               >
                 <Image
                   src="/assets/foto-perfil.jpg"

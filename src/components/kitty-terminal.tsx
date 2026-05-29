@@ -410,9 +410,6 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
         "material-dark": "material-dark",
         pink: "cute-pink",
         "cute-pink": "cute-pink",
-        catppuccin: "pink-cat-boo",
-        mocha: "pink-cat-boo",
-        "pink-cat-boo": "pink-cat-boo",
         dark: "dark",
         light: "light",
       };

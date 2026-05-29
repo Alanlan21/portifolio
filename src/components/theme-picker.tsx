@@ -28,7 +28,6 @@ const THEMES: ThemeOption[] = [
   { id: "cyberpunk", label: "Cyberpunk", bg: "#0b0b1a", accent: "#f700c0" },
   { id: "material-dark", label: "Material Dark", bg: "#121212", accent: "#bb86fc" },
   { id: "cute-pink", label: "Cute Pink", bg: "#fbeef4", accent: "#e8337e" },
-  { id: "pink-cat-boo", label: "Pink Cat Boo", bg: "#1e1e2e", accent: "#f5c2e7" },
   { id: "dark", label: "Dark", bg: "#171717", accent: "#34d399" },
   { id: "light", label: "Solarized Light", bg: "#fdf6e3", accent: "#268bd2" },
 ];
