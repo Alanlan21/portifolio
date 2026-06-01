@@ -2541,7 +2541,7 @@ canvas,
   }
   .kitty-tok-key {
     color: var(--kitty-fg);
-    font-weight: 600;
+    font-weight: 400;
   }
   .kitty-tok-dim {
     color: var(--kitty-fg-dim);
