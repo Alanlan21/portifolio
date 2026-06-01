@@ -65,21 +65,12 @@ export const metadata: Metadata = {
     url: siteUrl,
     locale: "pt_BR",
     siteName: "Alan Regis",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Alan Regis, Software Developer",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Alan Regis | Software Developer",
     description:
       "Desenvolvedor backend especializado em arquitetura de sistemas, segurança e APIs críticas em produção.",
-    images: ["/og-image.png"],
   },
   robots: {
     index: true,
