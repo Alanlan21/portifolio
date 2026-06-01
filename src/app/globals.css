@@ -40,7 +40,7 @@ canvas,
 }
 
 /* "dark:" cobre todos os temas escuros (dark + cafés Bearded), só não o light */
-@custom-variant dark (&:is(.dark *, .coffee *, .chocolate-espresso *, .black-gold *, .cyberpunk *, .material-dark *, .pink-cat-boo *));
+@custom-variant dark (&:is(.dark *, .coffee *, .chocolate-espresso *, .black-gold *, .cyberpunk *, .material-dark *, .pink-cat-boo *, .e-ink-dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -543,74 +543,74 @@ canvas,
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   CHOCOLATE ESPRESSO — borra de café, quase preto-vinho
-   base vinho-escuro #1a1111 · accent brasa/terracota #cf5340 · fonte rosada #d0a898
+   CHOCOLATE ESPRESSO — torra escura, quase puro preto
+   base #100d0c (torra italiana) · accent crema dourada #c08840 · fonte marfim #c4a882
    ═══════════════════════════════════════════════════════════════════ */
 .chocolate-espresso {
-  --background: #1a1111;
-  --foreground: #d0a898;
-  /* Emerald → rampa sienna/terracota (brasa do espresso) */
-  --color-emerald-50: #fce8e3;
-  --color-emerald-100: #f8d0c8;
-  --color-emerald-200: #f2b0a0;
-  --color-emerald-300: #e88e78;
-  --color-emerald-400: #de6e55;
-  --color-emerald-500: #cf5340;
-  --color-emerald-600: #b8402e;
-  --color-emerald-700: #9e3223;
-  --color-emerald-800: #7f281c;
-  --color-emerald-900: #621f16;
-  /* Zinc → vinho-cinza escuro (mais frio e profundo que o Coffee) */
-  --color-zinc-50: #f6f0ef;
-  --color-zinc-100: #ede4e2;
-  --color-zinc-200: #ddd0cd;
-  --color-zinc-300: #cfc0bc;
-  --color-zinc-400: #b3a09b;
-  --color-zinc-500: #9e8a84;
-  --color-zinc-600: #8c7470;
-  --color-zinc-700: #6e5754;
-  --color-zinc-800: #442f2d;
-  --color-zinc-900: #2c1e1c;
-  --color-zinc-950: #1c1211;
-  --card: #140d0d;
-  --card-foreground: #d0a898;
-  --popover: #140d0d;
-  --popover-foreground: #d0a898;
-  --primary: #e8c8c4;
-  --primary-foreground: #1a1111;
-  --secondary: #2b1a19;
-  --secondary-foreground: #d0a898;
-  --muted: #2b1a19;
-  --muted-foreground: #9a7570;
-  --accent: #2b1a19;
-  --accent-foreground: #e8c8c4;
-  --destructive: #e85640;
-  --border: #382220;
-  --input: #382220;
-  --ring: #cf5340;
-  --chart-1: #4db3c2;
-  --chart-2: #7ec98a;
-  --chart-3: #cf5340;
-  --chart-4: #b88eff;
-  --chart-5: #e8aa5a;
+  --background: #100d0c;
+  --foreground: #c4a882;
+  /* Emerald → rampa âmbar/crema (dourado do espresso extraído) */
+  --color-emerald-50: #fef6e4;
+  --color-emerald-100: #fde8b8;
+  --color-emerald-200: #fbd582;
+  --color-emerald-300: #f8be4c;
+  --color-emerald-400: #eeaa28;
+  --color-emerald-500: #d49030;
+  --color-emerald-600: #b87828;
+  --color-emerald-700: #9a6020;
+  --color-emerald-800: #7c4c18;
+  --color-emerald-900: #603a12;
+  /* Zinc → marrom-inky: profundo e quente, com toque de torrefação */
+  --color-zinc-50: #f6f2ee;
+  --color-zinc-100: #ede6de;
+  --color-zinc-200: #ddd4c8;
+  --color-zinc-300: #cfc4b4;
+  --color-zinc-400: #b3a28e;
+  --color-zinc-500: #9e8870;
+  --color-zinc-600: #8c7458;
+  --color-zinc-700: #6e5540;
+  --color-zinc-800: #442f20;
+  --color-zinc-900: #2c1e14;
+  --color-zinc-950: #1c1208;
+  --card: #0c0908;
+  --card-foreground: #c4a882;
+  --popover: #0c0908;
+  --popover-foreground: #c4a882;
+  --primary: #e4d0b0;
+  --primary-foreground: #100d0c;
+  --secondary: #231812;
+  --secondary-foreground: #c4a882;
+  --muted: #231812;
+  --muted-foreground: #927a5e;
+  --accent: #231812;
+  --accent-foreground: #e4d0b0;
+  --destructive: #e05030;
+  --border: #302018;
+  --input: #302018;
+  --ring: #c08840;
+  --chart-1: #5ab8c8;
+  --chart-2: #80c870;
+  --chart-3: #c08840;
+  --chart-4: #c090d8;
+  --chart-5: #d89050;
   --radius: 0.625rem;
-  --sidebar: #140d0d;
-  --sidebar-foreground: #d0a898;
-  --sidebar-primary: #e8c8c4;
-  --sidebar-primary-foreground: #1a1111;
-  --sidebar-accent: #2b1a19;
-  --sidebar-accent-foreground: #e8c8c4;
-  --sidebar-border: #382220;
-  --sidebar-ring: #cf5340;
-  --brand: #cf5340;
-  --brand-strong: #e0644f;
-  --accent-violet: #b88eff;
-  --accent-amber: #e8aa5a;
-  --accent-green: #7ec98a;
-  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.55);
+  --sidebar: #0c0908;
+  --sidebar-foreground: #c4a882;
+  --sidebar-primary: #e4d0b0;
+  --sidebar-primary-foreground: #100d0c;
+  --sidebar-accent: #231812;
+  --sidebar-accent-foreground: #e4d0b0;
+  --sidebar-border: #302018;
+  --sidebar-ring: #c08840;
+  --brand: #c08840;
+  --brand-strong: #d49a50;
+  --accent-violet: #b090d8;
+  --accent-amber: #e8a040;
+  --accent-green: #80c870;
+  --shadow-sm: 0 2px 8px -2px rgb(0 0 0 / 0.65);
   --shadow-md:
-    0 4px 20px -4px rgb(0 0 0 / 0.65), inset 0 1px 0 rgb(255 255 255 / 0.04);
-  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.9);
+    0 4px 20px -4px rgb(0 0 0 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.04);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.95);
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1448,6 +1448,43 @@ canvas,
     padding: 1rem;
   }
 
+  /* Kicker editorial: substitui o Badge colorido. Mono, uppercase, tracking
+     bem aberto, sem cor cromática — só hierarquia tipográfica. Lê como
+     kicker de revista impressa: presente o suficiente pra orientar,
+     discreto o suficiente pra desaparecer. */
+  .home-project-kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--muted-foreground);
+    opacity: 0.7;
+    margin-bottom: -0.25rem; /* aproxima do título */
+    transition: opacity 0.25s ease;
+  }
+  .home-project-kicker-rule {
+    display: inline-block;
+    width: 1.25rem;
+    height: 1px;
+    background: currentColor;
+    opacity: 0.5;
+    transition:
+      width 0.25s ease,
+      opacity 0.25s ease;
+  }
+  /* Hover: kicker inteiro ganha presença, barrinha cresce — micro-shift */
+  .home-project-card:hover .home-project-kicker {
+    opacity: 1;
+  }
+  .home-project-card:hover .home-project-kicker-rule {
+    width: 1.75rem;
+    opacity: 0.75;
+  }
+
   .home-project-title {
     font-size: 1.125rem;
     font-weight: 600;
@@ -2103,6 +2140,38 @@ canvas,
     transform: translateY(0) scale(1);
   }
 
+  /* ─── Availability — verde-sinal absoluto (tema-agnóstico) ──────
+     Marcador semântico "estou disponível": sempre o mesmo verde-sinal
+     vivo, independente do tema. Não cascateia por --color-emerald-*. */
+  .availability-dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 9999px;
+    background: #10b981;
+    box-shadow: 0 0 8px -1px rgb(16 185 129 / 0.55);
+    flex-shrink: 0;
+  }
+  .availability-label {
+    color: #059669;
+  }
+  .availability-panel {
+    border-color: rgb(16 185 129 / 0.3);
+    background: rgb(16 185 129 / 0.05);
+  }
+  /* No e-ink, suaviza para um verde-musgo de tinta verde de imprensa */
+  .e-ink .availability-dot {
+    background: #2f6b3f;
+    box-shadow: 0 0 6px -1px rgb(47 107 63 / 0.5);
+  }
+  .e-ink .availability-label {
+    color: #2f6b3f;
+  }
+  .e-ink .availability-panel {
+    border-color: rgb(47 107 63 / 0.35);
+    background: rgb(47 107 63 / 0.05);
+  }
+
   /* ─── Kitty Terminal — neofetch-style hero ─────────────────── */
   .kitty-terminal {
     display: flex;
@@ -2176,23 +2245,23 @@ canvas,
     --kitty-violet: #50539c;
   }
 
-  /* Chocolate Espresso — terminal âmbar-queimado, tinta vinho-escuro */
+  /* Chocolate Espresso — terminal pure-shot: fundo quase-preto, crema dourada */
   .chocolate-espresso .kitty-terminal {
-    --kitty-bg: #f4e6c8;
-    --kitty-bg-bar: #e8d8b4;
-    --kitty-bg-tab: #dbca9f;
-    --kitty-border: #cebd8a;
-    --kitty-fg: #311a10;
-    --kitty-fg-dim: #5c3325;
-    --kitty-fg-dimmer: #74463a;
-    --kitty-blue: #1a5e88;
-    --kitty-cyan: #1a6b54;
-    --kitty-green: #4d6300;
-    --kitty-yellow: #7a4e00;
-    --kitty-orange: #ad3810;
-    --kitty-red: #b52020;
-    --kitty-magenta: #a02260;
-    --kitty-violet: #4e4d98;
+    --kitty-bg: #0a0806;
+    --kitty-bg-bar: #161208;
+    --kitty-bg-tab: #080604;
+    --kitty-border: #2a1e0e;
+    --kitty-fg: #e0c898;
+    --kitty-fg-dim: #a89060;
+    --kitty-fg-dimmer: #786040;
+    --kitty-blue: #7ab8e8;
+    --kitty-cyan: #60c4b0;
+    --kitty-green: #90d070;
+    --kitty-yellow: #d8a840;
+    --kitty-orange: #e88840;
+    --kitty-red: #d85040;
+    --kitty-magenta: #c880a8;
+    --kitty-violet: #b090d8;
   }
 
   /* Title bar com tabs estilo kitty */
@@ -2380,6 +2449,12 @@ canvas,
     background: var(--kitty-fg);
     vertical-align: text-bottom;
     animation: kitty-blink 1.05s step-end infinite;
+    box-shadow: 0 0 8px -1px color-mix(in srgb, var(--brand) 55%, transparent);
+  }
+  /* Enquanto atraindo atenção, o cursor é a marca: cor brand + glow forte */
+  .kitty-terminal--attract .kitty-cursor {
+    background: var(--brand);
+    box-shadow: 0 0 12px -1px color-mix(in srgb, var(--brand) 70%, transparent);
   }
   @keyframes kitty-blink {
     0%,
@@ -2431,6 +2506,70 @@ canvas,
     margin-top: 0.45rem;
     color: var(--kitty-green);
     font-weight: 500;
+  }
+
+  /* whoami --all → bullets. "alan" é o retorno do whoami (cor do prompt);
+     os bullets são o --all expandido. Uma cor só; clareza por hierarquia
+     de peso, não por festa de cores. */
+  .kitty-whoami-name {
+    color: var(--kitty-green);
+    font-weight: 600;
+    margin-bottom: 0.15rem;
+  }
+  .kitty-whoami-surname {
+    color: color-mix(in srgb, var(--kitty-green) 62%, var(--kitty-fg-dimmer));
+    font-weight: 400;
+  }
+  .kitty-whoami-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .kitty-whoami-item {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+  }
+  .kitty-whoami-bullet {
+    flex-shrink: 0;
+    color: var(--kitty-fg-dimmer);
+    font-size: 0.7em;
+    line-height: 1;
+  }
+  .kitty-tok-key {
+    color: var(--kitty-fg);
+    font-weight: 600;
+  }
+  .kitty-tok-dim {
+    color: var(--kitty-fg-dim);
+    font-weight: 400;
+  }
+  /* Âncora navegável: idêntica ao tok-key até o hover, quando revela um
+     sublinhado pontilhado — descoberta progressiva, sem poluir. */
+  button.kitty-whoami-link {
+    appearance: none;
+    border: 0;
+    background: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    border-bottom: 1px dotted transparent;
+    transition:
+      border-color 0.15s ease,
+      color 0.15s ease;
+  }
+  button.kitty-whoami-link:hover,
+  button.kitty-whoami-link:focus-visible {
+    color: var(--kitty-green);
+    border-bottom-color: color-mix(
+      in srgb,
+      var(--kitty-green) 55%,
+      transparent
+    );
+    outline: none;
   }
   .kitty-dot {
     width: 0.55rem;
@@ -2525,7 +2664,7 @@ canvas,
     text-underline-offset: 3px;
   }
 
-  /* hint line */
+  /* hint line — convite à interação */
   .kitty-hint {
     display: flex;
     flex-wrap: wrap;
@@ -2534,6 +2673,41 @@ canvas,
     margin-top: 0.3rem;
     padding-top: 0.7rem;
     border-top: 1px dashed var(--kitty-border);
+  }
+  .kitty-hint-lead {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .kitty-hint-chevron {
+    display: inline-block;
+    color: var(--brand);
+    font-weight: 700;
+    transform: translateY(0.05em);
+    animation: kitty-hint-chevron 1.6s ease-in-out infinite;
+  }
+  .kitty-hint-text {
+    color: var(--kitty-fg-dim);
+  }
+  /* Quando o usuário ainda não interagiu, o texto fica um pouco mais vivo */
+  .kitty-terminal--attract .kitty-hint-text {
+    color: var(--kitty-fg);
+  }
+  /* Após a primeira interação, chevron para de pulsar (mais discreto) */
+  .kitty-terminal:not(.kitty-terminal--attract) .kitty-hint-chevron {
+    animation: none;
+    opacity: 0.55;
+  }
+  @keyframes kitty-hint-chevron {
+    0%,
+    100% {
+      transform: translate(0, 0.05em);
+      opacity: 0.55;
+    }
+    50% {
+      transform: translate(0.18em, 0.05em);
+      opacity: 1;
+    }
   }
   .kitty-hint-cmds {
     display: flex;
@@ -2544,11 +2718,40 @@ canvas,
     width: auto;
   }
 
-  /* whoami one-liner */
-  .kitty-who-tag {
-    color: var(--kitty-fg);
-    font-weight: 500;
+  /* Attract: halo que respira em --brand enquanto o usuário ainda não
+     interagiu com o terminal. Para no primeiro click/focus/comando. */
+  .kitty-terminal--attract {
+    animation: kitty-attract-breath 3.4s ease-in-out infinite;
   }
+  @keyframes kitty-attract-breath {
+    0%,
+    100% {
+      box-shadow:
+        0 0 0 0 color-mix(in srgb, var(--brand) 0%, transparent),
+        0 0 0 0 color-mix(in srgb, var(--brand) 0%, transparent),
+        var(--shadow-lg);
+    }
+    50% {
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--brand) 35%, transparent),
+        0 0 36px -6px color-mix(in srgb, var(--brand) 45%, transparent),
+        var(--shadow-lg);
+    }
+  }
+  /* Respeita reduced-motion */
+  @media (prefers-reduced-motion: reduce) {
+    .kitty-terminal--attract {
+      animation: none;
+      box-shadow:
+        0 0 0 1px color-mix(in srgb, var(--brand) 30%, transparent),
+        0 0 32px -8px color-mix(in srgb, var(--brand) 35%, transparent),
+        var(--shadow-lg);
+    }
+    .kitty-hint-chevron {
+      animation: none;
+    }
+  }
+
 
   /* history line numbers */
   .kitty-history-n {
@@ -3508,4 +3711,464 @@ html.cyberpunk .scroll-progress {
   --kitty-red: #ff7a8f;
   --kitty-magenta: #f07ec8;
   --kitty-violet: #b898f8;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   E-INK — papel quente + tinta preta + zero cromático.
+   Background: #f0ede6 (papel levemente creme). Brand: #1a1918 (tinta).
+   Conceito: e-reader / livro impresso. Contraste máximo, sem glows.
+   ══════════════════════════════════════════════════════════════════════ */
+.e-ink {
+  --background: #f0ede6;
+  --foreground: #1a1918;
+  /* Emerald → escala de cinza-creme quente (zero saturação real) */
+  --color-emerald-50: #f5f2ec;
+  --color-emerald-100: #e8e4da;
+  --color-emerald-200: #d5d0c4;
+  --color-emerald-300: #bfbab0;
+  --color-emerald-400: #a8a298;
+  --color-emerald-500: #90897e;
+  --color-emerald-600: #78706a;
+  --color-emerald-700: #605b54;
+  --color-emerald-800: #484240;
+  --color-emerald-900: #302c2a;
+  /* Zinc → cinza papel quente */
+  --color-zinc-50: #f8f6f2;
+  --color-zinc-100: #f0edea;
+  --color-zinc-200: #e0ddd8;
+  --color-zinc-300: #cbc8c2;
+  --color-zinc-400: #b0ada8;
+  --color-zinc-500: #98958e;
+  --color-zinc-600: #807d76;
+  --color-zinc-700: #686560;
+  --color-zinc-800: #504d48;
+  --color-zinc-900: #383532;
+  --color-zinc-950: #201e1c;
+  --card: #e8e5de;
+  --card-foreground: #1a1918;
+  --popover: #e8e5de;
+  --popover-foreground: #1a1918;
+  --primary: #1a1918;
+  --primary-foreground: #f0ede6;
+  --secondary: #dedad2;
+  --secondary-foreground: #1a1918;
+  --muted: #dedad2;
+  --muted-foreground: #7a7872;
+  --accent: #dedad2;
+  --accent-foreground: #1a1918;
+  --destructive: #b82828;
+  --border: #c8c5be;
+  --input: #c8c5be;
+  --ring: #1a1918;
+  --chart-1: #484240;
+  --chart-2: #686560;
+  --chart-3: #1a1918;
+  --chart-4: #98958e;
+  --chart-5: #b0ada8;
+  --radius: 0.375rem;
+  --sidebar: #e8e5de;
+  --sidebar-foreground: #1a1918;
+  --sidebar-primary: #1a1918;
+  --sidebar-primary-foreground: #f0ede6;
+  --sidebar-accent: #dedad2;
+  --sidebar-accent-foreground: #1a1918;
+  --sidebar-border: #c8c5be;
+  --sidebar-ring: #1a1918;
+  --brand: #1a1918;
+  --brand-strong: #000000;
+  --brand-glow: color-mix(in srgb, #1a1918 10%, transparent);
+  --accent-violet: #5c4a38;
+  --accent-amber: #8a6a40;
+  --accent-green: #4a6040;
+  --shadow-sm: 0 1px 3px rgb(26 25 24 / 0.12);
+  --shadow-md:
+    0 4px 18px -6px rgb(26 25 24 / 0.18), 0 1px 3px rgb(26 25 24 / 0.12);
+  --shadow-lg: 0 18px 50px -28px rgb(26 25 24 / 0.32);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   E-INK — overrides visuais CLAROS (top-level p/ vencer defaults escuros).
+   Sem glows, sem gradientes cromáticos — só contraste e textura de papel.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Aurora: sombra suave de tinta no topo — sem cor, só densidade */
+.e-ink .aurora {
+  background: radial-gradient(
+    ellipse 75% 45% at 50% -10%,
+    color-mix(in srgb, var(--foreground) 6%, transparent) 0%,
+    transparent 60%
+  );
+}
+.e-ink .hero-center-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--foreground) 3%, transparent) 0%,
+    transparent 55%
+  );
+}
+/* Hero: degradê de papel levemente mais escuro → background */
+.e-ink .hero-gradient-overlay {
+  --tw-gradient-from: #e4e0d8;
+  --tw-gradient-via: var(--background);
+  --tw-gradient-to: var(--background);
+}
+/* Grid: linhas de impressão sutis e nítidas */
+.e-ink .bg-grid-lines {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 7%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 7%, transparent) 1px,
+      transparent 1px
+    );
+}
+.e-ink .fade-bottom {
+  background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+}
+/* Gradiente do nome: tinta → sépia → tinta (letra de imprensa) */
+.e-ink .text-gradient-hero {
+  background: linear-gradient(135deg, #000000 0%, #5c4a38 45%, #1a1918 100%);
+  background-size: 200% auto;
+}
+/* Divisor de seção: risco de tinta, sem cor */
+.e-ink .section-divider::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground) 12%, transparent) 15%,
+    color-mix(in srgb, var(--foreground) 22%, transparent) 50%,
+    color-mix(in srgb, var(--foreground) 12%, transparent) 85%,
+    transparent 100%
+  );
+}
+/* Glows substituídos por névoa de papel */
+.e-ink .section-glow-emerald::before,
+.e-ink .section-glow-violet::before,
+.e-ink .section-glow-neutral::before {
+  background: radial-gradient(
+    ellipse at top center,
+    color-mix(in srgb, var(--foreground) 4%, transparent) 0%,
+    transparent 60%
+  );
+}
+/* Social links: borda de tinta, hover sólido */
+.e-ink .social-link {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.e-ink .social-link:hover {
+  color: var(--foreground);
+  background: var(--foreground);
+  color: var(--primary-foreground);
+  border-color: var(--foreground);
+  box-shadow: none;
+}
+/* Cards: papel ligeiramente amarelado com borda de impressão */
+.e-ink .bento-card,
+.e-ink .bento-highlight,
+.e-ink .bento-terminal,
+.e-ink .home-project-card {
+  background: var(--card);
+  border-color: var(--border);
+  backdrop-filter: none;
+  box-shadow: var(--shadow-md);
+}
+.e-ink .bento-card:hover,
+.e-ink .home-project-card:hover {
+  border-color: color-mix(in srgb, var(--foreground) 55%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--foreground) 12%, transparent),
+    var(--shadow-md);
+}
+.e-ink .home-project-placeholder {
+  border-color: var(--border);
+  background: linear-gradient(
+    180deg,
+    var(--card),
+    var(--secondary)
+  );
+}
+.e-ink .project-screenshot {
+  border-color: var(--border);
+  background: linear-gradient(180deg, var(--background), var(--secondary));
+  box-shadow: var(--shadow-md);
+}
+.e-ink .project-screenshot-chrome {
+  border-bottom-color: var(--border);
+  background: var(--secondary);
+}
+.e-ink .project-screenshot-viewport {
+  background: linear-gradient(180deg, var(--card), var(--secondary));
+}
+.e-ink .project-screenshot-viewport::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.5), transparent 28%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      transparent 16%,
+      transparent 84%,
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    );
+}
+/* Scroll: barra preta sólida, como sublinhado tipográfico */
+.e-ink .scroll-progress {
+  background: var(--foreground);
+}
+.e-ink .preloader-name {
+  color: var(--foreground);
+}
+
+/* Terminal monocromo: fundo quase-preto, texto creme-cinza.
+   Sintaxe em tons de cinza + sépia; evoca terminal de impressora. */
+.e-ink .kitty-terminal {
+  --kitty-bg: #0e0c0a;
+  --kitty-bg-bar: #181614;
+  --kitty-bg-tab: #080806;
+  --kitty-border: #2a2820;
+  --kitty-fg: #d8d0c0;
+  --kitty-fg-dim: #a8a098;
+  --kitty-fg-dimmer: #78706a;
+  --kitty-blue: #a0b4c8;
+  --kitty-cyan: #88b0a8;
+  --kitty-green: #98b090;
+  --kitty-yellow: #c8b878;
+  --kitty-orange: #c8986a;
+  --kitty-red: #b87060;
+  --kitty-magenta: #b09090;
+  --kitty-violet: #9898b8;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   E-INK DARK — grafite + tinta-pergaminho + zero cromático.
+   Diferente do coffee (que é marrom): aqui é cinza-carbono frio com um
+   toque mínimo de calor (papel envelhecido, não café). Brand #dcd8d0
+   (pergaminho neutro). Terminal vira "página acesa" — ilha de luz
+   contra a tela de tinta.
+   ══════════════════════════════════════════════════════════════════════ */
+.e-ink-dark {
+  --background: #141312;
+  --foreground: #dcd8d0;
+  /* Emerald → escala cinza-grafite neutra (sem amarelar) */
+  --color-emerald-50: #f0eee8;
+  --color-emerald-100: #dad6cc;
+  --color-emerald-200: #bab6ac;
+  --color-emerald-300: #989488;
+  --color-emerald-400: #767268;
+  --color-emerald-500: #5a564c;
+  --color-emerald-600: #443f38;
+  --color-emerald-700: #322e28;
+  --color-emerald-800: #25211c;
+  --color-emerald-900: #181614;
+  /* Zinc → grafite com calor mínimo (não bege) */
+  --color-zinc-50: #ececea;
+  --color-zinc-100: #d8d6d2;
+  --color-zinc-200: #b0aea8;
+  --color-zinc-300: #8a8882;
+  --color-zinc-400: #6c6a64;
+  --color-zinc-500: #56544f;
+  --color-zinc-600: #423f3b;
+  --color-zinc-700: #2f2d29;
+  --color-zinc-800: #1f1d1a;
+  --color-zinc-900: #141312;
+  --color-zinc-950: #0a0908;
+  --card: #1c1b19;
+  --card-foreground: #dcd8d0;
+  --popover: #1c1b19;
+  --popover-foreground: #dcd8d0;
+  --primary: #dcd8d0;
+  --primary-foreground: #141312;
+  --secondary: #232120;
+  --secondary-foreground: #dcd8d0;
+  --muted: #232120;
+  --muted-foreground: #8a8882;
+  --accent: #232120;
+  --accent-foreground: #dcd8d0;
+  --destructive: #c85040;
+  --border: #2c2a27;
+  --input: #2c2a27;
+  --ring: #dcd8d0;
+  --chart-1: #bcb8b0;
+  --chart-2: #8a8882;
+  --chart-3: #dcd8d0;
+  --chart-4: #56544f;
+  --chart-5: #423f3b;
+  --radius: 0.375rem;
+  --sidebar: #1c1b19;
+  --sidebar-foreground: #dcd8d0;
+  --sidebar-primary: #dcd8d0;
+  --sidebar-primary-foreground: #141312;
+  --sidebar-accent: #232120;
+  --sidebar-accent-foreground: #dcd8d0;
+  --sidebar-border: #2c2a27;
+  --sidebar-ring: #dcd8d0;
+  --brand: #dcd8d0;
+  --brand-strong: #ffffff;
+  --brand-glow: color-mix(in srgb, #dcd8d0 14%, transparent);
+  --accent-violet: #807c75;
+  --accent-amber: #948f86;
+  --accent-green: #828a82;
+  --shadow-sm: 0 1px 3px rgb(0 0 0 / 0.5);
+  --shadow-md:
+    0 4px 18px -6px rgb(0 0 0 / 0.6), 0 1px 3px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 18px 50px -28px rgb(0 0 0 / 0.85);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   E-INK DARK — overrides visuais. Sem glows cromáticos: o protagonismo
+   é a luz da página (terminal claro) contra o pergaminho escuro.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Aurora: névoa quente do tom do papel, muito sutil */
+.e-ink-dark .aurora {
+  background: radial-gradient(
+    ellipse 75% 45% at 50% -10%,
+    color-mix(in srgb, var(--foreground) 5%, transparent) 0%,
+    transparent 60%
+  );
+}
+.e-ink-dark .hero-center-glow {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--foreground) 3%, transparent) 0%,
+    transparent 55%
+  );
+}
+.e-ink-dark .hero-gradient-overlay {
+  --tw-gradient-from: #0e0c08;
+  --tw-gradient-via: var(--background);
+  --tw-gradient-to: var(--background);
+}
+.e-ink-dark .bg-grid-lines {
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--foreground) 5%, transparent) 1px,
+      transparent 1px
+    );
+}
+.e-ink-dark .fade-bottom {
+  background: linear-gradient(to bottom, transparent 0%, var(--background) 100%);
+}
+/* Gradiente do nome: branco → cinza-prata → pergaminho neutro */
+.e-ink-dark .text-gradient-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #a8a6a0 45%, #dcd8d0 100%);
+  background-size: 200% auto;
+}
+.e-ink-dark .section-divider::before {
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    color-mix(in srgb, var(--foreground) 10%, transparent) 15%,
+    color-mix(in srgb, var(--foreground) 20%, transparent) 50%,
+    color-mix(in srgb, var(--foreground) 10%, transparent) 85%,
+    transparent 100%
+  );
+}
+.e-ink-dark .section-glow-emerald::before,
+.e-ink-dark .section-glow-violet::before,
+.e-ink-dark .section-glow-neutral::before {
+  background: radial-gradient(
+    ellipse at top center,
+    color-mix(in srgb, var(--foreground) 4%, transparent) 0%,
+    transparent 60%
+  );
+}
+.e-ink-dark .social-link {
+  background: var(--secondary);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+}
+.e-ink-dark .social-link:hover {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+  box-shadow: none;
+}
+.e-ink-dark .bento-card,
+.e-ink-dark .bento-highlight,
+.e-ink-dark .bento-terminal,
+.e-ink-dark .home-project-card {
+  background: var(--card);
+  border-color: var(--border);
+  backdrop-filter: none;
+  box-shadow: var(--shadow-md);
+}
+.e-ink-dark .bento-card:hover,
+.e-ink-dark .home-project-card:hover {
+  border-color: color-mix(in srgb, var(--foreground) 50%, transparent);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--foreground) 14%, transparent),
+    var(--shadow-md);
+}
+.e-ink-dark .home-project-placeholder {
+  border-color: var(--border);
+  background: linear-gradient(180deg, var(--card), var(--secondary));
+}
+.e-ink-dark .project-screenshot {
+  border-color: var(--border);
+  background: linear-gradient(180deg, var(--card), var(--secondary));
+  box-shadow: var(--shadow-md);
+}
+.e-ink-dark .project-screenshot-chrome {
+  border-bottom-color: var(--border);
+  background: var(--secondary);
+}
+.e-ink-dark .project-screenshot-viewport {
+  background: linear-gradient(180deg, var(--card), var(--secondary));
+}
+.e-ink-dark .project-screenshot-viewport::after {
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.04), transparent 28%),
+    linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--foreground) 6%, transparent),
+      transparent 16%,
+      transparent 84%,
+      color-mix(in srgb, var(--foreground) 6%, transparent)
+    );
+}
+/* Scroll: barra marfim sólida — sublinhado claro */
+.e-ink-dark .scroll-progress {
+  background: var(--foreground);
+}
+.e-ink-dark .preloader-name {
+  color: var(--foreground);
+}
+
+/* Terminal CLARO no tema escuro — a "página acesa".
+   Inversão proposital: a janela do terminal é uma ilha de papel
+   neutro-pergaminho contra a tela de tinta. Syntax em tons de tinta
+   azul-acinzentada (não sépia/marrom), pra não puxar pro café. */
+.e-ink-dark .kitty-terminal {
+  --kitty-bg: #ededea;
+  --kitty-bg-bar: #e0e0dc;
+  --kitty-bg-tab: #d4d4d0;
+  --kitty-border: #c2c2be;
+  --kitty-fg: #18181a;
+  --kitty-fg-dim: #48484a;
+  --kitty-fg-dimmer: #78787a;
+  --kitty-blue: #2e4868;
+  --kitty-cyan: #2e6868;
+  --kitty-green: #406040;
+  --kitty-yellow: #6e5828;
+  --kitty-orange: #884818;
+  --kitty-red: #883028;
+  --kitty-magenta: #604858;
+  --kitty-violet: #484868;
+  /* Halo de página neutro (sem amarelar) */
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--foreground) 8%, transparent),
+    0 0 60px -20px color-mix(in srgb, #ededea 30%, transparent),
+    var(--shadow-lg);
 }

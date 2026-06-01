@@ -30,8 +30,6 @@ const CMD_NAMES = ["about", "stack", "projects", "contact", "cv", "help"];
 
 const UI = {
   pt: {
-    whoami:
-      "alan · backend dev em Fortaleza-CE · faz frontend mas não admite · trompetista nas horas vagas · remoto ou presencial",
     hint: "Digite um comando ou clique —",
     helpTitle: "comandos disponíveis",
     notFound: (c: string) => `comando não encontrado: ${c}`,
@@ -59,8 +57,6 @@ const UI = {
     } as Record<string, string>,
   },
   en: {
-    whoami:
-      "alan · backend dev in Fortaleza-CE, brazil · does frontend but won't admit it · trumpet player off-hours · remote or on-site",
     hint: "Type a command or click —",
     helpTitle: "available commands",
     notFound: (c: string) => `command not found: ${c}`,
@@ -111,6 +107,8 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
   const [booted, setBooted] = useState(false);
   const [bootTyped, setBootTyped] = useState("");
   const [closed, setClosed] = useState(false);
+  // Sinaliza "olha pra cá" até a primeira interação — depois desligo o pulse
+  const [interacted, setInteracted] = useState(false);
 
   const idRef = useRef(0);
   const historyRef = useRef<string[]>([]);
@@ -143,9 +141,61 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
   }
 
   function whoamiOutput(): ReactNode {
+    // whoami → "alan"; --all expande os detalhes em bullets. Âncoras com
+    // `cmd` viram clicáveis (descoberta progressiva → outros comandos).
+    const items: { key: string; rest: string; cmd?: string }[] =
+      lang === "pt"
+        ? [
+            {
+              key: "backend dev",
+              rest: "faz frontend mas não admite",
+              cmd: "stack",
+            },
+            { key: "Fortaleza-CE", rest: "remoto ou presencial", cmd: "pwd" },
+            { key: "trompetista", rest: "nas horas vagas" },
+          ]
+        : [
+            {
+              key: "backend dev",
+              rest: "does frontend but won't admit it",
+              cmd: "stack",
+            },
+            {
+              key: "Fortaleza-CE, Brazil",
+              rest: "remote or on-site",
+              cmd: "pwd",
+            },
+            { key: "trumpet player", rest: "off-hours" },
+          ];
     return (
-      <div className="kitty-out">
-        <span className="kitty-who-tag">{ui.whoami}</span>
+      <div className="kitty-out kitty-whoami">
+        <div className="kitty-whoami-name">
+          alan<span className="kitty-whoami-surname"> regis</span>
+        </div>
+        <ul className="kitty-whoami-list">
+          {items.map((it) => (
+            <li key={it.key} className="kitty-whoami-item">
+              <span className="kitty-whoami-bullet" aria-hidden>
+                ▪
+              </span>
+              <span>
+                {it.cmd ? (
+                  <button
+                    type="button"
+                    className="kitty-tok-key kitty-whoami-link"
+                    onClick={() => runCommand(it.cmd!)}
+                    title={`${it.cmd} ⏎`}
+                  >
+                    {it.key}
+                  </button>
+                ) : (
+                  <span className="kitty-tok-key">{it.key}</span>
+                )}
+                <span className="kitty-tok-dim"> · {it.rest}</span>
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     );
   }
@@ -309,7 +359,12 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
   function hintLine(): ReactNode {
     return (
       <div className="kitty-hint">
-        <span className="kitty-out-dim">{ui.hint}</span>
+        <span className="kitty-hint-lead">
+          <span className="kitty-hint-chevron" aria-hidden>
+            ›
+          </span>
+          <span className="kitty-hint-text">{ui.hint}</span>
+        </span>
         <span className="kitty-hint-cmds">
           {CMD_NAMES.map((name) => (
             <button
@@ -329,12 +384,13 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
   // Update bootFinishRef every render so the boot animation always
   // fires with the current language (fixes the PT-in-EN-mode bug).
   bootFinishRef.current = () => {
-    push(echoLine("whoami"), whoamiOutput(), hintLine());
+    push(echoLine("whoami --all"), whoamiOutput(), hintLine());
     setBooted(true);
   };
 
   const COMMANDS: Record<string, () => ReactNode> = {
     whoami: whoamiOutput,
+    "whoami --all": whoamiOutput,
     about: aboutOutput,
     stack: stackOutput,
     projects: projectsOutput,
@@ -348,6 +404,7 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
 
   /* ─── Command runner ───────────────────────────────────────── */
   function runCommand(raw: string) {
+    if (!interacted) setInteracted(true);
     const trimmed = raw.trim();
     const cmd = trimmed.toLowerCase();
 
@@ -461,14 +518,14 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
   /* ─── Boot ─────────────────────────────────────────────────── */
   useEffect(() => {
     if (reduce) {
-      setBootTyped("whoami");
+      setBootTyped("whoami --all");
       bootFinishRef.current();
       return;
     }
 
     let i = 0;
     let cancelled = false;
-    const word = "whoami";
+    const word = "whoami --all";
     const tick = () => {
       if (cancelled) return;
       i++;
@@ -518,8 +575,16 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
     }
   };
 
+  const showAttract = booted && !closed && !interacted;
+
   return (
-    <div className={cn("kitty-terminal", className)}>
+    <div
+      className={cn(
+        "kitty-terminal",
+        showAttract && "kitty-terminal--attract",
+        className,
+      )}
+    >
       {/* Title bar */}
       <div className="kitty-titlebar">
         <div className="kitty-tabs">
@@ -552,7 +617,10 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
         <div
           className="kitty-body"
           ref={bodyRef}
-          onClick={() => inputRef.current?.focus()}
+          onClick={() => {
+            if (!interacted) setInteracted(true);
+            inputRef.current?.focus();
+          }}
         >
           {!booted && (
             <div className="kitty-cmd">
@@ -579,7 +647,13 @@ export function KittyTerminal({ className, skills }: KittyTerminalProps) {
                 ref={inputRef}
                 className="kitty-input-native"
                 value={input}
-                onChange={(e) => setInput(e.target.value)}
+                onChange={(e) => {
+                  if (!interacted) setInteracted(true);
+                  setInput(e.target.value);
+                }}
+                onFocus={() => {
+                  if (!interacted) setInteracted(true);
+                }}
                 onKeyDown={handleKeyDown}
                 aria-label="terminal input"
                 autoComplete="off"
