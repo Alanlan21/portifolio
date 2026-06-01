@@ -100,10 +100,10 @@ export function ContatoPageContent() {
             </div>
 
             {/* Availability */}
-            <div className="p-4 rounded-lg border border-emerald-500/30 bg-emerald-500/5">
+            <div className="availability-panel p-4 rounded-lg border">
               <div className="flex items-center gap-2 mb-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                <span className="text-sm font-medium text-emerald-500">
+                <span className="availability-dot animate-pulse" />
+                <span className="availability-label text-sm font-medium">
                   {t.contactPage.availabilityStatus}
                 </span>
               </div>

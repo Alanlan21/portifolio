@@ -9,7 +9,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <LanguageProvider>
       <NextThemesProvider
         attribute="class"
-        defaultTheme="coffee"
+        defaultTheme="e-ink"
         themes={[
           "coffee",
           "chocolate-espresso",
@@ -22,6 +22,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
           "dark",
           "light",
           "fluffy",
+          "e-ink",
+          "e-ink-dark",
         ]}
         enableSystem={false}
       >

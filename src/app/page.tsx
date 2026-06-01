@@ -44,14 +44,6 @@ const skills = {
   devops: ["Docker", "Git", "GitHub Actions", "AWS"],
 };
 
-const projectCategoryClasses = {
-  emerald: "text-emerald-400/80 border-emerald-500/30",
-  violet: "text-violet-400/80 border-violet-500/30",
-  amber: "text-amber-400/80 border-amber-500/30",
-  orange: "text-orange-400/80 border-orange-500/30",
-  cyan: "text-cyan-400/80 border-cyan-500/30",
-} as const;
-
 // Cada screenshot tem um ponto de interesse diferente: dashboards/telas
 // full-bleed favorecem o topo; UIs centralizadas favorecem o centro.
 const projectShotFocus: Record<string, string> = {
@@ -60,13 +52,6 @@ const projectShotFocus: Record<string, string> = {
   valvecraft: "center",
   "fala-pai": "center",
 };
-
-function getProjectCategoryClass(color: string) {
-  return (
-    projectCategoryClasses[color as keyof typeof projectCategoryClasses] ??
-    projectCategoryClasses.cyan
-  );
-}
 
 export default function Home() {
   const { lang, t } = useLanguage();
@@ -442,17 +427,11 @@ export default function Home() {
                 </div>
 
                 <div className="home-project-card-body">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="home-project-title">{project.name}</h3>
-                    <Badge
-                      variant="outline"
-                      className={`shrink-0 text-[10px] uppercase tracking-wider ${getProjectCategoryClass(
-                        project.categoryColor,
-                      )}`}
-                    >
-                      {project.category}
-                    </Badge>
-                  </div>
+                  <p className="home-project-kicker">
+                    <span className="home-project-kicker-rule" aria-hidden />
+                    {project.category}
+                  </p>
+                  <h3 className="home-project-title">{project.name}</h3>
 
                   <p className="home-project-tagline">{project.tagline}</p>
 
@@ -579,7 +558,7 @@ export default function Home() {
                   {t.home.availabilityTitle}
                 </p>
                 <div className="flex items-center gap-2 mb-2">
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <span className="availability-dot animate-pulse" />
                   <span className="text-sm text-zinc-900 dark:text-white font-medium">
                     {t.status.available}
                   </span>

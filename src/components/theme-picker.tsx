@@ -17,11 +17,13 @@ type ThemeOption = {
 
 // Ordem do menu = ordem de afinidade (cafés primeiro).
 const THEMES: ThemeOption[] = [
+  { id: "e-ink", label: "e-ink", bg: "#f0ede6", accent: "#1a1918" },
+  { id: "e-ink-dark", label: "e-ink dark", bg: "#141312", accent: "#dcd8d0" },
   {
     id: "chocolate-espresso",
     label: "Chocolate Espresso",
-    bg: "#1a1111",
-    accent: "#cf5340",
+    bg: "#100d0c",
+    accent: "#c08840",
   },
   { id: "coffee", label: "Coffee", bg: "#292423", accent: "#f09177" },
   { id: "black-gold", label: "Black & Gold", bg: "#111418", accent: "#e3a52a" },
